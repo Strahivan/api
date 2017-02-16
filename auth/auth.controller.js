@@ -75,7 +75,7 @@ async function verify(req, res) {
     await User.query()
       .insert(userInfo);
 
-    return res.redirect('http://locomotr.com/#/login');
+    return res.redirect('http://radship.com/#/login');
   } catch (e) {
     return utilities.responseHandler(e, res, 500);
   }
