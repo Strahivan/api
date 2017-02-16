@@ -57,7 +57,7 @@ class BaseController {
       .skipUndefined()
       .patch(req.body)
       .where(filter)
-      .then(item => utilities.responseHandler(null, res, 200, item))
+      .then(affected => utilities.responseHandler(null, res, 200))
       .catch(err => utilities.responseHandler(err, res));
   }
 
