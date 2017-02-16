@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["country_id", "name"],
+
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "random.word"
+    },
+    "country_id": {
+      "type": "integer",
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    }
+  }
+}
