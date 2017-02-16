@@ -1,0 +1,118 @@
+#%RAML 0.8
+title: radship
+version: working draft
+baseUri: http://localhost:3000
+mediaType: application/json
+
+securitySchemes:
+  - token: !include securitySchema/token.raml
+
+schemas:
+  - request: !include ../api/request/request.schema.json
+  - user: !include ../api/user/user.schema.json
+
+resourceTypes:
+  - collection: !include resourceTypes/collection.raml
+  - member: !include resourceTypes/member.raml
+traits:
+  - query: !include traits/query.raml
+
+# auth
+/auth:
+  /signup:
+    post:
+      body:
+        application/json:
+          schema: phone, password
+      responses:
+        201: 
+          body: 
+            schema: Sending sms
+  /verify:
+    get:
+      queryParameters:
+        token:
+          type: string
+          description: code sent to users phone
+  /login:
+    post:
+      body:
+        application/json:
+          schema: phone, password
+      responses:
+        200: 
+          body: 
+            schema: token
+  /reset-request:
+    post:
+      body:
+        application/json:
+          schema: phone
+      responses:
+        201: 
+          body: 
+            schema: Sending code
+  /reset:
+    get:
+      queryParameters:
+        token:
+          type: string
+          description: code sent to users phone
+
+# user
+/users:
+  type: {collection: {resourceName: user}}
+  /{userId}:
+    type: {member: {objectType: user}}
+    /requests:
+      type: {collection: {resourceName: request}}
+      /{requestId}:
+        type: {member: {objectType: request}}
+
+# request
+/requests:
+  type: {collection: {resourceName: request}}
+  /{requestId}:
+    type: {member: {objectType: request}}
+
+# file upload
+/upload:
+  securedBy: [ token ]
+  description: |
+      Steps to upload a file to s3:
+
+      1. Call this endpoint with necessary parameters. Remember that `folder_name` accepts only the following values: `products`, `users`
+
+      2. You'll receive a json object with `signed_request` and `url`
+
+      3. Send a PUT request with the file to be uploaded to the value you received in `signed_request`
+
+      4. After upload is complete, save the `url` value that you received earlier on the resource.
+      For example, if you are saving the logo of a company, update the company's `picture` property
+      with the value you received in `url`.
+
+  get:
+    queryParameters:
+      file_type:
+        type: string
+        description: the mime type of the file
+      file_name:
+        type: string
+        description: the name of the file
+      folder_name:
+        type: string
+        description: the folder in s3 where the file will be saved
+    responses:
+      200:
+        body: 
+          application/json:
+            schema: |
+                { "signed_request": "the url where the PUT request with file will go",
+                "url": "the url of the uploaded file "}
+
+
+documentation:
+  - title: Headline
+    content: !include docs/headline.md
+  - title: Authentication
+    content: !include docs/authentication.md
