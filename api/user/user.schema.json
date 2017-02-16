@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [],
+
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "name.findName"
+    },
+    "country_id": {
+      "type": "integer",
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
+    "role": {
+      "enum": ["admin"]
+    },
+    "email": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "format": "email",
+      "faker": "internet.email"
+    },
+    "hash": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "chance": "hash"
+    },
+    "avatar": {
+      "type": "string",
+      "faker": "image.imageUrl"
+    },
+    "address": {
+      "type": "string",
+      "faker": "lorem.paragraph"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "minLength": 1,
+      "maxLength": 255,
+      "chance": { "date": [{"string": true}]}
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "minLength": 1,
+      "maxLength": 255,
+      "chance": { "date": [{"string": true}]}
+    }
+  }
+}
