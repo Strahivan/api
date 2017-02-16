@@ -1,0 +1,55 @@
+{
+  "name": "radship",
+  "version": "0.0.1",
+  "description": "cross country ship",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon --harmony-async-await app.js",
+    "test": "abao docs/api.raml --hookfiles=**/*/*.e2e.js --hooks-only",
+    "start": "node --harmony-async-await app.js",
+    "mail": "node --harmony-async-await workers/mail.worker.js",
+    "doc": "rm -f docs/index.html && raml2html -i docs/api.raml -o docs/index.html && http-server docs --port=8898"
+  },
+  "author": "afm-sayem",
+  "engines": {
+    "node": "7.1.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.7.2",
+    "bcrypt": "^0.8.7",
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
+    "bull": "^1.1.1",
+    "chai": "^3.5.0",
+    "compression": "^1.6.2",
+    "cors": "^2.8.1",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "hooks": "^0.3.2",
+    "json-schema-faker": "^0.3.7",
+    "jwt-simple": "^0.5.0",
+    "knex": "^0.12.6",
+    "lodash": "^4.17.1",
+    "moment": "^2.16.0",
+    "morgan": "^1.7.0",
+    "nodemailer": "^2.6.4",
+    "objection": "^0.6.2",
+    "objection-find": "^0.3.0",
+    "pg": "^6.1.0",
+    "raml2html": "^3.0.1",
+    "redis": "^2.6.3",
+    "request": "^2.78.0",
+    "request-promise": "^4.1.1",
+    "uuid": "^2.0.3"
+  },
+  "devDependencies": {
+    "abao": "^0.5.0",
+    "chai": "^3.5.0",
+    "eslint": "^3.10.2",
+    "eslint-config-airbnb-base": "^10.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "http-server": "^0.9.0",
+    "jsdoc": "^3.4.3",
+    "nodemon": "^1.11.0"
+  }
+}
