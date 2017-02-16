@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["traveler_id", "origin_id", "destination_id"],
+
+  "properties": {
+    "traveler_id": {
+      "type": "integer",
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
+    "origin_id": {
+      "type": "integer",
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
+    "destination_id": {
+      "type": "integer",
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
+    "zone_id": {
+      "type": "integer",
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
+    "note": {
+      "type": "string",
+      "faker": "lorem.paragraph"
+    },
+    "chat_id": {
+      "type": "string",
+      "chance": "hash"
+    },
+    "available_weight": {
+      "type": "integer",
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
+    "departure": {
+      "type": "string",
+      "format": "date-time",
+      "minLength": 1,
+      "maxLength": 255,
+      "chance": { "date": [{"string": true}]}
+    },
+    "arrival": {
+      "type": "string",
+      "format": "date-time",
+      "minLength": 1,
+      "maxLength": 255,
+      "chance": { "date": [{"string": true}]}
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "minLength": 1,
+      "maxLength": 255,
+      "chance": { "date": [{"string": true}]}
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "minLength": 1,
+      "maxLength": 255,
+      "chance": { "date": [{"string": true}]}
+    }
+  }
+}
