@@ -26,18 +26,18 @@ class User extends Model {
     return {
       trips: {
         relation: Model.HasManyRelation,
-        modelClass: path.normalize(`${__dirname}/../trade/trade.model`),
+        modelClass: path.normalize(`${__dirname}/../trip/trip.model`),
         join: {
           from: 'user.id',
-          to: 'trade.user_id',
+          to: 'trip.traveler_id',
         },
       },
       requests: {
         relation: Model.HasManyRelation,
-        modelClass: path.normalize(`${__dirname}/../trade/trade.model`),
+        modelClass: path.normalize(`${__dirname}/../request/request.model`),
         join: {
           from: 'user.id',
-          to: 'trade.user_id',
+          to: 'request.customer_id',
         },
       },
     };

@@ -24,7 +24,7 @@ class UserController extends BaseController {
   show(req, res) {
     return this.model
       .query()
-      .findById(req.user)
+      .findById(req.user.id)
       .omit('hash')
       .then((user) => {
         if (!user) return utilities.throwNotFound(res);
