@@ -11,7 +11,7 @@ router.use(authenticate);
 
 router.get('/me', controller.show.bind(controller));
 router.get('/', processQuery, controller.index.bind(controller));
-router.put('/:user_id', controller.update.bind(controller));
-router.patch('/:user_id', controller.update.bind(controller));
+router.put('/me', controller.update.bind(controller));
+router.patch('/me', controller.update.bind(controller));
 
 module.exports = router;
