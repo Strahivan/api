@@ -42,6 +42,7 @@ function up(knex) {
       table.integer('customer_id').unsigned().notNullable().references('id').inTable('user');
       table.integer('trip_id').unsigned().references('id').inTable('trip');
       table.string('title');
+      table.string('url', 512);
       table.text('instructions');
       table.text('shipping_address');
       table.float('price');
@@ -53,8 +54,8 @@ function up(knex) {
       table.enu('status', ['pending', 'confirmed', 'processing', 'delivering', 'completed', 'failed', 'canceled']);
       table.timestamps();
     })
-    .then(() => knex.raw('CREATE UNIQUE INDEX zone_country ON zone (name, country_id)'));
-    // .then(() => knex.raw('ALTER TABLE trip ADD CONSTRAINT valid_departure CHECK (arrival <= departure)'));
+    .then(() => knex.raw('CREATE UNIQUE INDEX zone_country ON zone (name, country_id)'))
+    .then(() => knex.raw('ALTER TABLE request ADD CONSTRAINT either_or CHECK (url IS NOT NULL OR gallery IS NOT NULL)'));
 }
 
 function down(knex) {

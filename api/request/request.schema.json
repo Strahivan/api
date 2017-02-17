@@ -96,7 +96,6 @@
           "type": "array",
           "items": {
             "type": "string",
-            "format": "uri",
             "faker": "image.imageUrl"
           }
         },
