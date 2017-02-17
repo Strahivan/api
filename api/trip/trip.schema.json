@@ -29,7 +29,7 @@
       "chance": "hash"
     },
     "available_weight": {
-      "type": "integer",
+      "type": "number",
       "faker": { "random.number": [{"max": 5, "min": 1}]}
     },
     "departure": {
