@@ -8,7 +8,7 @@ function userFilter(userKey) {
       if (req.user.role === 'admin') {
         return next();
       }
-      req.filter = Object.assign(req.filter || {}, { [userKey]: req.user.id });
+      req.filters = Object.assign({}, { [userKey]: req.user.id });
       return next();
     }
     return next();

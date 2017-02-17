@@ -31,7 +31,7 @@ function getUrlParams(req, resourceId) {
   // additional filters like user specific resource
   // TODO: separate it
   // TODO: write tests
-  return Object.assign(req.filters || {}, urlParams);
+  return Object.assign({}, req.filters || {}, urlParams);
 }
 
 module.exports = getUrlParams;
