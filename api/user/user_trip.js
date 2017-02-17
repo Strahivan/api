@@ -20,7 +20,7 @@ router.use('/:trip_id/requests', requestRouter);
 router.get('/', processQuery, controller.index.bind(controller));
 router.get('/:trip_id', controller.show.bind(controller));
 
-router.post('/', addUser('user_id'), controller.create.bind(controller));
+router.post('/', addUser('traveler_id'), controller.create.bind(controller));
 router.put('/:trip_id', controller.update.bind(controller));
 router.patch('/:trip_id', controller.update.bind(controller));
 router.delete('/:trip_id', controller.destroy.bind(controller));
