@@ -90,6 +90,13 @@
       "faker": { "random.number": [{"max": 10, "min": 1}]
       }
     },
+    "url": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "faker": "internet.url"
+    },
     "gallery": {
       "anyOf": [
         {
