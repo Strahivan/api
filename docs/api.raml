@@ -9,6 +9,9 @@ securitySchemes:
 
 schemas:
   - request: !include ../api/request/request.schema.json
+  - trip: !include ../api/trip/trip.schema.json
+  - country: !include ../api/country/country.schema.json
+  - zone: !include ../api/zone/zone.schema.json
   - user: !include ../api/user/user.schema.json
 
 resourceTypes:
@@ -59,22 +62,6 @@ traits:
           type: string
           description: code sent to users phone
 
-# user
-/users:
-  type: {collection: {resourceName: user}}
-  /{userId}:
-    type: {member: {objectType: user}}
-    /requests:
-      type: {collection: {resourceName: request}}
-      /{requestId}:
-        type: {member: {objectType: request}}
-
-# request
-/requests:
-  type: {collection: {resourceName: request}}
-  /{requestId}:
-    type: {member: {objectType: request}}
-
 # file upload
 /upload:
   securedBy: [ token ]
@@ -109,6 +96,47 @@ traits:
             schema: |
                 { "signed_request": "the url where the PUT request with file will go",
                 "url": "the url of the uploaded file "}
+
+/request:
+  type: {collection: {resourceName: request}}
+  /{requestId}:
+    type: {member: {objectType: request}}
+
+/countries:
+  type: {collection: {resourceName: country}}
+  /{countryId}:
+    type: {member: {objectType: country}}
+    /zones:
+      type: {collection: {resourceName: zone}}
+      /{zoneId}:
+        type: {member: {objectType: zone}}
+
+/trips:
+  type: {collection: {resourceName: trip}}
+  /{tripId}:
+    type: {member: {objectType: trip}}
+    /requests:
+      type: {collection: {resourceName: request}}
+      /{requestId}:
+        type: {member: {objectType: request}}
+
+# user
+/users:
+  type: {collection: {resourceName: user}}
+  /me:
+    type: {member: {objectType: user}}
+    /trips:
+      type: {collection: {resourceName: trip}}
+      /{tripId}:
+        type: {member: {objectType: trip}}
+        /requests:
+          type: {collection: {resourceName: request}}
+          /{requestId}:
+            type: {member: {objectType: request}}
+    /requests:
+      type: {collection: {resourceName: request}}
+      /{requestId}:
+        type: {member: {objectType: request}}
 
 
 documentation:
