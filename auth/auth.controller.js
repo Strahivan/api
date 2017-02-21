@@ -13,6 +13,10 @@ function getVerificationContent(registrationId) {
 async function signup(req, res) {
   // TODO: validate username, password and email
   // decorator for validation
+  if (!(req.body.email || req.body.password)) {
+    return utilities.responseHandler(new Error('Must provide both email and password'), res, 400);
+  }
+
   try {
     const registrationId = uuid.v4();
     const user = await User
