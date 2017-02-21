@@ -12,11 +12,15 @@ const knex = require('knex')(knexConfig[process.env.NODE_ENV]);
 
 Model.knex(knex);
 
+const corsOptions = {
+  origin: ['http://localhost:3000', 'http://radship.com'],
+};
+
 const app = express()
   .use(bodyParser.json())
   .use(morgan('dev'))
   .use(compress())
-  .use(cors())
+  .use(cors(corsOptions))
   .set('json spaces', 2);
 
 registerApi(app);
