@@ -1,8 +1,8 @@
 const _ = require('lodash');
 const mailQueue = require('../config/queue').mailQueue;
 
-function getErrorStatus(err) {
-  let errStatus = 500;
+function getErrorStatus(err, status) {
+  let errStatus = status || 500;
   if (err.name === 'error') {
     errStatus = 400;
   }
@@ -12,7 +12,7 @@ function getErrorStatus(err) {
 function responseHandler(err, res, status, data) {
   // TODO: send response based on the error message
   if (err) {
-    const errStatus = getErrorStatus(err);
+    const errStatus = getErrorStatus(err, status);
     return res.status(err.statusCode || errStatus || 500)
       .send(_.pickBy({ err: `${err.message}`, hint: `${err.hint || ''}` }));
   }
