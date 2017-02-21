@@ -11,7 +11,6 @@ function castToNum(obj) {
 }
 
 // TODO: add a parameter-columnname map
-// column name might not always be the same as the parameter
 function getUrlParams(req, resourceId) {
   let urlParams = Object.assign({}, req.params);
   if (Object.keys(urlParams).length) {

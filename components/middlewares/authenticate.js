@@ -25,8 +25,11 @@ module.exports = function (req, res, next) {
     .query()
     .findById(payload.sub)
     .then((user) => {
-      req.user = user;
-      return next();
+      if (user) {
+        req.user = user;
+        return next();
+      }
+      return next(new Error('User not found'));
     });
 };
 
