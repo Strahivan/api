@@ -43,7 +43,7 @@ class BaseController {
       .skipUndefined()
       .where(filter)
       .first()
-      .eager(req.query.eager)
+      .eager(req.query.include)
       .then((item) => {
         if (!item) return utilities.throwNotFound(res);
         return utilities.responseHandler(null, res, 200, item);
