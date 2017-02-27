@@ -4,6 +4,11 @@ function up(knex) {
       table.increments('id').primary();
       table.string('name').unique();
     })
+    .createTable('category', (table) => {
+      table.increments('id').primary();
+      table.string('name').unique();
+      table.integer('parent_id').unsigned().references('id').inTable('category');
+    })
     .createTable('zone', (table) => {
       table.increments('id').primary();
       table.integer('country_id').unsigned().notNullable().references('id').inTable('country');
@@ -64,6 +69,7 @@ function down(knex) {
     .dropTableIfExists('trip')
     .dropTableIfExists('user')
     .dropTableIfExists('zone')
+    .dropTableIfExists('category')
     .dropTableIfExists('country');
 }
 

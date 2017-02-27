@@ -7,6 +7,7 @@ const requestSchema = require('../api/request/request.schema.json');
 const tripSchema = require('../api/trip/trip.schema.json');
 const userSchema = require('../api/user/user.schema.json');
 const zoneSchema = require('../api/zone/zone.schema.json');
+const categorySchema = require('../api/category/category.schema.json');
 
 function cleanData(data, schema) {
   return data.map((item) => {
@@ -33,13 +34,14 @@ function truncate(knex, Promise, tables) {
       table => knex.raw(`TRUNCATE TABLE ${table} RESTART IDENTITY CASCADE`));
 }
 
-const tables = ['request', 'trip', '"user"', 'zone', 'country'];
+const tables = ['request', 'trip', '"user"', 'zone', 'country', 'category'];
 
 function seed(knex, Promise) {
   const numberOfRecords = 10;
   return truncate(knex, Promise, tables)
     .then(() => Promise.all([
       knex('country').insert(getRecords(numberOfRecords, countrySchema)),
+      knex('category').insert(getRecords(numberOfRecords, categorySchema)),
     ]))
     .then(() => Promise.all([
       knex('zone').insert(getRecords(numberOfRecords, zoneSchema)),

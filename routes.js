@@ -3,12 +3,14 @@ const request = require('./api/request');
 const trip = require('./api/trip');
 const user = require('./api/user');
 const zone = require('./api/zone');
+const category = require('./api/category');
 const me = require('./api/me');
 const auth = require('./auth');
 const signedUrl = require('./components/signing');
 
 module.exports = (app) => {
   app.use('/countries', country);
+  app.use('/categories', category);
   app.use('/requests', request);
   app.use('/trips', trip);
   app.use('/zones', zone);
