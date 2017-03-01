@@ -44,6 +44,7 @@ function up(knex) {
       table.increments('id').primary();
       table.integer('category_id').unsigned().references('id').inTable('category');
       table.integer('source_id').unsigned().references('id').inTable('country');
+      table.integer('creator_id').unsigned().references('id').inTable('user');
       table.enu('status', ['closed', 'open']);
       table.float('price').unsigned();
       table.jsonb('colors');

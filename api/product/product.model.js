@@ -21,6 +21,14 @@ class Product extends Model {
           to: 'category.id',
         },
       },
+      creator: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: path.normalize(`${__dirname}/../user/user.model`),
+        join: {
+          from: 'product.creator_id',
+          to: 'user.id',
+        },
+      },
       source: {
         relation: Model.BelongsToOneRelation,
         modelClass: path.normalize(`${__dirname}/../country/country.model`),

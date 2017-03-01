@@ -12,6 +12,14 @@
       "minimum": 1,
       "faker": { "random.number": [{"max": 5, "min": 1}]}
     },
+    "creator_id": {
+      "anyOf": [
+        { "type": "integer" },
+        { "type": "null" }
+      ],
+      "minimum": 1,
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
     "source_id": {
       "anyOf": [
         { "type": "integer" },
