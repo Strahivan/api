@@ -1,7 +1,7 @@
 const indexName = 'tsv_idx';
 function up(knex) {
-  const table = 'request';
-  const column = 'title';
+  const table = 'product';
+  const column = 'name';
   const query = `CREATE INDEX ${indexName} ON ${table} USING gin(${column} gin_trgm_ops)`;
   return knex.raw(query);
 }

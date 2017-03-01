@@ -40,32 +40,55 @@ function up(knex) {
       table.date('arrival');
       table.timestamps();
     })
+    .createTable('product', (table) => {
+      table.increments('id').primary();
+      table.integer('category_id').unsigned().references('id').inTable('category');
+      table.integer('source_id').unsigned().references('id').inTable('country');
+      table.enu('status', ['closed', 'open']);
+      table.float('price').unsigned();
+      table.jsonb('colors');
+      table.jsonb('editions');
+      table.jsonb('gallery');
+      table.jsonb('sizes'); // dimension, price difference, weight
+      table.string('delivery');
+      table.string('name');
+      table.string('url', 512);
+      table.text('description');
+      table.timestamps();
+    })
     .createTable('request', (table) => {
       table.increments('id').primary();
+      table.integer('customer_id').unsigned().notNullable().references('id').inTable('user');
       table.integer('source_id').unsigned().notNullable().references('id').inTable('country');
       table.integer('destination_id').unsigned().notNullable().references('id').inTable('country');
-      table.integer('customer_id').unsigned().notNullable().references('id').inTable('user');
+      table.integer('product_id').unsigned().references('id').inTable('product');
       table.integer('trip_id').unsigned().references('id').inTable('trip');
-      table.string('title');
-      table.string('url', 512);
+      table.boolean('preorder');
+      table.date('delivery_date');
+      table.enu('delivery', ['pickup', 'post']);
+      table.enu('status', ['pending', 'confirmed', 'processing', 'delivering', 'completed', 'failed', 'canceled']);
+      table.float('base_price').unsigned().notNullable();
+      table.float('carrier_charge');
+      table.float('postage');
+      table.float('service_charge');
+      table.float('total_price').unsigned().notNullable();
+      table.integer('count');
+      table.jsonb('color');
+      table.jsonb('edition');
+      table.jsonb('size'); // dimension, price difference, weight
+      table.string('trx_id');
       table.text('instructions');
       table.text('shipping_address');
-      table.float('price');
-      table.float('service_charge');
-      table.float('carrier_charge');
-      table.float('weight');
-      table.json('dimensions');
-      table.json('gallery');
-      table.enu('status', ['pending', 'confirmed', 'processing', 'delivering', 'completed', 'failed', 'canceled']);
       table.timestamps();
     })
     .then(() => knex.raw('CREATE UNIQUE INDEX zone_country ON zone (name, country_id)'))
-    .then(() => knex.raw('ALTER TABLE request ADD CONSTRAINT either_or CHECK (url IS NOT NULL OR gallery IS NOT NULL)'));
+    .then(() => knex.raw('ALTER TABLE product ADD CONSTRAINT either_or CHECK (url IS NOT NULL OR gallery IS NOT NULL)'));
 }
 
 function down(knex) {
   return knex.schema
     .dropTableIfExists('request')
+    .dropTableIfExists('product')
     .dropTableIfExists('trip')
     .dropTableIfExists('user')
     .dropTableIfExists('zone')
