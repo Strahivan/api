@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["name"],
+
+  "properties": {
+    "category_id": {
+      "anyOf": [
+        { "type": "integer" },
+        { "type": "null" }
+      ],
+      "minimum": 1,
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
+    "source_id": {
+      "anyOf": [
+        { "type": "integer" },
+        { "type": "null" }
+      ],
+      "minimum": 1,
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
+    "status": {
+      "enum": ["close", "open"]
+    },
+    "price": {
+      "anyOf": [
+        { "type": "number" }
+      ],
+      "faker": { "random.number": [{"max": 100, "min": 10}]
+      }
+    },
+    "colors": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "color": { "type": "string" },
+              "delta": { "type": "number" }
+            }
+          }
+        },
+        { "type": "null" }
+      ]
+    },
+    "editions": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "edition": { "type": "string" },
+              "delta": { "type": "number" }
+            }
+          }
+        },
+        { "type": "null" }
+      ]
+    },
+    "gallery": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "faker": "image.imageUrl"
+          }
+        },
+        { "type": "null" }
+      ]
+    },
+    "sizes": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "size": { "type": "string" },
+              "weight": { "type": "number" },
+              "dimensions": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 3,
+                "minItems": 2
+              },
+              "delta": { "type": "number" }
+            }
+          }
+        },
+        { "type": "null" }
+      ]
+    },
+    "delivery": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "lorem.sentence"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "lorem.sentence"
+    },
+    "url": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "maxLength": 512,
+      "faker": "internet.url"
+    },
+    "description": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "maxLength": 1000,
+      "faker": "lorem.paragraph"
+    },
+    "created_at": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "format": "date-time",
+      "chance": { "date": [{"string": true}]}
+    },
+    "updated_at": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "format": "date-time",
+      "chance": { "date": [{"string": true}]}
+    }
+  }
+}
+
