@@ -29,6 +29,14 @@ class Request extends Model {
           to: 'country.id',
         },
       },
+      product: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: path.normalize(`${__dirname}/../product/product.model`),
+        join: {
+          from: 'request.product_id',
+          to: 'product.id',
+        },
+      },
       customer: {
         relation: Model.BelongsToOneRelation,
         modelClass: path.normalize(`${__dirname}/../user/user.model`),

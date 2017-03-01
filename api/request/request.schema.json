@@ -4,6 +4,14 @@
   "required": ["customer_id", "source_id", "destination_id"],
 
   "properties": {
+    "customer_id": {
+      "anyOf": [
+        { "type": "integer" },
+        { "type": "null" }
+      ],
+      "minimum": 1,
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
     "source_id": {
       "anyOf": [
         { "type": "integer" },
@@ -20,7 +28,7 @@
       "minimum": 1,
       "faker": { "random.number": [{"max": 5, "min": 1}]}
     },
-    "customer_id": {
+    "product_id": {
       "anyOf": [
         { "type": "integer" },
         { "type": "null" }
@@ -36,29 +44,32 @@
       "minimum": 1,
       "faker": { "random.number": [{"max": 5, "min": 1}]}
     },
-    "title": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 255,
-      "faker": "lorem.sentence"
+    "preorder": {
+      "type": "boolean"
     },
-    "instructions": {
+    "delivery_date": {
       "anyOf": [
         { "type": "string" },
         { "type": "null" }
       ],
-      "maxLength": 1000,
-      "faker": "lorem.paragraph"
+      "format": "date-time",
+      "chance": { "date": [{"string": true}]}
     },
-    "shipping_address": {
+    "status": {
+      "enum": ["pending", "confirmed", "processing", "delivering", "completed", "completed", "failed", "canceled"]
+    },
+    "delivery": {
+      "enum": ["pickup", "post"]
+    },
+    "total_price": {
       "anyOf": [
-        { "type": "string" },
+        { "type": "number" },
         { "type": "null" }
       ],
-      "maxLength": 1000,
-      "faker": "lorem.paragraph"
+      "faker": { "random.number": [{"max": 100, "min": 10}]
+      }
     },
-    "price": {
+    "base_price": {
       "anyOf": [
         { "type": "number" },
         { "type": "null" }
@@ -82,35 +93,79 @@
       "faker": { "random.number": [{"max": 100, "min": 10}]
       }
     },
-    "weight": {
+    "postage": {
       "anyOf": [
         { "type": "number" },
         { "type": "null" }
       ],
+      "faker": { "random.number": [{"max": 100, "min": 10}]
+      }
+    },
+    "count": {
+      "type": "number",
       "faker": { "random.number": [{"max": 10, "min": 1}]
       }
     },
-    "url": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "faker": "internet.url"
-    },
-    "gallery": {
+    "color": {
       "anyOf": [
         {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "faker": "image.imageUrl"
+          "type": "object",
+          "properties": {
+            "color": { "type": "string" },
+            "delta": { "type": "number" }
           }
         },
         { "type": "null" }
       ]
     },
-    "status": {
-      "enum": ["pending", "confirmed", "processing", "delivering", "completed", "completed", "failed", "canceled"]
+    "edition": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "edition": { "type": "string" },
+            "delta": { "type": "number" }
+          }
+        },
+        { "type": "null" }
+      ]
+    },
+    "size": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "size": { "type": "string" },
+            "weight": { "type": "number" },
+            "dimensions": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 2
+            },
+            "delta": { "type": "number" }
+          }
+        },
+        { "type": "null" }
+      ]
+    },
+    "instructions": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "maxLength": 1000,
+      "faker": "lorem.paragraph"
+    },
+    "shipping_address": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "maxLength": 1000,
+      "faker": "lorem.paragraph"
     },
     "created_at": {
       "anyOf": [
