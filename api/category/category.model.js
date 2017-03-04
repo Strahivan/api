@@ -1,7 +1,7 @@
-const Model = require('objection').Model;
+const Base = require('../base/base.model');
 const schema = require('./category.schema.json');
 
-class Category extends Model {
+class Category extends Base {
   static get tableName() {
     return 'category';
   }
@@ -13,7 +13,7 @@ class Category extends Model {
   static get relationMappings() {
     return {
       parent: {
-        relation: Model.BelongsToOneRelation,
+        relation: Base.BelongsToOneRelation,
         modelClass: Category,
         join: {
           from: 'category.parent_id',

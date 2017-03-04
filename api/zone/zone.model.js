@@ -1,7 +1,7 @@
-const Model = require('objection').Model;
+const Base = require('../base/base.model');
 const schema = require('./zone.schema.json');
 
-class Zone extends Model {
+class Zone extends Base {
   static get tableName() {
     return 'zone';
   }

@@ -1,10 +1,10 @@
 const Promise = require('bluebird');
 const bcrypt = Promise.promisifyAll(require('bcrypt'));
-const Model = require('objection').Model;
+const Base = require('../base/base.model');
 const schema = require('./user.schema.json');
 const path = require('path');
 
-class User extends Model {
+class User extends Base {
   static get tableName() {
     return 'user';
   }
@@ -25,7 +25,7 @@ class User extends Model {
   static get relationMappings() {
     return {
       trips: {
-        relation: Model.HasManyRelation,
+        relation: Base.HasManyRelation,
         modelClass: path.normalize(`${__dirname}/../trip/trip.model`),
         join: {
           from: 'user.id',
@@ -33,7 +33,7 @@ class User extends Model {
         },
       },
       requests: {
-        relation: Model.HasManyRelation,
+        relation: Base.HasManyRelation,
         modelClass: path.normalize(`${__dirname}/../request/request.model`),
         join: {
           from: 'user.id',

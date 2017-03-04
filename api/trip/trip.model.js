@@ -1,8 +1,8 @@
 const path = require('path');
-const Model = require('objection').Model;
+const Base = require('../base/base.model');
 const schema = require('./trip.schema.json');
 
-class Trip extends Model {
+class Trip extends Base {
   static get tableName() {
     return 'trip';
   }
@@ -14,7 +14,7 @@ class Trip extends Model {
   static getRelationMappings() {
     return {
       traveler: {
-        relation: Model.BelongsToOneRelation,
+        relation: Base.BelongsToOneRelation,
         modelClass: path.normalize(`${__dirname}/../user/user.model`),
         join: {
           from: 'trip.traveler_id',
@@ -22,7 +22,7 @@ class Trip extends Model {
         },
       },
       origin: {
-        relation: Model.BelongsToOneRelation,
+        relation: Base.BelongsToOneRelation,
         modelClass: path.normalize(`${__dirname}/../country/country.model`),
         join: {
           from: 'trip.origin_id',
@@ -30,7 +30,7 @@ class Trip extends Model {
         },
       },
       destination: {
-        relation: Model.BelongsToOneRelation,
+        relation: Base.BelongsToOneRelation,
         modelClass: path.normalize(`${__dirname}/../country/country.model`),
         join: {
           from: 'trip.destination_id',

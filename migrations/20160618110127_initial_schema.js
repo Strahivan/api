@@ -25,7 +25,8 @@ function up(knex) {
       table.string('salt');
       table.enu('role', ['admin']);
       table.integer('country_id').unsigned().references('id').inTable('country');
-      table.timestamps();
+      table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+      table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
     })
     .createTable('trip', (table) => {
       table.increments('id').primary();
@@ -38,14 +39,16 @@ function up(knex) {
       table.text('note');
       table.date('departure');
       table.date('arrival');
-      table.timestamps();
+      table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+      table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
     })
     .createTable('product', (table) => {
       table.increments('id').primary();
       table.integer('category_id').unsigned().references('id').inTable('category');
       table.integer('source_id').unsigned().references('id').inTable('country');
       table.integer('creator_id').unsigned().references('id').inTable('user');
-      table.enu('status', ['closed', 'open']);
+      table.boolean('active').notNullable().defaultTo(true);
+      table.boolean('featured').defaultTo(false);
       table.float('price').unsigned();
       table.jsonb('colors');
       table.jsonb('editions');
@@ -55,7 +58,8 @@ function up(knex) {
       table.string('name');
       table.string('url', 512);
       table.text('description');
-      table.timestamps();
+      table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+      table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
     })
     .createTable('request', (table) => {
       table.increments('id').primary();
@@ -65,6 +69,7 @@ function up(knex) {
       table.integer('product_id').unsigned().references('id').inTable('product');
       table.integer('trip_id').unsigned().references('id').inTable('trip');
       table.boolean('preorder');
+      table.boolean('active').notNullable().defaultTo(true);
       table.date('delivery_date');
       table.enu('delivery', ['pickup', 'post']);
       table.enu('status', ['pending', 'confirmed', 'processing', 'delivering', 'completed', 'failed', 'canceled']);
@@ -80,7 +85,8 @@ function up(knex) {
       table.string('trx_id');
       table.text('instructions');
       table.text('shipping_address');
-      table.timestamps();
+      table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+      table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
     })
     .then(() => knex.raw('CREATE UNIQUE INDEX zone_country ON zone (name, country_id)'))
     .then(() => knex.raw('ALTER TABLE product ADD CONSTRAINT either_or CHECK (url IS NOT NULL OR gallery IS NOT NULL)'));

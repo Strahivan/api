@@ -1,8 +1,8 @@
 const path = require('path');
-const Model = require('objection').Model;
+const Base = require('../base/base.model');
 const schema = require('./request.schema.json');
 
-class Request extends Model {
+class Request extends Base {
   static get tableName() {
     return 'request';
   }
@@ -14,7 +14,7 @@ class Request extends Model {
   static get relationMappings() {
     return {
       source: {
-        relation: Model.BelongsToOneRelation,
+        relation: Base.BelongsToOneRelation,
         modelClass: path.normalize(`${__dirname}/../country/country.model`),
         join: {
           from: 'request.source_id',
@@ -22,7 +22,7 @@ class Request extends Model {
         },
       },
       destination: {
-        relation: Model.BelongsToOneRelation,
+        relation: Base.BelongsToOneRelation,
         modelClass: path.normalize(`${__dirname}/../country/country.model`),
         join: {
           from: 'request.destination_id',
@@ -30,7 +30,7 @@ class Request extends Model {
         },
       },
       product: {
-        relation: Model.BelongsToOneRelation,
+        relation: Base.BelongsToOneRelation,
         modelClass: path.normalize(`${__dirname}/../product/product.model`),
         join: {
           from: 'request.product_id',
@@ -38,7 +38,7 @@ class Request extends Model {
         },
       },
       customer: {
-        relation: Model.BelongsToOneRelation,
+        relation: Base.BelongsToOneRelation,
         modelClass: path.normalize(`${__dirname}/../user/user.model`),
         join: {
           from: 'request.customer_id',
@@ -46,7 +46,7 @@ class Request extends Model {
         },
       },
       trip: {
-        relation: Model.BelongsToOneRelation,
+        relation: Base.BelongsToOneRelation,
         modelClass: path.normalize(`${__dirname}/../trip/trip.model`),
         join: {
           from: 'request.trip_id',

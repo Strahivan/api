@@ -12,7 +12,11 @@ class BaseQueryBuilder extends QueryBuilder {
   }
 }
 
-class Base extends Model {}
+class Base extends Model {
+  $beforeUpdate() {
+    this.updated_at = new Date().toISOString();
+  }
+}
 
 Base.QueryBuilder = BaseQueryBuilder;
 
