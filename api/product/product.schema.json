@@ -28,8 +28,11 @@
       "minimum": 1,
       "faker": { "random.number": [{"max": 5, "min": 1}]}
     },
-    "status": {
-      "enum": ["close", "open"]
+    "active": {
+      "type": "boolean"
+    },
+    "featured": {
+      "type": "boolean"
     },
     "price": {
       "anyOf": [
