@@ -50,11 +50,12 @@ function up(knex) {
       table.boolean('active').notNullable().defaultTo(true);
       table.boolean('featured').defaultTo(false);
       table.float('price').unsigned();
+      table.integer('order_count').unsigned();
       table.jsonb('colors');
       table.jsonb('editions');
       table.jsonb('gallery');
       table.jsonb('sizes'); // dimension, price difference, weight
-      table.string('delivery');
+      table.enu('delivery', ['pickup', 'post']);
       table.string('name');
       table.string('url', 512);
       table.text('description');
