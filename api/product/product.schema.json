@@ -28,6 +28,14 @@
       "minimum": 1,
       "faker": { "random.number": [{"max": 5, "min": 1}]}
     },
+    "order_count": {
+      "anyOf": [
+        { "type": "integer" },
+        { "type": "null" }
+      ],
+      "minimum": 1,
+      "faker": { "random.number": [{"max": 200, "min": 1}]}
+    },
     "active": {
       "type": "boolean"
     },
@@ -48,6 +56,13 @@
           "items": {
             "type": "object",
             "properties": {
+              "name": { "type": "string" },
+              "gallery": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "color": { "type": "string" },
               "delta": { "type": "number" }
             }
@@ -90,6 +105,7 @@
           "items": {
             "type": "object",
             "properties": {
+              "name": { "type": "string" },
               "size": { "type": "string" },
               "weight": { "type": "number" },
               "dimensions": {
