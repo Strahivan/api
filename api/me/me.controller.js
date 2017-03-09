@@ -20,7 +20,7 @@ class MeController {
       .catch(err => utilities.responseHandler(err, res));
   }
 
-  put(req, res) {
+  update(req, res) {
     return this.model
       .query()
       .patch(req.body)
@@ -28,7 +28,7 @@ class MeController {
       .omit('hash')
       .then((user) => {
         if (!user) return utilities.throwNotFound(res);
-        return utilities.responseHandler(null, res, 200, user);
+        return utilities.responseHandler(null, res, 200);
       })
       .catch(err => utilities.responseHandler(err, res));
   }

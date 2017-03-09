@@ -14,7 +14,7 @@ router.use('/requests', requestRouter);
 router.use('/trips', tripRouter);
 
 router.get('/', controller.show.bind(controller));
-router.put('/', processQuery, controller.put.bind(controller));
-router.put('/unlink/:provider', controller.unlink.bind(controller));
+router.put('/', controller.update.bind(controller));
+// router.put('/unlink/:provider', controller.unlink.bind(controller));
 
 module.exports = router;
