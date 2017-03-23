@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["name", "owner_id"],
+
+  "properties": {
+    "name": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "string" }
+      ],
+      "faker": "company.name"
+    },
+    "owner_id": {
+      "type": "integer",
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    }
+  }
+}
+
