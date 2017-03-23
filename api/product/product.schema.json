@@ -12,7 +12,15 @@
       "minimum": 1,
       "faker": { "random.number": [{"max": 5, "min": 1}]}
     },
-    "creator_id": {
+    "shop_id": {
+      "anyOf": [
+        { "type": "integer" },
+        { "type": "null" }
+      ],
+      "minimum": 1,
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
+    "brand_id": {
       "anyOf": [
         { "type": "integer" },
         { "type": "null" }

@@ -21,12 +21,20 @@ class Product extends Base {
           to: 'category.id',
         },
       },
-      creator: {
+      shop: {
         relation: Base.BelongsToOneRelation,
-        modelClass: path.normalize(`${__dirname}/../user/user.model`),
+        modelClass: path.normalize(`${__dirname}/../shop/shop.model`),
         join: {
-          from: 'product.creator_id',
-          to: 'user.id',
+          from: 'product.shop_id',
+          to: 'shop.id',
+        },
+      },
+      brand: {
+        relation: Base.BelongsToOneRelation,
+        modelClass: path.normalize(`${__dirname}/../brand/brand.model`),
+        join: {
+          from: 'product.brand_id',
+          to: 'brand.id',
         },
       },
       source: {
