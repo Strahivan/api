@@ -28,6 +28,15 @@ function up(knex) {
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
     })
+    .createTable('shop', (table) => {
+      table.increments('id').primary();
+      table.string('name').unique();
+      table.integer('owner_id').unsigned().notNullable().references('id').inTable('user');
+    })
+    .createTable('brand', (table) => {
+      table.increments('id').primary();
+      table.string('name').unique();
+    })
     .createTable('trip', (table) => {
       table.increments('id').primary();
       table.integer('traveler_id').unsigned().notNullable().references('id').inTable('user');
@@ -46,7 +55,8 @@ function up(knex) {
       table.increments('id').primary();
       table.integer('category_id').unsigned().references('id').inTable('category');
       table.integer('source_id').unsigned().references('id').inTable('country');
-      table.integer('creator_id').unsigned().references('id').inTable('user');
+      table.integer('shop_id').unsigned().references('id').inTable('shop');
+      table.integer('brand_id').unsigned().references('id').inTable('brand');
       table.boolean('active').notNullable().defaultTo(true);
       table.boolean('featured').defaultTo(false);
       table.float('price').unsigned();
