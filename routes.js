@@ -3,6 +3,8 @@ const request = require('./api/request');
 const trip = require('./api/trip');
 const user = require('./api/user');
 const zone = require('./api/zone');
+const shop = require('./api/shop');
+const brand = require('./api/brand');
 const product = require('./api/product');
 const category = require('./api/category');
 const me = require('./api/me');
@@ -15,6 +17,8 @@ module.exports = (app) => {
   app.use('/requests', request);
   app.use('/trips', trip);
   app.use('/products', product);
+  app.use('/shops', shop);
+  app.use('/brands', brand);
   app.use('/zones', zone);
   app.use('/users', user);
   app.use('/me', me);
