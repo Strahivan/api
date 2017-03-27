@@ -79,14 +79,14 @@ async function verify(req, res) {
     await User.query()
       .insert(userInfo);
 
-    return res.redirect('https://novelship.com/#/login');
+    return res.redirect('https://novelship.com/#/auth/login');
   } catch (e) {
     return utilities.responseHandler(e, res, 500);
   }
 }
 
 function getResetContent(resetId) {
-  const verificationUrl = `http://${config.host}:${config.port}/auth/verify?token=${resetId}`;
+  const verificationUrl = `https://${config.host}/auth/verify?token=${resetId}`;
   return `<a href=${verificationUrl}>Click here to reset</a>`;
 }
 
@@ -120,7 +120,7 @@ async function reset(req, res) {
     await User.query()
       .patchAndFetchById(Number(userId), { hash });
 
-    return utilities.responseHandler(null, res, 200, { message: 'Reset successful' });
+    return res.redirect('https://novelship.com/#/auth/login');
   } catch (e) {
     return utilities.responseHandler(new Error('Resetting password failed'), res, 500);
   }
