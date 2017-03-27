@@ -4,13 +4,14 @@ const searchFilter = require('../../components/filters/text-search');
 const utilities = require('../../components/utilities');
 
 function rejectExtras(properties, params, idKey) {
-  const data = Object.assign({}, params);
+  let data = Object.assign({}, params);
   if (data[idKey]) {
     const temp = data[idKey];
     delete data[idKey];
     data.id = temp;
   }
-  return _.pick(data, properties);
+  data = _.pick(data, properties);
+  return _.mapValues(data, Number);
 }
 
 function getFilter(req, idKey, properties, userKey) {
