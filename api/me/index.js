@@ -15,9 +15,9 @@ router.use(authenticate);
 router.get('/', controller.show.bind(controller));
 router.put('/', controller.update.bind(controller));
 
-router.use('/requests', userFilter('customer_id'), requestRouter);
-router.use('/shops', userFilter('owner_id'), shopRouter);
-router.use('/trips', userFilter('traveler_id'), tripRouter);
+router.use('/requests', userFilter(), requestRouter);
+router.use('/shops', userFilter(), shopRouter);
+router.use('/trips', userFilter(), tripRouter);
 
 // router.put('/unlink/:provider', controller.unlink.bind(controller));
 
