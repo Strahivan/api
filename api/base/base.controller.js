@@ -1,30 +1,49 @@
 const findQuery = require('objection-find');
+const _ = require('lodash');
 const searchFilter = require('../../components/filters/text-search');
 const utilities = require('../../components/utilities');
-const getUrlParams = require('../../components/middlewares/add-url-params');
+
+function rejectExtras(properties, params, idKey) {
+  const data = Object.assign({}, params);
+  if (data[idKey]) {
+    const temp = data[idKey];
+    delete data[idKey];
+    data.id = temp;
+  }
+  return _.pick(data, properties);
+}
+
+function getFilter(req, idKey, properties, userKey) {
+  let filter;
+  if (userKey && req.userSpecific) {
+    filter = { [userKey]: req.user.id };
+  }
+  return Object.assign({}, filter, rejectExtras(properties, req.params, idKey));
+}
+
 
 class BaseController {
-  constructor(model, id) {
+  constructor(model, idKey, userKey) {
     this.model = model;
-    this.id = id;
+    this.id = idKey;
+    this.userKey = userKey;
+    this.properties = Object.keys(this.model.jsonSchema.properties);
+    this.properties.push('id');
   }
 
   // add middleware to check existence
   // TODO: seperate adding data to request body
   async create(req, res) {
-    // FIX: creates a side effect
-    getUrlParams(req, this.id);
-    // TODO: check for existence of resource in req.filter
-    // await this.model.query().where(req.filter).then(if exists create else error)
+    const data = Object.assign({}, req.body, rejectExtras(this.properties, req.params, this.idKey));
+    if (this.userKey) data[this.userKey] = req.user.id;
     return this.model.query()
-      .insert(req.body)
+      .insert(data)
       .then(item => utilities.responseHandler(null, res, 201, item))
       .catch(err => utilities.responseHandler(err, res));
   }
 
   index(req, res) {
-    const filter = getUrlParams(req, this.id);
-    // TODO: Use filterEager to remove the included items that don't match the where query
+    const filter = getFilter(req, this.idKey, this.properties, this.userKey);
     return findQuery(this.model)
       .registerFilter('search', searchFilter)
       .build(req.query.where)
@@ -38,7 +57,7 @@ class BaseController {
   }
 
   show(req, res) {
-    const filter = getUrlParams(req, this.id);
+    const filter = getFilter(req, this.idKey, this.properties, this.userKey);
     return this.model.query()
       .skipUndefined()
       .where(filter)
@@ -52,7 +71,7 @@ class BaseController {
   }
 
   update(req, res) {
-    const filter = getUrlParams(req, this.id);
+    const filter = getFilter(req, this.idKey, this.properties, this.userKey);
     return this.model.query()
       .skipUndefined()
       .patch(req.body)
@@ -62,7 +81,7 @@ class BaseController {
   }
 
   destroy(req, res) {
-    const filter = getUrlParams(req, this.id);
+    const filter = getFilter(req, this.idKey, this.properties, this.userKey);
     return this.model.query()
       .skipUndefined()
       .delete()
