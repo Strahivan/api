@@ -6,7 +6,7 @@ const redis = require('../config/redis');
 const uuid = require('uuid');
 
 function getVerificationContent(registrationId) {
-  const verificationUrl = `http://${config.host}:${config.port}/auth/verify?token=${registrationId}`;
+  const verificationUrl = `https://${config.host}/auth/verify?token=${registrationId}`;
   return `<a href=${verificationUrl}>Click here to verify</a>`;
 }
 
