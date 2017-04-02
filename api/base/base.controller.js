@@ -35,7 +35,7 @@ class BaseController {
   // add middleware to check existence
   // TODO: seperate adding data to request body
   async create(req, res) {
-    const data = Object.assign({}, req.body, rejectExtras(this.properties, req.params, this.idKey));
+    const data = Object.assign({}, req.body, rejectExtras(this.properties, req.params, this.id));
     if (this.userKey) data[this.userKey] = req.user.id;
     return this.model.query()
       .insert(data)
@@ -44,7 +44,7 @@ class BaseController {
   }
 
   index(req, res) {
-    const filter = getFilter(req, this.idKey, this.properties, this.userKey);
+    const filter = getFilter(req, this.id, this.properties, this.userKey);
     return findQuery(this.model)
       .registerFilter('search', searchFilter)
       .build(req.query.where)
@@ -58,7 +58,7 @@ class BaseController {
   }
 
   show(req, res) {
-    const filter = getFilter(req, this.idKey, this.properties, this.userKey);
+    const filter = getFilter(req, this.id, this.properties, this.userKey);
     return this.model.query()
       .skipUndefined()
       .where(filter)
@@ -72,7 +72,7 @@ class BaseController {
   }
 
   update(req, res) {
-    const filter = getFilter(req, this.idKey, this.properties, this.userKey);
+    const filter = getFilter(req, this.id, this.properties, this.userKey);
     return this.model.query()
       .skipUndefined()
       .patch(req.body)
@@ -82,7 +82,7 @@ class BaseController {
   }
 
   destroy(req, res) {
-    const filter = getFilter(req, this.idKey, this.properties, this.userKey);
+    const filter = getFilter(req, this.id, this.properties, this.userKey);
     return this.model.query()
       .skipUndefined()
       .delete()
