@@ -24,7 +24,6 @@ module.exports = function (req, res) {
     }
     const response = {
       signed_request: data,
-      url: fileName,
     };
     return res.send(response);
   });
