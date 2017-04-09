@@ -2,8 +2,8 @@ function processQuery(req, res, next) {
   function getPagination(pageVal) {
     const page = pageVal || {};
     return {
-      number: page.number || 0,
-      size: page.size || 10,
+      number: Number(page.number || 0),
+      size: Number(page.size || 10),
     };
   }
   function getOrder(sort) {
