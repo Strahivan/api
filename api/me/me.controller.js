@@ -40,7 +40,7 @@ class MeController {
     // create customer if there's no customer
     // else create a new source on current customer
     // console.log(req.body.token);
-    if (!req.user.cus_token) {
+    if (!req.user.stripe_token) {
       stripe.customers.create({
         description: req.user.name,
         email: req.user.email,
@@ -56,7 +56,7 @@ class MeController {
       .then(success => utilities.responseHandler(null, res, 200))
       .catch(err => utilities.responseHandler(err, res));
     } else {
-      stripe.customers.createSource(req.user.cus_token, {
+      stripe.customers.createSource(req.user.stripe_token, {
         source: req.body.token,
       })
       .then(success => utilities.responseHandler(null, res, 200))
@@ -71,7 +71,9 @@ class MeController {
   }
 
   charge(req, res) {
-    console.log(req.body.amount);
+    console.log(Number(req.body.amount));
+    console.log(req.body.currency);
+    console.log(req.user.stripe_token);
     stripe.charges.create({
       amount: Number(req.body.amount),
       currency: req.body.currency,
