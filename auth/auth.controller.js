@@ -24,7 +24,7 @@ async function signup(req, res) {
       .where('email', req.body.email);
     if (user.length) {
       return utilities.responseHandler(new Error('A user with that' +
-            'email already exists'), res, 409);
+            ' email already exists'), res, 409);
     }
 
     const hash = await User.encryptPassword(req.body.password);
