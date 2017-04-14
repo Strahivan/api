@@ -21,6 +21,7 @@ function up(knex) {
       table.string('email').unique();
       table.string('phone').unique();
       table.string('hash');
+      table.string('stripe_token');
       table.string('address');
       table.string('salt');
       table.enu('role', ['admin']);
@@ -93,7 +94,7 @@ function up(knex) {
       table.jsonb('color');
       table.jsonb('edition');
       table.jsonb('size'); // dimension, price difference, weight
-      table.string('trx_id');
+      table.string('stripe_charge_id');
       table.text('instructions');
       table.text('shipping_address');
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());

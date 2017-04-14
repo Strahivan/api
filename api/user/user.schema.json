@@ -34,6 +34,9 @@
       "type": "string",
       "faker": "image.imageUrl"
     },
+    "stripe_token": {
+      "type": "string"
+    },
     "address": {
       "type": "string",
       "faker": "lorem.paragraph"

@@ -166,6 +166,9 @@
       "maxLength": 1000,
       "faker": "lorem.paragraph"
     },
+    "stripe_charge_id": {
+      "type": "string"
+    },
     "shipping_address": {
       "anyOf": [
         { "type": "string" },
