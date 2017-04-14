@@ -1,5 +1,8 @@
 const User = require('../user/user.model');
 const utilities = require('../../components/utilities');
+const stripe = require('stripe')(process.env.STRIPE_KEY);
+
+// console.log(process.env.STRIPE_TOKEN);
 
 class MeController {
   constructor() {
@@ -31,6 +34,50 @@ class MeController {
         return utilities.responseHandler(null, res, 200);
       })
       .catch(err => utilities.responseHandler(err, res));
+  }
+
+  saveCard(req, res) {
+    // create customer if there's no customer
+    // else create a new source on current customer
+    // console.log(req.body.token);
+    if (!req.user.cus_token) {
+      stripe.customers.create({
+        description: req.user.name,
+        email: req.user.email,
+        source: req.body.token.id,
+        currency: req.user.currency,
+      })
+      .then((response) => {
+        return this.model
+          .query()
+          .findById(req.user.id)
+          .patch({ cus_token: response.id });
+      })
+      .then(success => utilities.responseHandler(null, res, 200))
+      .catch(err => utilities.responseHandler(err, res));
+    } else {
+      stripe.customers.createSource(req.user.cus_token, {
+        source: req.body.token,
+      })
+      .then(success => utilities.responseHandler(null, res, 200))
+      .catch(err => utilities.responseHandler(err, res));
+    }
+  }
+
+  getCards(req, res) {
+    stripe.customers.listCards(req.user.id)
+      .then(cards => utilities.responseHandler(null, res, 200, cards))
+      .catch(err => utilities.responseHandler(err, res));
+  }
+
+  charge(req, res) {
+    stripe.charges.create({
+      amount: Number(req.body.amount),
+      currency: req.body.currency,
+      customer: req.user.stripe_token,
+    })
+    .then(charge => utilities.responseHandler(null, res, 200, charge))
+    .catch(err => utilities.responseHandler(err, res));
   }
 
   unlink(req, res) {

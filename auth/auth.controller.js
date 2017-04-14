@@ -120,7 +120,7 @@ async function reset(req, res) {
     await User.query()
       .patchAndFetchById(Number(userId), { hash });
 
-    return res.redirect('https://novelship.com/#/auth/login');
+    return res.redirect('https://novelship.com/auth/login');
   } catch (e) {
     return utilities.responseHandler(new Error('Resetting password failed'), res, 500);
   }

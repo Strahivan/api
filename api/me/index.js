@@ -13,6 +13,8 @@ const controller = new MeController(User);
 router.use(authenticate);
 
 router.get('/', controller.show.bind(controller));
+router.post('/cards', controller.saveCard.bind(controller));
+router.post('/charge', controller.charge.bind(controller));
 router.put('/', controller.update.bind(controller));
 
 router.use('/requests', userFilter(), requestRouter);
