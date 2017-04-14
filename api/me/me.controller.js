@@ -2,11 +2,13 @@ const User = require('../user/user.model');
 const utilities = require('../../components/utilities');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 
-// console.log(process.env.STRIPE_TOKEN);
-
 class MeController {
   constructor() {
     this.model = User;
+    this.currencyMultiplierMap = {
+      sgd: 100,
+      yen: 1,
+    };
   }
 
   show(req, res) {
@@ -39,7 +41,6 @@ class MeController {
   saveCard(req, res) {
     // create customer if there's no customer
     // else create a new source on current customer
-    // console.log(req.body.token);
     if (!req.user.stripe_token) {
       stripe.customers.create({
         description: req.user.name,
@@ -70,12 +71,11 @@ class MeController {
       .catch(err => utilities.responseHandler(err, res));
   }
 
+
   charge(req, res) {
-    console.log(Number(req.body.amount));
-    console.log(req.body.currency);
-    console.log(req.user.stripe_token);
+    const amount = Number(req.body.amount) * this.currencyMultiplierMap[req.body.currency.toLowerCase()];
     stripe.charges.create({
-      amount: Number(req.body.amount),
+      amount,
       currency: req.body.currency,
       customer: req.user.stripe_token,
     })
