@@ -51,7 +51,7 @@ class MeController {
         return this.model
           .query()
           .findById(req.user.id)
-          .patch({ cus_token: response.id });
+          .patch({ stripe_token: response.id });
       })
       .then(success => utilities.responseHandler(null, res, 200))
       .catch(err => utilities.responseHandler(err, res));
