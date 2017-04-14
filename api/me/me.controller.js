@@ -57,7 +57,7 @@ class MeController {
       .catch(err => utilities.responseHandler(err, res));
     } else {
       stripe.customers.createSource(req.user.stripe_token, {
-        source: req.body.token,
+        source: req.body.token.id,
       })
       .then(success => utilities.responseHandler(null, res, 200))
       .catch(err => utilities.responseHandler(err, res));
