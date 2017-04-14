@@ -71,13 +71,17 @@ class MeController {
   }
 
   charge(req, res) {
+    console.log(req.body.amount);
     stripe.charges.create({
       amount: Number(req.body.amount),
       currency: req.body.currency,
       customer: req.user.stripe_token,
     })
     .then(charge => utilities.responseHandler(null, res, 200, charge))
-    .catch(err => utilities.responseHandler(err, res));
+    .catch((err) => {
+      console.log(err);
+      return utilities.responseHandler(err, res);
+    });
   }
 
   unlink(req, res) {
