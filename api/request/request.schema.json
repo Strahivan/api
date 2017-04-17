@@ -170,12 +170,13 @@
       "type": "string"
     },
     "shipping_address": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "maxLength": 1000,
-      "faker": "lorem.paragraph"
+      "type": "object",
+      "properties": {
+        "first_line": {"type": "string"},
+        "second_line": {"type": "string"},
+        "city": {"type": "string"},
+        "zip": {"type": "string"}
+      }
     },
     "created_at": {
       "anyOf": [

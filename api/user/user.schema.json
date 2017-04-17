@@ -37,9 +37,17 @@
     "stripe_token": {
       "type": "string"
     },
+    "phone": {
+      "type": "string"
+    },
     "address": {
-      "type": "string",
-      "faker": "lorem.paragraph"
+      "type": "object",
+      "properties": {
+        "street_address": {"type": "string"},
+        "city": {"type": "string"},
+        "zip": {"type": "string"},
+        "country": {"type": "string"}
+      }
     },
     "created_at": {
       "type": "string",

@@ -21,9 +21,9 @@ function up(knex) {
       table.string('email').unique();
       table.string('phone').unique();
       table.string('hash');
-      table.string('stripe_token');
-      table.string('address');
       table.string('salt');
+      table.string('stripe_token');
+      table.jsonb('address');
       table.enu('role', ['admin']);
       table.integer('country_id').unsigned().references('id').inTable('country');
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
@@ -44,8 +44,8 @@ function up(knex) {
       table.integer('origin_id').unsigned().notNullable().references('id').inTable('country');
       table.integer('destination_id').unsigned().notNullable().references('id').inTable('country');
       table.integer('zone_id').unsigned().references('id').inTable('zone');
-      table.string('chat_id');
       table.integer('available_weight');
+      table.string('chat_id');
       table.text('note');
       table.date('departure');
       table.date('arrival');
@@ -58,15 +58,15 @@ function up(knex) {
       table.integer('source_id').unsigned().references('id').inTable('country');
       table.integer('shop_id').unsigned().references('id').inTable('shop');
       table.integer('brand_id').unsigned().references('id').inTable('brand');
+      table.integer('order_count').unsigned();
       table.boolean('active').notNullable().defaultTo(true);
       table.boolean('featured').defaultTo(false);
       table.float('price').unsigned();
-      table.integer('order_count').unsigned();
       table.jsonb('colors');
       table.jsonb('editions');
       table.jsonb('gallery');
       table.jsonb('sizes'); // dimension, price difference, weight
-      table.enu('delivery', ['pickup', 'post']);
+      table.enu('collection_method', ['pickup', 'post']);
       table.string('name');
       table.string('url', 512);
       table.text('description');
@@ -80,23 +80,23 @@ function up(knex) {
       table.integer('destination_id').unsigned().notNullable().references('id').inTable('country');
       table.integer('product_id').unsigned().references('id').inTable('product');
       table.integer('trip_id').unsigned().references('id').inTable('trip');
+      table.integer('count');
       table.boolean('preorder');
       table.boolean('active').notNullable().defaultTo(true);
       table.date('delivery_date');
-      table.enu('delivery', ['pickup', 'post']);
+      table.enu('collection_method', ['pickup', 'post']);
       table.enu('status', ['pending', 'confirmed', 'processing', 'delivering', 'completed', 'failed', 'canceled']);
       table.float('base_price').unsigned().notNullable();
       table.float('carrier_charge');
       table.float('postage');
       table.float('service_charge');
       table.float('total_price').unsigned().notNullable();
-      table.integer('count');
       table.jsonb('color');
       table.jsonb('edition');
+      table.jsonb('shipping_address');
       table.jsonb('size'); // dimension, price difference, weight
       table.string('stripe_charge_id');
       table.text('instructions');
-      table.text('shipping_address');
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
     })
