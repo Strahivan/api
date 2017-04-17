@@ -14,6 +14,7 @@ router.use(authenticate);
 
 router.get('/', controller.show.bind(controller));
 router.post('/cards', controller.saveCard.bind(controller));
+router.get('/cards', controller.getCards.bind(controller));
 router.post('/charge', controller.charge.bind(controller));
 router.put('/', controller.update.bind(controller));
 

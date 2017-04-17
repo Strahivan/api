@@ -54,19 +54,19 @@ class MeController {
           .findById(req.user.id)
           .patch({ stripe_token: response.id });
       })
-      .then(success => utilities.responseHandler(null, res, 200))
+      .then(success => utilities.responseHandler(null, res, 200, response))
       .catch(err => utilities.responseHandler(err, res));
     } else {
       stripe.customers.createSource(req.user.stripe_token, {
         source: req.body.token.id,
       })
-      .then(success => utilities.responseHandler(null, res, 200))
+      .then(response => utilities.responseHandler(null, res, 200, response))
       .catch(err => utilities.responseHandler(err, res));
     }
   }
 
   getCards(req, res) {
-    stripe.customers.listCards(req.user.id)
+    stripe.customers.listCards(req.user.stripe_token)
       .then(cards => utilities.responseHandler(null, res, 200, cards))
       .catch(err => utilities.responseHandler(err, res));
   }
@@ -76,6 +76,7 @@ class MeController {
     const amount = Number(req.body.amount) * this.currencyMultiplierMap[req.body.currency.toLowerCase()];
     stripe.charges.create({
       amount,
+      source: req.body.source,
       currency: req.body.currency,
       customer: req.user.stripe_token,
     })
