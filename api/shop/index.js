@@ -3,6 +3,7 @@ const processQuery = require('../../components/middlewares/process-query');
 const authenticate = require('../../components/middlewares/authenticate');
 const Shop = require('./shop.model');
 const productRouter = require('../product');
+const requestRouter = require('../request');
 const BaseController = require('../base/base.controller');
 
 const controller = new BaseController(Shop, 'shop_id', 'owner_id');
@@ -10,6 +11,7 @@ const controller = new BaseController(Shop, 'shop_id', 'owner_id');
 const router = new express.Router({ mergeParams: true });
 
 router.use('/:shop_id/products', productRouter);
+router.use('/:shop_id/requests', requestRouter);
 
 router.get('/', processQuery, controller.index.bind(controller));
 router.get('/:shop_id', controller.show.bind(controller));
