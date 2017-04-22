@@ -85,7 +85,7 @@ function up(knex) {
       table.boolean('active').notNullable().defaultTo(true);
       table.date('delivery_date');
       table.enu('collection_method', ['pickup', 'post']);
-      table.enu('status', ['pending', 'confirmed', 'processing', 'delivering', 'completed', 'failed', 'canceled']);
+      table.enu('status', ['pending', 'confirmed', 'processing', 'delivering', 'ready', 'completed', 'failed', 'canceled']);
       table.float('base_price').unsigned().notNullable();
       table.float('carrier_charge');
       table.float('postage');
