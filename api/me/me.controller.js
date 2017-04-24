@@ -54,7 +54,7 @@ class MeController {
           .findById(req.user.id)
           .patch({ stripe_token: response.id });
       })
-      .then(success => utilities.responseHandler(null, res, 200, response))
+      .then(response => utilities.responseHandler(null, res, 200, response))
       .catch(err => utilities.responseHandler(err, res));
     } else {
       stripe.customers.createSource(req.user.stripe_token, {
