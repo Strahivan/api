@@ -58,7 +58,7 @@
     "status": {
       "enum": ["pending", "confirmed", "processing", "ready", "delivering", "completed", "failed", "canceled"]
     },
-    "delivery": {
+    "collection_method": {
       "enum": ["pickup", "post"]
     },
     "total_price": {
@@ -172,8 +172,8 @@
     "shipping_address": {
       "type": "object",
       "properties": {
-        "first_line": {"type": "string"},
-        "second_line": {"type": "string"},
+        "line_1": {"type": "string"},
+        "line_2": {"type": "string"},
         "city": {"type": "string"},
         "zip": {"type": "string"}
       }
