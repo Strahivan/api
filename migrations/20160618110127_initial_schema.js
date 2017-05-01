@@ -54,23 +54,24 @@ function up(knex) {
     })
     .createTable('product', (table) => {
       table.increments('id').primary();
-      table.integer('category_id').unsigned().references('id').inTable('category');
-      table.integer('source_id').unsigned().references('id').inTable('country');
-      table.integer('shop_id').unsigned().references('id').inTable('shop');
+      table.integer('category_id').unsigned().notNullable().references('id').inTable('category');
+      table.integer('source_id').unsigned().notNullable().references('id').inTable('country');
+      table.integer('shop_id').unsigned().notNullable().references('id').inTable('shop');
       table.integer('brand_id').unsigned().references('id').inTable('brand');
       table.integer('order_count').unsigned();
       table.integer('delivery_time');
+      table.boolean('preorder');
       table.boolean('active').notNullable().defaultTo(true);
       table.boolean('featured').defaultTo(false);
-      table.float('price').unsigned();
+      table.float('price').notNullable().unsigned();
       table.jsonb('colors');
       table.jsonb('editions');
       table.jsonb('gallery');
       table.jsonb('sizes'); // dimension, price difference, weight
       table.enu('collection_method', ['pickup', 'post']);
-      table.string('name');
+      table.string('name').notNullable();
       table.string('url', 512);
-      table.text('description');
+      table.text('description').notNullable();
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
     })
@@ -81,8 +82,7 @@ function up(knex) {
       table.integer('destination_id').unsigned().notNullable().references('id').inTable('country');
       table.integer('product_id').unsigned().references('id').inTable('product');
       table.integer('trip_id').unsigned().references('id').inTable('trip');
-      table.integer('count');
-      table.boolean('preorder');
+      table.integer('count').unsigned();
       table.boolean('active').notNullable().defaultTo(true);
       table.date('delivery_date');
       table.enu('collection_method', ['pickup', 'post']);

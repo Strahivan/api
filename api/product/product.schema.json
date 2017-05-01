@@ -50,6 +50,9 @@
     "featured": {
       "type": "boolean"
     },
+    "preorder": {
+      "type": "boolean"
+    },
     "price": {
       "anyOf": [
         { "type": "number" }
