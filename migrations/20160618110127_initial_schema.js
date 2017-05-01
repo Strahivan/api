@@ -59,6 +59,7 @@ function up(knex) {
       table.integer('shop_id').unsigned().references('id').inTable('shop');
       table.integer('brand_id').unsigned().references('id').inTable('brand');
       table.integer('order_count').unsigned();
+      table.integer('delivery_time');
       table.boolean('active').notNullable().defaultTo(true);
       table.boolean('featured').defaultTo(false);
       table.float('price').unsigned();

@@ -131,7 +131,7 @@
         { "type": "null" }
       ]
     },
-    "delivery": {
+    "delivery_time": {
       "type": "string",
       "minLength": 1,
       "maxLength": 255,
