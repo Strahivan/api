@@ -16,6 +16,9 @@
         { "type": "null" }
       ],
       "minimum": 1
+    },
+    "active": {
+      "type": "boolean"
     }
   }
 }

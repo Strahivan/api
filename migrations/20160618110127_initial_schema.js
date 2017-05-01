@@ -3,16 +3,19 @@ function up(knex) {
     .createTable('country', (table) => {
       table.increments('id').primary();
       table.string('name').unique();
+      table.boolean('active').notNullable().defaultTo(true);
     })
     .createTable('category', (table) => {
       table.increments('id').primary();
       table.string('name').unique();
       table.integer('parent_id').unsigned().references('id').inTable('category');
+      table.boolean('active').notNullable().defaultTo(true);
     })
     .createTable('zone', (table) => {
       table.increments('id').primary();
       table.integer('country_id').unsigned().notNullable().references('id').inTable('country');
       table.string('name');
+      table.boolean('active').notNullable().defaultTo(true);
     })
     .createTable('user', (table) => {
       table.increments('id').primary();
@@ -26,6 +29,7 @@ function up(knex) {
       table.jsonb('address');
       table.enu('role', ['admin']);
       table.integer('country_id').unsigned().references('id').inTable('country');
+      table.boolean('active').notNullable().defaultTo(true);
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
     })
@@ -33,10 +37,12 @@ function up(knex) {
       table.increments('id').primary();
       table.string('name').unique();
       table.integer('owner_id').unsigned().notNullable().references('id').inTable('user');
+      table.boolean('active').notNullable().defaultTo(false); // a shop needs to be approved
     })
     .createTable('brand', (table) => {
       table.increments('id').primary();
       table.string('name').unique();
+      table.boolean('active').notNullable().defaultTo(true);
     })
     .createTable('trip', (table) => {
       table.increments('id').primary();
@@ -61,7 +67,6 @@ function up(knex) {
       table.integer('order_count').unsigned();
       table.integer('delivery_time');
       table.boolean('preorder');
-      table.boolean('active').notNullable().defaultTo(true);
       table.boolean('featured').defaultTo(false);
       table.float('price').notNullable().unsigned();
       table.jsonb('colors');
@@ -72,6 +77,7 @@ function up(knex) {
       table.string('name').notNullable();
       table.string('url', 512);
       table.text('description').notNullable();
+      table.boolean('active').notNullable().defaultTo(true);
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
     })
@@ -84,10 +90,9 @@ function up(knex) {
       table.integer('trip_id').unsigned().references('id').inTable('trip');
       table.integer('count').unsigned();
       table.boolean('preorder');
-      table.boolean('active').notNullable().defaultTo(true);
       table.date('delivery_date');
       table.enu('collection_method', ['pickup', 'post']);
-      table.enu('status', ['pending', 'confirmed', 'processing', 'delivering', 'ready', 'completed', 'failed', 'canceled']);
+      table.enu('status', ['confirmed', 'processing', 'delivering', 'ready', 'completed', 'failed', 'canceled']).defaultTo('confirmed');
       table.float('base_price').unsigned().notNullable();
       table.float('carrier_charge');
       table.float('postage');
@@ -99,6 +104,7 @@ function up(knex) {
       table.jsonb('size'); // dimension, price difference, weight
       table.string('stripe_charge_id');
       table.text('instructions');
+      table.boolean('active').notNullable().defaultTo(true);
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
     })

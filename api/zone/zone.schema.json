@@ -13,6 +13,9 @@
     "country_id": {
       "type": "integer",
       "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
+    "active": {
+      "type": "boolean"
     }
   }
 }

@@ -56,7 +56,7 @@
       "chance": { "date": [{"string": true}]}
     },
     "status": {
-      "enum": ["pending", "confirmed", "processing", "ready", "delivering", "completed", "failed", "canceled"]
+      "enum": ["confirmed", "processing", "ready", "delivering", "completed", "failed", "canceled"]
     },
     "collection_method": {
       "enum": ["pickup", "post"]
@@ -177,6 +177,9 @@
         "city": {"type": "string"},
         "zip": {"type": "string"}
       }
+    },
+    "active": {
+      "type": "boolean"
     },
     "created_at": {
       "anyOf": [
