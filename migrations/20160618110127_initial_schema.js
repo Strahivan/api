@@ -83,6 +83,7 @@ function up(knex) {
       table.integer('product_id').unsigned().references('id').inTable('product');
       table.integer('trip_id').unsigned().references('id').inTable('trip');
       table.integer('count').unsigned();
+      table.boolean('preorder');
       table.boolean('active').notNullable().defaultTo(true);
       table.date('delivery_date');
       table.enu('collection_method', ['pickup', 'post']);
