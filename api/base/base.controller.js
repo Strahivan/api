@@ -85,7 +85,7 @@ class BaseController {
     const filter = getFilter(req, this.id, this.properties, this.userKey);
     return this.model.query()
       .skipUndefined()
-      .delete()
+      .patch({ active: false })
       .where(filter)
       .then(() => utilities.responseHandler(null, res, 204))
       .catch(err => utilities.responseHandler(err, res));
