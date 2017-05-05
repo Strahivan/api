@@ -71,6 +71,11 @@ class MeController {
       .catch(err => utilities.responseHandler(err, res));
   }
 
+  removeCard(req, res) {
+    stripe.customers.deleteCard(req.user.stripe_token, req.params.card_id)
+      .then(cards => utilities.responseHandler(null, res, 200, cards))
+      .catch(err => utilities.responseHandler(err, res));
+  }
 
   charge(req, res) {
     const amount = Number(req.body.amount) * this.currencyMultiplierMap[req.body.currency.toLowerCase()];
