@@ -40,6 +40,14 @@ class User extends Base {
           to: 'request.customer_id',
         },
       },
+      country: {
+        relation: Base.BelongsToOneRelation,
+        modelClass: path.normalize(`${__dirname}/../country/country.model`),
+        join: {
+          from: 'user.country_id',
+          to: 'country.id',
+        },
+      },
     };
   }
 }
