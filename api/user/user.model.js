@@ -48,6 +48,14 @@ class User extends Base {
           to: 'country.id',
         },
       },
+      shops: {
+        relation: Base.HasManyRelation,
+        modelClass: path.normalize(`${__dirname}/../shop/shop.model`),
+        join: {
+          from: 'user.id',
+          to: 'shop.owner_id',
+        },
+      },
     };
   }
 }

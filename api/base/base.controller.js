@@ -34,7 +34,7 @@ class BaseController {
 
   // add middleware to check existence
   // TODO: seperate adding data to request body
-  async create(req, res) {
+  create(req, res) {
     const data = Object.assign({}, req.body, rejectExtras(this.properties, req.params, this.id));
     if (this.userKey) data[this.userKey] = req.user.id;
     return this.model.query()
