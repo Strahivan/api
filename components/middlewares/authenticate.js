@@ -4,6 +4,10 @@ const moment = require('moment');
 const User = require('../../api/user/user.model');
 
 module.exports = function (req, res, next) {
+  if (req.user) {
+    return next();
+  }
+
   if (!req.headers.authorization) {
     return res.status(401).send({ message: 'No authorization header is present' });
   }
