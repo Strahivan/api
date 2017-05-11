@@ -41,17 +41,17 @@ function seed(knex, Promise) {
   return truncate(knex, Promise, tables)
     .then(() => Promise.all([
       knex('country').insert(getRecords(numberOfRecords, countrySchema)),
-      knex('category').insert(getRecords(numberOfRecords, categorySchema)),
+      knex('category').insert(getRecords(numberOfRecords, categorySchema))
     ]))
     .then(() => Promise.all([
       knex('zone').insert(getRecords(numberOfRecords, zoneSchema)),
-      knex('user').insert(getRecords(numberOfRecords, userSchema)),
+      knex('user').insert(getRecords(numberOfRecords, userSchema))
     ]))
     .then(() => Promise.all([
-      knex('trip').insert(getRecords(numberOfRecords, tripSchema)),
+      knex('trip').insert(getRecords(numberOfRecords, tripSchema))
     ]))
     .then(() => Promise.all([
-      knex('request').insert(getRecords(numberOfRecords, requestSchema)),
+      knex('request').insert(getRecords(numberOfRecords, requestSchema))
     ]));
 }
 

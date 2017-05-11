@@ -3,7 +3,7 @@ const config = require('../../config/environment');
 const moment = require('moment');
 const User = require('../../api/user/user.model');
 
-module.exports = function (req, res, next) {
+module.exports = function(req, res, next) {
   if (req.user) {
     return next();
   }

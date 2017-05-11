@@ -29,33 +29,33 @@ class User extends Base {
         modelClass: path.normalize(`${__dirname}/../trip/trip.model`),
         join: {
           from: 'user.id',
-          to: 'trip.traveler_id',
-        },
+          to: 'trip.traveler_id'
+        }
       },
       requests: {
         relation: Base.HasManyRelation,
         modelClass: path.normalize(`${__dirname}/../request/request.model`),
         join: {
           from: 'user.id',
-          to: 'request.customer_id',
-        },
+          to: 'request.customer_id'
+        }
       },
       country: {
         relation: Base.BelongsToOneRelation,
         modelClass: path.normalize(`${__dirname}/../country/country.model`),
         join: {
           from: 'user.country_id',
-          to: 'country.id',
-        },
+          to: 'country.id'
+        }
       },
       shops: {
         relation: Base.HasManyRelation,
         modelClass: path.normalize(`${__dirname}/../shop/shop.model`),
         join: {
           from: 'user.id',
-          to: 'shop.owner_id',
-        },
-      },
+          to: 'shop.owner_id'
+        }
+      }
     };
   }
 }

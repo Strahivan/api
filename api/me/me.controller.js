@@ -7,7 +7,7 @@ class MeController {
     this.model = User;
     this.currencyMultiplierMap = {
       sgd: 100,
-      yen: 1,
+      yen: 1
     };
   }
 
@@ -46,7 +46,7 @@ class MeController {
         description: req.user.name,
         email: req.user.email,
         source: req.body.token.id,
-        currency: req.user.currency,
+        currency: req.user.currency
       })
       .then((response) => {
         return this.model
@@ -58,7 +58,7 @@ class MeController {
       .catch(err => utilities.responseHandler(err, res));
     } else {
       stripe.customers.createSource(req.user.stripe_token, {
-        source: req.body.token.id,
+        source: req.body.token.id
       })
       .then(response => utilities.responseHandler(null, res, 200, response))
       .catch(err => utilities.responseHandler(err, res));
@@ -83,7 +83,7 @@ class MeController {
       amount,
       source: req.body.source,
       currency: req.body.currency,
-      customer: req.user.stripe_token,
+      customer: req.user.stripe_token
     })
     .then(charge => utilities.responseHandler(null, res, 200, charge))
     .catch((err) => {

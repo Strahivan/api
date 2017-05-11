@@ -17,9 +17,9 @@ class Category extends Base {
         modelClass: Category,
         join: {
           from: 'category.parent_id',
-          to: 'category.id',
-        },
-      },
+          to: 'category.id'
+        }
+      }
     };
   }
 }

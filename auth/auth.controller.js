@@ -30,7 +30,7 @@ async function signup(req, res) {
     const hash = await User.encryptPassword(req.body.password);
     const userInfo = {
       hash,
-      email: req.body.email,
+      email: req.body.email
     };
 
     await redis.hmsetAsync(registrationId, userInfo);

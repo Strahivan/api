@@ -5,7 +5,7 @@ function filterEagerData(columnName, queryParams, relation) {
   const opMap = {
     gt: '>',
     lt: '<',
-    eq: '=',
+    eq: '='
   };
   // construct the keys that are in where condition in query parameters
   const keys = Object.keys(opMap).map(op => `${relation}.${columnName}:${op}`);
@@ -17,7 +17,7 @@ function filterEagerData(columnName, queryParams, relation) {
         const opMarker = key.split(':')[1];
         return {
           op: opMap[opMarker],
-          value,
+          value
         };
       }
       return null;

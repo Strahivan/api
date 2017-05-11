@@ -18,9 +18,9 @@ class Shop extends Base {
         modelClass: path.normalize(`${__dirname}/../user/user.model`),
         join: {
           from: 'shop.owner_id',
-          to: 'user.id',
-        },
-      },
+          to: 'user.id'
+        }
+      }
     };
   }
 }

@@ -10,16 +10,16 @@ function createUser(res, profile) {
     .catch(error => error);
 }
 
-exports.authenticate = function (req, res) {
+exports.authenticate = function(req, res) {
   const query = Object.assign({}, req.body, { fields: 'email,name' });
   return request.get({
     url: config.facebook.profile,
     qs: query,
-    json: true,
+    json: true
   }, (fberr, fbres, profile) => {
     if (fberr) {
       res.status(400).send({
-        message: fberr,
+        message: fberr
       });
     }
 

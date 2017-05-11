@@ -13,7 +13,7 @@ hooks.after('GET /users -> 200', (test, done) => {
 //-----------------------------------------------------------------------------
 hooks.before('GET /users/{userId} -> 200', (test, done) => {
   test.request.params = {
-    userId: 1,
+    userId: 1
   };
   done();
 });

@@ -8,9 +8,9 @@ function authenticate() {
     uri: 'http://localhost:3000/auth/login',
     body: {
       email: config.test.email,
-      password: config.test.password,
+      password: config.test.password
     },
-    json: true,
+    json: true
   };
   return rp(options);
 }
@@ -29,7 +29,7 @@ hooks.before('POST /requests -> 201', (test, done) => {
   .then((res) => {
     test.request.headers.Authorization = `Bearer ${res.token}`;
     test.request.body = {
-      title: 'Lard of the Pings',
+      title: 'Lard of the Pings'
     };
     done();
   })
@@ -43,7 +43,7 @@ hooks.after('POST /requests -> 201', (test, done) => {
 //-----------------------------------------------------------------------------
 hooks.before('GET /requests/{requestId} -> 200', (test, done) => {
   test.request.params = {
-    requestId: 1,
+    requestId: 1
   };
   done();
 });

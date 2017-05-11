@@ -1,7 +1,7 @@
 const aws = require('aws-sdk');
 const config = require('../config/environment');
 
-module.exports = function (req, res) {
+module.exports = function(req, res) {
   if (!(req.query || req.query.folder_name || req.query.file_name)) {
     return res.status(400).send({ err: new Error('Must define folder_name and file_name') });
   }
@@ -13,9 +13,9 @@ module.exports = function (req, res) {
   const params = {
     Bucket: config.aws.bucket,
     Key: `${req.query.folder_name}/${fileName}`,
-    Expires: 60,
+    Expires: 300,
     ContentType: req.query.file_type,
-    ACL: 'public-read',
+    ACL: 'public-read'
   };
 
   s3.getSignedUrl('putObject', params, (err, data) => {
@@ -23,7 +23,7 @@ module.exports = function (req, res) {
       return res.status(400).send({ err });
     }
     const response = {
-      signed_request: data,
+      signed_request: data
     };
     return res.send(response);
   });

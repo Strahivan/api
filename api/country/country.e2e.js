@@ -21,7 +21,7 @@ hooks.after('POST /countries -> 201', (test, done) => {
 //-----------------------------------------------------------------------------
 hooks.before('GET /countries/{countryId} -> 200', (test, done) => {
   test.request.params = {
-    objectId: 1,
+    objectId: 1
   };
   done();
 });

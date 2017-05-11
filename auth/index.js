@@ -2,7 +2,7 @@ const express = require('express');
 const facebook = require('./facebook');
 const local = require('./auth.controller');
 
-const router = express.Router();
+const router = new express.Router();
 
 router.post('/facebook', facebook.authenticate);
 

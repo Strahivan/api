@@ -6,7 +6,7 @@ function up(knex, Promise) {
         knex.raw("SELECT AddGeometryColumn ('trip','location',3857,'POINT',2);"),
         knex.schema.table('trip', (table) => {
           table.jsonb('coordinates');
-        }),
+        })
       ]);
     });
 }
@@ -18,7 +18,7 @@ function down(knex, Promise) {
       .table('trip', (table) => {
         table.dropColumn('location');
         table.dropColumn('coordinates');
-      }),
+      })
   ]);
 }
 
