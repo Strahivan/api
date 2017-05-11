@@ -12,6 +12,7 @@ function getErrorStatus(err, status) {
 function responseHandler(err, res, status, data) {
   // TODO: send response based on the error message
   if (err) {
+    console.log(err);
     const errStatus = getErrorStatus(err, status);
     return res.status(err.statusCode || errStatus || 500)
       .send(_.pickBy({ err: `${err.message}`, hint: `${err.hint || ''}` }));
