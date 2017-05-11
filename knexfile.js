@@ -6,11 +6,14 @@ module.exports = {
     connection: process.env.DATABASE_URL,
     pool: {
       min: 0,
-      max: 7,
+      max: 7
     },
+    migrations: {
+      stub: 'migrations/migration.stub.js'
+    }
   },
   production: {
     client: 'postgresql',
-    connection: process.env.DATABASE_URL,
-  },
+    connection: process.env.DATABASE_URL
+  }
 };
