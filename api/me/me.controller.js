@@ -17,7 +17,7 @@ class MeController {
       .eager(req.query.include)
       .skipUndefined()
       .findById(req.user.id)
-      .omit('hash')
+      .omit(['hash'])
       .then((user) => {
         if (!user) return utilities.throwNotFound(res);
         return utilities.responseHandler(null, res, 200, user);
@@ -30,7 +30,7 @@ class MeController {
       .query()
       .patch(req.body)
       .where({ id: req.user.id })
-      .omit('hash')
+      .omit(['hash'])
       .then((user) => {
         if (!user) return utilities.throwNotFound(res);
         return utilities.responseHandler(null, res, 200);
