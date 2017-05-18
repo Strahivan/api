@@ -47,6 +47,9 @@
     "preorder": {
       "type": "boolean"
     },
+    "urgent": {
+      "type": "boolean"
+    },
     "delivery_date": {
       "anyOf": [
         { "type": "string" },
@@ -77,15 +80,7 @@
       "faker": { "random.number": [{"max": 100, "min": 10}]
       }
     },
-    "service_charge": {
-      "anyOf": [
-        { "type": "number" },
-        { "type": "null" }
-      ],
-      "faker": { "random.number": [{"max": 100, "min": 10}]
-      }
-    },
-    "carrier_charge": {
+    "platform_charge": {
       "anyOf": [
         { "type": "number" },
         { "type": "null" }
@@ -105,6 +100,12 @@
       "type": "number",
       "faker": { "random.number": [{"max": 10, "min": 1}]
       }
+    },
+    "currency": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "lorem.word"
     },
     "color": {
       "anyOf": [
