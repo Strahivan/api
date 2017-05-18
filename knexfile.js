@@ -9,7 +9,7 @@ module.exports = {
       max: 7
     },
     migrations: {
-      stub: 'migrations/migration.stub.js'
+      stub: 'config/migration.stub.js'
     }
   },
   production: {
