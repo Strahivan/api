@@ -60,6 +60,28 @@
       "faker": { "random.number": [{"max": 100, "min": 10}]
       }
     },
+    "weight": {
+      "anyOf": [
+        { "type": "number" }
+      ],
+      "faker": { "random.number": [{"max": 100, "min": 10}]
+      }
+    },
+    "dimensions": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 3,
+      "minItems": 2
+    },
+    "platform_charge": {
+      "anyOf": [
+        { "type": "number" }
+      ],
+      "faker": { "random.number": [{"max": 100, "min": 10}]
+      }
+    },
     "colors": {
       "anyOf": [
         {
@@ -145,6 +167,12 @@
       "minLength": 1,
       "maxLength": 255,
       "faker": "lorem.sentence"
+    },
+    "currency": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "lorem.word"
     },
     "url": {
       "anyOf": [
