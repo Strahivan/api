@@ -19,7 +19,7 @@
     "bcrypt": "^1.0.2",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
-    "bull": "^3.0.0-alpha.4",
+    "bull": "^2.2.6",
     "chai": "^3.5.0",
     "compression": "^1.6.2",
     "cors": "^2.8.3",
