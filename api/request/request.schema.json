@@ -170,6 +170,9 @@
     "stripe_charge_id": {
       "type": "string"
     },
+    "bank_reference": {
+      "type": "string"
+    },
     "shipping_address": {
       "type": "object",
       "properties": {
