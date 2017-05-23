@@ -59,7 +59,7 @@
       "chance": { "date": [{"string": true}]}
     },
     "status": {
-      "enum": ["confirmed", "processing", "ready", "delivering", "completed", "failed", "canceled"]
+      "enum": ["pending", "confirmed", "processing", "ready", "delivering", "completed", "failed", "canceled"]
     },
     "collection_method": {
       "enum": ["pickup", "post"]
