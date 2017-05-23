@@ -157,10 +157,10 @@
       ]
     },
     "delivery_time": {
-      "type": "string",
+      "type": "integer",
       "minLength": 1,
-      "maxLength": 255,
-      "faker": "lorem.sentence"
+      "maxLength": 12,
+      "faker": { "random.number": [{"max": 100, "min": 10}] }
     },
     "name": {
       "type": "string",
