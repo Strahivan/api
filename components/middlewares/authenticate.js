@@ -9,7 +9,8 @@ module.exports = function(req, res, next) {
   }
 
   if (!req.headers.authorization) {
-    return res.status(401).send({ message: 'No authorization header is present' });
+    res.locals.status = 401;
+    return next(new Error('no authorization header is present'));
   }
   let payload = null;
 
@@ -17,12 +18,13 @@ module.exports = function(req, res, next) {
     const token = req.headers.authorization.split(' ')[1];
     payload = jwt.decode(token, config.token);
   } catch (err) {
-    return res.status(400).send({ message: err.message });
+    return next(err);
   }
 
   // if token has expired
   if (payload.exp <= moment().unix()) {
-    return res.status(401).send({ message: 'Token has expired' });
+    res.locals.status = 401;
+    return next(new Error('Token has expired'));
   }
 
   return User
@@ -33,6 +35,7 @@ module.exports = function(req, res, next) {
         req.user = user;
         return next();
       }
+      res.locals.status = 404;
       return next(new Error('User not found'));
     });
 };

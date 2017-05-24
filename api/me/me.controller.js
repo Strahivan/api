@@ -1,5 +1,4 @@
 const User = require('../user/user.model');
-const utilities = require('../../components/utilities');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 class MeController {
@@ -11,7 +10,7 @@ class MeController {
     };
   }
 
-  show(req, res) {
+  show(req, res, next) {
     return this.model
       .query()
       .eager(req.query.include)
@@ -19,26 +18,33 @@ class MeController {
       .findById(req.user.id)
       .omit(['hash'])
       .then((user) => {
-        if (!user) return utilities.throwNotFound(res);
-        return utilities.responseHandler(null, res, 200, user);
+        if (!user) {
+          res.locals.status = 404;
+          return next(new Error('not found'));
+        }
+        res.locals.data = user;
+        return next();
       })
-      .catch(err => utilities.responseHandler(err, res));
+      .catch(err => next(err));
   }
 
-  update(req, res) {
+  update(req, res, next) {
     return this.model
       .query()
       .patch(req.body)
       .where({ id: req.user.id })
       .omit(['hash'])
       .then((user) => {
-        if (!user) return utilities.throwNotFound(res);
-        return utilities.responseHandler(null, res, 200);
+        if (!user) {
+          res.locals.status = 404;
+          return next(new Error('not found'));
+        }
+        return next();
       })
-      .catch(err => utilities.responseHandler(err, res));
+      .catch(err => next(err));
   }
 
-  saveCard(req, res) {
+  saveCard(req, res, next) {
     // create customer if there's no customer
     // else create a new source on current customer
     if (!req.user.stripe_token) {
@@ -54,30 +60,42 @@ class MeController {
           .findById(req.user.id)
           .patch({ stripe_token: response.id });
       })
-      .then(response => utilities.responseHandler(null, res, 200, response))
-      .catch(err => utilities.responseHandler(err, res));
+      .then(response => {
+        res.locals.data = response;
+        return next();
+      })
+      .catch(err => next(err));
     } else {
       stripe.customers.createSource(req.user.stripe_token, {
         source: req.body.token.id
       })
-      .then(response => utilities.responseHandler(null, res, 200, response))
-      .catch(err => utilities.responseHandler(err, res));
+      .then(response => {
+        response.locals.data = response;
+        return next();
+      })
+      .catch(err => next(err));
     }
   }
 
-  getCards(req, res) {
+  getCards(req, res, next) {
     stripe.customers.listCards(req.user.stripe_token)
-      .then(cards => utilities.responseHandler(null, res, 200, cards))
-      .catch(err => utilities.responseHandler(err, res));
+      .then(cards => {
+        res.locals.data = cards;
+        return next();
+      })
+      .catch(err => next(err));
   }
 
-  removeCard(req, res) {
+  removeCard(req, res, next) {
     stripe.customers.deleteCard(req.user.stripe_token, req.params.card_id)
-      .then(cards => utilities.responseHandler(null, res, 200, cards))
-      .catch(err => utilities.responseHandler(err, res));
+      .then(cards => {
+        res.locals.data = cards;
+        return next();
+      })
+      .catch(err => next(err));
   }
 
-  charge(req, res) {
+  charge(req, res, next) {
     const amount = Number(req.body.amount) * this.currencyMultiplierMap[req.body.currency.toLowerCase()];
     stripe.charges.create({
       amount,
@@ -85,19 +103,20 @@ class MeController {
       currency: req.body.currency,
       customer: req.user.stripe_token
     })
-    .then(charge => utilities.responseHandler(null, res, 200, charge))
-    .catch((err) => {
-      console.log(err);
-      return utilities.responseHandler(err, res);
-    });
+    .then(charge => {
+      res.locals.data = charge;
+      return next();
+    })
+    .catch((err) => next(err));
   }
 
-  unlink(req, res) {
+  unlink(req, res, next) {
     const provider = req.query.provider;
 
     const providers = ['facebook'];
     if (providers.indexOf(provider) === -1) {
-      return res.status(404).send('Unknown provider');
+      res.locals.status = 404;
+      return next(new Error('Unknown provider'));
     }
 
     return this.model
@@ -105,9 +124,10 @@ class MeController {
       .findById(req.user.id)
       .update({ [provider]: null })
       .then((user) => {
-        res.status(200).send(user);
+        res.locals.data = user;
+        return next();
       })
-      .catch(err => utilities.responseHandler(err, res));
+      .catch(err => next(err));
   }
 }
 

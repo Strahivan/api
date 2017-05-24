@@ -1,7 +1,6 @@
 const findQuery = require('objection-find');
 const _ = require('lodash');
 const searchFilter = require('../../components/filters/text-search');
-const utilities = require('../../components/utilities');
 
 function rejectExtras(properties, params, idKey) {
   let data = Object.assign({}, params);
@@ -34,16 +33,21 @@ class BaseController {
 
   // add middleware to check existence
   // TODO: seperate adding data to request body
-  create(req, res) {
+  create(req, res, next) {
     const data = Object.assign({}, req.body, rejectExtras(this.properties, req.params, this.id));
     if (this.userKey) data[this.userKey] = req.user.id;
     return this.model.query()
       .insert(data)
-      .then(item => utilities.responseHandler(null, res, 201, item))
-      .catch(err => utilities.responseHandler(err, res));
+      .then(item => {
+        res.locals.data = item;
+        return next();
+      })
+      .catch(err => {
+        next(err);
+      });
   }
 
-  index(req, res) {
+  index(req, res, next) {
     const filter = getFilter(req, this.id, this.properties, this.userKey);
     return findQuery(this.model)
       .registerFilter('search', searchFilter)
@@ -53,11 +57,14 @@ class BaseController {
       .eager(req.query.include)
       .orderBy(req.query.sort.by, req.query.sort.order)
       .page(req.query.page.number, req.query.page.size)
-      .then(items => utilities.responseHandler(null, res, 200, items))
-      .catch(err => utilities.responseHandler(err, res));
+      .then(items => {
+        res.locals.data = items;
+        return next();
+      })
+      .catch(err => next(err));
   }
 
-  show(req, res) {
+  show(req, res, next) {
     const filter = getFilter(req, this.id, this.properties, this.userKey);
     return this.model.query()
       .skipUndefined()
@@ -65,30 +72,37 @@ class BaseController {
       .first()
       .eager(req.query.include)
       .then((item) => {
-        if (!item) return utilities.throwNotFound(res);
-        return utilities.responseHandler(null, res, 200, item);
+        if (!item) {
+          res.locals.status = 404;
+          return next(new Error('not found'));
+        }
+        res.locals.data = item;
+        return next();
       })
-    .catch(err => utilities.responseHandler(err, res));
+    .catch(err => next(err));
   }
 
-  update(req, res) {
+  update(req, res, next) {
     const filter = getFilter(req, this.id, this.properties, this.userKey);
     return this.model.query()
       .skipUndefined()
       .patch(req.body)
       .where(filter)
-      .then(affected => utilities.responseHandler(null, res, 200))
-      .catch(err => utilities.responseHandler(err, res));
+      .then(affected => next())
+      .catch(err => next(err));
   }
 
-  destroy(req, res) {
+  destroy(req, res, next) {
     const filter = getFilter(req, this.id, this.properties, this.userKey);
     return this.model.query()
       .skipUndefined()
       .patch({ active: false })
       .where(filter)
-      .then(() => utilities.responseHandler(null, res, 204))
-      .catch(err => utilities.responseHandler(err, res));
+      .then(() => {
+        res.locals.status = 204;
+        return next();
+      })
+      .catch(err => next(err));
   }
 }
 

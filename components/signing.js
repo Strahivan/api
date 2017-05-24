@@ -1,9 +1,9 @@
 const aws = require('aws-sdk');
 const config = require('../config/environment');
 
-module.exports = function(req, res) {
+module.exports = function(req, res, next) {
   if (!(req.query || req.query.folder_name || req.query.file_name)) {
-    return res.status(400).send({ err: new Error('Must define folder_name and file_name') });
+    return next(new Error('Must define folder_name and file_name'));
   }
 
   aws.config.update({ accessKeyId: config.aws.access, secretAccessKey: config.aws.secret });
@@ -20,12 +20,12 @@ module.exports = function(req, res) {
 
   s3.getSignedUrl('putObject', params, (err, data) => {
     if (err) {
-      return res.status(400).send({ err });
+      return next(err);
     }
-    const response = {
+    res.locals.data = {
       signed_request: data
     };
-    return res.send(response);
+    return next();
   });
 };
 

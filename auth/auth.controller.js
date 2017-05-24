@@ -10,11 +10,11 @@ function getVerificationContent(registrationId) {
   return `<a href=${verificationUrl}>Click here to verify</a>`;
 }
 
-async function signup(req, res) {
+async function signup(req, res, next) {
   // TODO: validate username, password and email
   // decorator for validation
   if (!(req.body.email || req.body.password)) {
-    return utilities.responseHandler(new Error('Must provide both email and password'), res, 400);
+    return next(new Error('must provide email and password'));
   }
 
   try {
@@ -23,8 +23,8 @@ async function signup(req, res) {
       .query()
       .where('email', req.body.email);
     if (user.length) {
-      return utilities.responseHandler(new Error('A user with that' +
-            ' email already exists'), res, 409);
+      res.locals.status = 409;
+      return next(new Error('a user with that email already exists'));
     }
 
     const hash = await User.encryptPassword(req.body.password);
@@ -41,14 +41,14 @@ async function signup(req, res) {
         [config.mail.registration],
         'Verify',
         getVerificationContent(registrationId));
-    return utilities.responseHandler(null, res, 200, { message: 'Sending mail' });
-  } catch (e) {
-    return utilities.responseHandler(e, res, 500);
+    return next();
+  } catch (err) {
+    return next(err);
   }
 }
 
 
-async function login(req, res) {
+async function login(req, res, next) {
   try {
     const user = await User.query()
       .where({ email: req.body.email })
@@ -57,31 +57,34 @@ async function login(req, res) {
     if (user) {
       const passwordMatch = await user.authenticate(req.body.password);
       if (passwordMatch) {
-        return res.status(200).send({ token: authUtils.createJWT(user) });
+        res.locals.data = {token: authUtils.createJWT(user)};
+        return next();
       }
-      return utilities.responseHandler(new Error('Wrong username or password'), res, 422);
+      res.locals.status = 422;
+      return next(new Error('wrong username or password'));
     }
-    return utilities.responseHandler(new Error('Wrong username or password'), res, 422);
+    res.locals.status = 422;
+    return next(new Error('wrong username or password'));
   } catch (e) {
-    return utilities.responseHandler(e, res, 500);
+    return next(err);
   }
 }
 
-async function verify(req, res) {
+async function verify(req, res, next) {
   try {
     const userInfo = await redis.hgetallAsync(req.query.token);
 
     if (!userInfo) {
-      return utilities.responseHandler(new Error('Invalid registration link', res, 400));
+      return next(new Error('the link has expired'));
     }
     redis.del(req.query.token);
 
     await User.query()
       .insert(userInfo);
 
-    return res.redirect('https://novelship.com/#/auth/login');
+    return res.redirect('https://novelship.com/auth/login');
   } catch (e) {
-    return utilities.responseHandler(e, res, 500);
+    return next(err);
   }
 }
 
@@ -90,13 +93,14 @@ function getResetContent(resetId) {
   return `<a href=${verificationUrl}>Click here to reset</a>`;
 }
 
-async function requestReset(req, res) {
+async function requestReset(req, res, next) {
   try {
     const user = await User.query()
       .where({ email: req.body.email })
       .first();
     if (!user) {
-      return utilities.responseHandler(new Error('No such user exists'), res, 404);
+      res.locals.status = 404;
+      return next(new Error('no such user exists'));
     }
     const resetId = uuid.v4();
     await redis.setAsync(resetId, user.id);
@@ -105,13 +109,13 @@ async function requestReset(req, res) {
         [config.mail.support],
         'Password Reset',
         getResetContent(resetId));
-    return utilities.responseHandler(null, res, 200, { message: 'Sending email with reset link' });
+    return next();
   } catch (e) {
-    return utilities.responseHandler(e, res, 500);
+    return next(err);
   }
 }
 
-async function reset(req, res) {
+async function reset(req, res, next) {
   try {
     const hash = await User.encryptPassword(req.body.password);
     const userId = await redis.get(req.body.token);
@@ -122,7 +126,7 @@ async function reset(req, res) {
 
     return res.redirect('https://novelship.com/auth/login');
   } catch (e) {
-    return utilities.responseHandler(new Error('Resetting password failed'), res, 500);
+    return next(err);
   }
 }
 
