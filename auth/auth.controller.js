@@ -1,6 +1,6 @@
 const User = require('../api/user/user.model');
 const authUtils = require('./authutils');
-const utilities = require('../components/utilities');
+const mailQueue = require('../config/queue').mailQueue;
 const config = require('../config/environment');
 const redis = require('../config/redis');
 const uuid = require('uuid');
@@ -37,10 +37,12 @@ async function signup(req, res, next) {
     redis.expire(registrationId, 2 * 24 * 60 * 60);
 
     // create a mail sending task
-    await utilities.sendMail(req.body.email,
-        [config.mail.registration],
-        'Verify',
-        getVerificationContent(registrationId));
+    await mailQueue.add({
+      from: [config.mail.registration],
+      to: req.body.email,
+      subject: 'Verify',
+      html: getVerificationContent(registrationId)
+    });
     return next();
   } catch (err) {
     return next(err);
@@ -105,10 +107,12 @@ async function requestReset(req, res, next) {
     const resetId = uuid.v4();
     await redis.setAsync(resetId, user.id);
     redis.expire(resetId, 2 * 24 * 60 * 60);
-    await utilities.sendMail(req.body.email,
-        [config.mail.support],
-        'Password Reset',
-        getResetContent(resetId));
+    await mailQueue.add({
+      from: [config.mail.support],
+      to: req.body.email,
+      subject: 'Password Reset',
+      html: getResetContent(resetId)
+    });
     return next();
   } catch (e) {
     return next(err);
