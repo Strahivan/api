@@ -10,6 +10,7 @@ const category = require('./api/category');
 const me = require('./api/me');
 const auth = require('./auth');
 const signedUrl = require('./components/signing');
+const responseHandler = require('./components/middlewares/respond');
 
 module.exports = (app) => {
   app.use('/countries', country);
@@ -23,14 +24,15 @@ module.exports = (app) => {
   app.use('/users', user);
   app.use('/me', me);
 
-  app.get('/upload', signedUrl);
+  app.get('/upload', signedUrl, responseHandler);
   app.use('/auth', auth);
 
   app.use((err, req, res, next) => {
+    console.log(err);
     if (err) {
-      res.status(err.statusCode || err.status || 500).send(err.data || err.message || {});
-    } else {
-      next();
+      const status = res.locals.status || err.statusCode || err.status || 400;
+      return res.status(status).send({err: err.message});
     }
+    return next();
   });
 };
