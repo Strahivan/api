@@ -1,0 +1,6 @@
+<% include ('../layout.nunjucks') %>
+
+
+{% block content %}
+  <p>{{url}}</p>
+{% endblock %}
