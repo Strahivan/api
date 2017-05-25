@@ -5,9 +5,8 @@ const config = require('../config/environment');
 const redis = require('../config/redis');
 const uuid = require('uuid');
 
-function getVerificationContent(registrationId) {
-  const verificationUrl = `https://${config.host}/auth/verify?token=${registrationId}`;
-  return `<a href=${verificationUrl}>Click here to verify</a>`;
+function getVerificationUrl(registrationId) {
+  return `https://${config.host}/auth/verify?token=${registrationId}`;
 }
 
 async function signup(req, res, next) {
@@ -38,10 +37,12 @@ async function signup(req, res, next) {
 
     // create a mail sending task
     await mailQueue.add({
-      from: [config.mail.registration],
+      from: `Novelship <${config.mail.registration}>`,
       to: req.body.email,
-      subject: 'Verify',
-      html: getVerificationContent(registrationId)
+      template: 'signup',
+      context: {
+        verification_url: getVerificationUrl(registrationId)
+      }
     });
     return next();
   } catch (err) {
@@ -108,7 +109,7 @@ async function requestReset(req, res, next) {
     await redis.setAsync(resetId, user.id);
     redis.expire(resetId, 2 * 24 * 60 * 60);
     await mailQueue.add({
-      from: [config.mail.support],
+      from: `Novelship <${config.mail.support}>`,
       to: req.body.email,
       subject: 'Password Reset',
       html: getResetContent(resetId)

@@ -1,13 +1,29 @@
 require('dotenv').config();
+const path = require('path');
 const mail = require('../config/mail');
+const EmailTemplate = require('email-templates').EmailTemplate;
 const mailQueue = require('../config/queue').mailQueue;
+const templatesDir = path.resolve(__dirname, '../components/email-templates');
 
-mailQueue.process(async function(mailInfo, done) {
+mailQueue.process((mailInfo, done) => {
+  // render template
+  // with the context
   try {
-    await mail.sendMail(mailInfo.data);
-    return done();
-  } catch (e) {
-    throw e;
+    template = new EmailTemplate(path.join(templatesDir, mailInfo.data.template));
+    template.render(mailInfo.data.context, (error, result) => {
+      console.log(result);
+      console.log(error);
+      return mail.sendMail({
+        from: mailInfo.data.from,
+        to: mailInfo.data.to,
+        subject: result.subject,
+        html: result.html
+      })
+      .then(success => done())
+      .catch(err => done(err));
+    });
+  } catch (err) {
+    console.log(err);
   }
 });
 
