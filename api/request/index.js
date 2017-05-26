@@ -3,6 +3,7 @@ const processQuery = require('../../components/middlewares/process-query');
 const authenticate = require('../../components/middlewares/authenticate');
 const responseHandler = require('../../components/middlewares/respond');
 const Request = require('./request.model');
+const Shop = require('../shop/shop.model');
 const BaseController = require('../base/base.controller');
 const mailQueue = require('../../config/queue').mailQueue;
 const config = require('../../config/environment');
