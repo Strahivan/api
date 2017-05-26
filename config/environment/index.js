@@ -18,8 +18,10 @@ const all = {
     smtp: process.env.SMTP_CONNECTION,
     registration: process.env.REGISTRATION_EMAIL,
     support: process.env.SUPPORT_EMAIL,
-    notify: process.env.NOTIFICATION_EMAIL
-  }
+    notify: process.env.NOTIFICATION_EMAIL,
+    sales: process.env.SALES_EMAIL
+  },
+  webappUrl: process.env.WEBAPP_URL
 };
 module.exports = _.merge(
   all,

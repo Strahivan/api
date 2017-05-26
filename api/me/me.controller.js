@@ -70,7 +70,7 @@ class MeController {
         source: req.body.token.id
       })
       .then(response => {
-        response.locals.data = response;
+        res.locals.data = response;
         return next();
       })
       .catch(err => next(err));
