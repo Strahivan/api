@@ -17,7 +17,8 @@ const all = {
   mail: {
     smtp: process.env.SMTP_CONNECTION,
     registration: process.env.REGISTRATION_EMAIL,
-    support: process.env.SUPPORT_EMAIL
+    support: process.env.SUPPORT_EMAIL,
+    notify: process.env.NOTIFICATION_EMAIL
   }
 };
 module.exports = _.merge(

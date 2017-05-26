@@ -1,0 +1,26 @@
+{% include "components/email-templates/layout.nunjucks" %}
+
+{% block content %}
+    <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="center">
+          <table class="email-content" width="100%" cellpadding="0" cellspacing="0">
+            <!-- Email Body -->
+            <tr>
+              <td class="email-body" width="100%" cellpadding="0" cellspacing="0">
+                <table class="email-body_inner" align="center" width="570" cellpadding="0" cellspacing="0">
+                  <!-- Body content -->
+                  <tr>
+                    <td class="content-cell">
+                      Your <a href={{order_url}}>order #{{order_number}}</a> containing <b>{{product_name}}</b> just changed it's status to <b>{{status}}</b>.
+                      <br
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+{% endblock %}
