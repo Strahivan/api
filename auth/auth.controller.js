@@ -92,8 +92,7 @@ async function verify(req, res, next) {
 }
 
 function getResetContent(resetId) {
-  const verificationUrl = `https://${config.host}/auth/verify?token=${resetId}`;
-  return `<a href=${verificationUrl}>Click here to reset</a>`;
+  return `${config.webappUrl}/auth/new-password?token=${resetId}`;
 }
 
 async function requestReset(req, res, next) {
@@ -111,8 +110,10 @@ async function requestReset(req, res, next) {
     await mailQueue.add({
       from: `Novelship <${config.mail.support}>`,
       to: req.body.email,
-      subject: 'Password Reset',
-      html: getResetContent(resetId)
+      template: 'reset',
+      context: {
+        reset_url: getResetContent(resetId)
+      }
     });
     return next();
   } catch (e) {
@@ -129,7 +130,7 @@ async function reset(req, res, next) {
     await User.query()
       .patchAndFetchById(Number(userId), { hash });
 
-    return res.redirect('https://novelship.com/auth/login');
+    return next();
   } catch (e) {
     return next(err);
   }

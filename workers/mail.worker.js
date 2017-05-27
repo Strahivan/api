@@ -6,13 +6,9 @@ const mailQueue = require('../config/queue').mailQueue;
 const templatesDir = path.resolve(__dirname, '../components/email-templates');
 
 mailQueue.process((mailInfo, done) => {
-  // render template
-  // with the context
   try {
     template = new EmailTemplate(path.join(templatesDir, mailInfo.data.template));
     template.render(mailInfo.data.context, (error, result) => {
-      console.log(result);
-      console.log(error);
       return mail.sendMail({
         from: mailInfo.data.from,
         to: mailInfo.data.to,
@@ -20,7 +16,10 @@ mailQueue.process((mailInfo, done) => {
         html: result.html
       })
       .then(success => done())
-      .catch(err => done(err));
+      .catch(err => {
+        console.log(err);
+        return done(err)
+      });
     });
   } catch (err) {
     console.log(err);
