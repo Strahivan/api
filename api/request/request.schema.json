@@ -20,6 +20,14 @@
       "minimum": 1,
       "faker": { "random.number": [{"max": 5, "min": 1}]}
     },
+    "batch_id": {
+      "anyOf": [
+        { "type": "integer" },
+        { "type": "null" }
+      ],
+      "minimum": 1,
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
     "destination_id": {
       "anyOf": [
         { "type": "integer" },

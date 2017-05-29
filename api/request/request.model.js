@@ -29,6 +29,14 @@ class Request extends Base {
           to: 'country.id'
         }
       },
+      batch: {
+        relation: Base.BelongsToOneRelation,
+        modelClass: path.normalize(`${__dirname}/../batch/batch.model`),
+        join: {
+          from: 'request.source_id',
+          to: 'country.id'
+        }
+      },
       product: {
         relation: Base.BelongsToOneRelation,
         modelClass: path.normalize(`${__dirname}/../product/product.model`),
