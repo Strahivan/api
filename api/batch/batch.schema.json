@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["source_id", "destination_id", "number", "shipping_date"],
+
+  "properties": {
+    "source_id": {
+      "anyof": [
+        { "type": "integer" },
+        { "type": "null" }
+      ],
+      "minimum": 1,
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
+    "destination_id": {
+      "anyof": [
+        { "type": "integer" },
+        { "type": "null" }
+      ],
+      "minimum": 1,
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
+    "shop_id": {
+      "anyof": [
+        { "type": "integer" },
+        { "type": "null" }
+      ],
+      "minimum": 1,
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
+    "number": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "string" }
+      ],
+      "faker": "company.name"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "paid": {
+      "type": "boolean"
+    },
+    "shipping_date": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "format": "date-time",
+      "chance": { "date": [{"string": true}]}
+    },
+    "arrival_date": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "format": "date-time",
+      "chance": { "date": [{"string": true}]}
+    },
+    "created_at": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "format": "date-time",
+      "chance": { "date": [{"string": true}]}
+    },
+    "updated_at": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "format": "date-time",
+      "chance": { "date": [{"string": true}]}
+    }
+  }
+}
+

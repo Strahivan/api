@@ -5,6 +5,7 @@ const user = require('./api/user');
 const zone = require('./api/zone');
 const shop = require('./api/shop');
 const brand = require('./api/brand');
+const batch = require('./api/batch');
 const product = require('./api/product');
 const category = require('./api/category');
 const me = require('./api/me');
@@ -20,6 +21,7 @@ module.exports = (app) => {
   app.use('/products', product);
   app.use('/shops', shop);
   app.use('/brands', brand);
+  app.use('/batches', batch);
   app.use('/zones', zone);
   app.use('/users', user);
   app.use('/me', me);
