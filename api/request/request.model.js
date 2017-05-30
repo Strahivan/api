@@ -33,8 +33,8 @@ class Request extends Base {
         relation: Base.BelongsToOneRelation,
         modelClass: path.normalize(`${__dirname}/../batch/batch.model`),
         join: {
-          from: 'request.source_id',
-          to: 'country.id'
+          from: 'request.batch_id',
+          to: 'batch.id'
         }
       },
       product: {
