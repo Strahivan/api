@@ -4,15 +4,15 @@
   "description": "cross country ship",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon --harmony-async-await app.js",
+    "dev": "nodemon app.js",
     "test": "abao docs/api.raml --hookfiles=**/*/*.e2e.js --hooks-only",
-    "start": "node --harmony-async-await app.js",
-    "mail": "node --harmony-async-await workers/mail.worker.js",
+    "start": "node app.js",
+    "mail": "node workers/mail.worker.js",
     "doc": "rm -f docs/index.html && raml2html -i docs/api.raml -o docs/index.html && http-server docs --port=8898"
   },
   "author": "afm-sayem",
   "engines": {
-    "node": "7.1.0"
+    "node": "8.0.0"
   },
   "dependencies": {
     "aws-sdk": "^2.49.0",
