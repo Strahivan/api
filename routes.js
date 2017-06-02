@@ -8,12 +8,14 @@ const brand = require('./api/brand');
 const batch = require('./api/batch');
 const product = require('./api/product');
 const category = require('./api/category');
+const announcement = require('./api/announcement');
 const me = require('./api/me');
 const auth = require('./auth');
 const signedUrl = require('./components/signing');
 const responseHandler = require('./components/middlewares/respond');
 
 module.exports = (app) => {
+  app.use('/announcements', announcement);
   app.use('/countries', country);
   app.use('/categories', category);
   app.use('/requests', request);

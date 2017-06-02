@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["image"],
+
+  "properties": {
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "random.word"
+    },
+    "url": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "random.word"
+    },
+    "c2a": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "random.word"
+    },
+    "image": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "random.word"
+    },
+    "description_style": {
+      "anyOf": [
+        { "type": "object" },
+        { "type": "null" }
+      ]
+    }
+  }
+}
+
+
