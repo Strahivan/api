@@ -1,5 +1,6 @@
 const User = require('../user/user.model');
-const stripe = require('stripe')(process.env.STRIPE_KEY);
+const config = require('../../config/environment');
+const stripe = require('stripe')(config.stripeKey);
 
 class MeController {
   constructor() {

@@ -59,7 +59,7 @@ async function notifyOrderChanged(req, res, next) {
         to: email,
         template: template,
         context: {
-          order_url: `${process.env.WEBAPP_URL}/user/requests/${req.params.request_id}`,
+          order_url: `${config.webappUrl}/user/requests/${req.params.request_id}`,
           order_number: order.id,
           status: order.status,
           product_name: order.product.name
