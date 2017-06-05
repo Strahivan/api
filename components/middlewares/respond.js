@@ -1,5 +1,6 @@
 function respond(req, res, next) {
-  return res.status(res.locals.status || 200).send(res.locals.data);
+  const response = res.locals.data || {status: 'OK'};
+  return res.status(res.locals.status || 200).send(response);
 }
 
 module.exports = respond;
