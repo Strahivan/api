@@ -6,7 +6,7 @@ const redis = require('../config/redis');
 const uuid = require('uuid');
 
 function getVerificationUrl(registrationId) {
-  return `https://${config.host}/auth/verify?token=${registrationId}`;
+  return `${config.host}/auth/verify?token=${registrationId}`;
 }
 
 async function signup(req, res, next) {
