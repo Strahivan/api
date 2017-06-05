@@ -79,6 +79,9 @@ class MeController {
   }
 
   getCards(req, res, next) {
+    if (!req.user.stripe_token) {
+      return next();
+    }
     stripe.customers.listCards(req.user.stripe_token)
       .then(cards => {
         res.locals.data = cards;
