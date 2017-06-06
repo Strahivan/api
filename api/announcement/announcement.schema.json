@@ -4,6 +4,20 @@
   "required": ["image"],
 
   "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "random.word"
+    },
+    "sequence": {
+      "anyOf": [
+        { "type": "integer" },
+        { "type": "null" }
+      ],
+      "minimum": 1,
+      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    },
     "description": {
       "type": "string",
       "minLength": 1,
@@ -28,11 +42,30 @@
       "maxLength": 255,
       "faker": "random.word"
     },
+    "active": {
+      "type": "boolean"
+    },
     "description_style": {
       "anyOf": [
         { "type": "object" },
         { "type": "null" }
       ]
+    },
+    "created_at": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "format": "date-time",
+      "chance": { "date": [{"string": true}]}
+    },
+    "updated_at": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "format": "date-time",
+      "chance": { "date": [{"string": true}]}
     }
   }
 }
