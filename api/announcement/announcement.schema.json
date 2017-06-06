@@ -9,7 +9,6 @@
         { "type": "string" },
         { "type": "null" }
       ],
-      "minLength": 1,
       "maxLength": 255,
       "faker": "random.word"
     },
@@ -26,7 +25,6 @@
         { "type": "string" },
         { "type": "null" }
       ],
-      "minLength": 1,
       "maxLength": 255,
       "faker": "random.word"
     },
@@ -43,7 +41,6 @@
         { "type": "string" },
         { "type": "null" }
       ],
-      "minLength": 1,
       "maxLength": 255,
       "faker": "random.word"
     },
@@ -52,7 +49,6 @@
         { "type": "string" },
         { "type": "null" }
       ],
-      "minLength": 1,
       "maxLength": 255,
       "faker": "random.word"
     },
