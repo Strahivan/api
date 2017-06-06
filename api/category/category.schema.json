@@ -10,6 +10,12 @@
       "maxLength": 255,
       "faker": "random.word"
     },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "random.word"
+    },
     "image": {
       "type": "string",
       "minLength": 1,
