@@ -16,6 +16,18 @@
       "maxLength": 255,
       "faker": "random.word"
     },
+    "lang": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "random.word"
+    },
+    "shortcode": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "random.word"
+    },
     "active": {
       "type": "boolean"
     }
