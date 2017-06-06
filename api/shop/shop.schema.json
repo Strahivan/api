@@ -5,11 +5,21 @@
 
   "properties": {
     "name": {
+      "type": "string",
+      "faker": "company.name"
+    },
+    "description": {
       "anyOf": [
         { "type": "string" },
-        { "type": "string" }
+        { "type": "null" }
       ],
       "faker": "company.name"
+    },
+    "image": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "random.word"
     },
     "owner_id": {
       "type": "integer",
@@ -17,6 +27,22 @@
     },
     "active": {
       "type": "boolean"
+    },
+    "created_at": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "format": "date-time",
+      "chance": { "date": [{"string": true}]}
+    },
+    "updated_at": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "format": "date-time",
+      "chance": { "date": [{"string": true}]}
     }
   }
 }
