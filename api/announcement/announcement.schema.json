@@ -5,7 +5,10 @@
 
   "properties": {
     "title": {
-      "type": "string",
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
       "minLength": 1,
       "maxLength": 255,
       "faker": "random.word"
@@ -19,25 +22,36 @@
       "faker": { "random.number": [{"max": 5, "min": 1}]}
     },
     "description": {
-      "type": "string",
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
       "minLength": 1,
       "maxLength": 255,
       "faker": "random.word"
     },
     "url": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 255,
-      "faker": "random.word"
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "maxLength": 512,
+      "faker": "internet.url"
     },
     "c2a": {
-      "type": "string",
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
       "minLength": 1,
       "maxLength": 255,
       "faker": "random.word"
     },
     "image": {
-      "type": "string",
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
       "minLength": 1,
       "maxLength": 255,
       "faker": "random.word"
