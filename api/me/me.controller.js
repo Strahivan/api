@@ -97,9 +97,9 @@ class MeController {
   }
 
   charge(req, res, next) {
-    // const amount = Number(req.body.amount) * this.currencyMultiplierMap[req.body.currency.toLowerCase()];
+    const amount = Number(req.body.amount) * this.currencyMultiplierMap[req.body.currency.toLowerCase()];
     stripe.charges.create({
-      amount: Number(req.body.amount),
+      amount: amount,
       source: req.body.source,
       currency: req.body.currency,
       customer: req.user.stripe_token
