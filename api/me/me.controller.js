@@ -48,34 +48,31 @@ class MeController {
   saveCard(req, res, next) {
     // create customer if there's no customer
     // else create a new source on current customer
-    if (!req.user.stripe_token) {
-      stripe.customers.create({
+    const createCustomer = () => {
+      return stripe.customers.create({
         description: req.user.name,
         email: req.user.email,
-        source: req.body.token.id,
         currency: req.user.currency
-      })
-      .then((response) => {
-        return this.model
-          .query()
-          .findById(req.user.id)
-          .patch({ stripe_token: response.id });
-      })
+      });
+    };
+    const addToken = (response) => {
+      req.user.stripe_token = response.id;
+      return this.model
+        .query()
+        .findById(req.user.id)
+        .patch({ stripe_token: response.id });
+    };
+    const createSource = () => stripe.customers.createSource(req.user.stripe_token, {
+      source: req.body.token.id
+    });
+
+    (!req.user.stripe_token ? createCustomer().then(addToken) : Promise.resolve())
+      .then(createSource)
       .then(response => {
-        res.locals.data = response;
+        res.locals.data = {card_id: response.id};
         return next();
       })
       .catch(err => next(err));
-    } else {
-      stripe.customers.createSource(req.user.stripe_token, {
-        source: req.body.token.id
-      })
-      .then(response => {
-        res.locals.data = response;
-        return next();
-      })
-      .catch(err => next(err));
-    }
   }
 
   getCards(req, res, next) {
@@ -100,9 +97,9 @@ class MeController {
   }
 
   charge(req, res, next) {
-    const amount = Number(req.body.amount) * this.currencyMultiplierMap[req.body.currency.toLowerCase()];
+    // const amount = Number(req.body.amount) * this.currencyMultiplierMap[req.body.currency.toLowerCase()];
     stripe.charges.create({
-      amount,
+      amount: Number(req.body.amount),
       source: req.body.source,
       currency: req.body.currency,
       customer: req.user.stripe_token
