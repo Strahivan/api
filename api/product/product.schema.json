@@ -112,14 +112,21 @@
         { "type": "null" }
       ]
     },
-    "editions": {
+    "variations": {
       "anyOf": [
         {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
-              "edition": { "type": "string" },
+              "name": { "type": "string" },
+              "gallery": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "description": { "type": "string" },
               "delta": { "type": "number" }
             }
           }

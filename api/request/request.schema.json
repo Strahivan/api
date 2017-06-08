@@ -134,12 +134,19 @@
         { "type": "null" }
       ]
     },
-    "edition": {
+    "variation": {
       "anyOf": [
         {
           "type": "object",
           "properties": {
-            "edition": { "type": "string" },
+            "name": { "type": "string" },
+            "gallery": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "description": { "type": "string" },
             "delta": { "type": "number" }
           }
         },
