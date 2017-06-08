@@ -185,6 +185,18 @@
     "stripe_charge_id": {
       "type": "string"
     },
+    "proof": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "faker": "image.imageUrl"
+          }
+        },
+        { "type": "null" }
+      ]
+    },
     "bank_reference": {
       "type": "string"
     },
