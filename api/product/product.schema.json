@@ -202,7 +202,7 @@
         { "type": "string" },
         { "type": "null" }
       ],
-      "maxLength": 1000,
+      "maxLength": 2000,
       "faker": "lorem.paragraph"
     },
     "created_at": {
