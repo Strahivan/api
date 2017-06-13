@@ -27,7 +27,6 @@ module.exports = function(req, res, next) {
     return next(new Error('Token has expired'));
   }
 
-  console.log(payload);
   return User
     .query()
     .findById(payload.sub)

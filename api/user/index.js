@@ -11,6 +11,7 @@ router.use(authenticate);
 const controller = new BaseController(User, 'user_id');
 
 router.get('/', processQuery, controller.index.bind(controller), responseHandler);
+router.post('/', controller.create.bind(controller), responseHandler);
 router.get('/:user_id', controller.show.bind(controller), responseHandler);
 router.put('/:user_id', controller.update.bind(controller), responseHandler);
 router.patch('/:user_id', controller.update.bind(controller), responseHandler);
