@@ -124,7 +124,7 @@ async function requestReset(req, res, next) {
 async function reset(req, res, next) {
   try {
     const hash = await User.encryptPassword(req.body.password);
-    const userId = await redis.get(req.body.token);
+    const userId = await redis.getAsync(req.body.token);
     redis.del(req.body.token);
 
     await User.query()
