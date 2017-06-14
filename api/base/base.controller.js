@@ -49,6 +49,12 @@ class BaseController {
 
   index(req, res, next) {
     const filter = getFilter(req, this.id, this.properties, this.userKey);
+    console.log('#######################');
+    console.log(req.query.where);
+    console.log('#######################');
+    console.log(filter);
+    console.log('#######################');
+    console.log(searchFilter);
     return findQuery(this.model)
       .registerFilter('search', searchFilter)
       .build(req.query.where)
