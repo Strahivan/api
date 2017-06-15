@@ -13,7 +13,12 @@ const controller = new BaseController(Shop, 'shop_id', 'owner_id');
 const router = new express.Router({ mergeParams: true });
 
 router.use('/:shop_id/products', productRouter);
-router.use('/:shop_id/requests', requestRouter);
+router.use('/:shop_id/requests',
+  (req, res, next) => {
+    req.userSpecific = false;
+    return next();
+  },
+  requestRouter);
 router.use('/:shop_id/batches', batchRouter);
 
 router.get('/', processQuery, controller.index.bind(controller), responseHandler);
