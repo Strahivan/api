@@ -6,7 +6,7 @@ const MeController = require('./me.controller');
 const requestRouter = require('../request');
 const tripRouter = require('../trip');
 const shopRouter = require('../shop');
-const userFilter = require('../../components/middlewares/user-filter');
+const addUserFilter = require('../../components/middlewares/user-filter');
 
 const router = new express.Router({ mergeParams: true });
 const controller = new MeController(User);
@@ -21,9 +21,9 @@ router.get('/cards', controller.getCards.bind(controller), responseHandler);
 router.delete('/cards/:card_id', controller.removeCard.bind(controller), responseHandler);
 router.post('/charge', controller.charge.bind(controller), responseHandler);
 
-router.use('/requests', userFilter(), requestRouter);
-router.use('/shops', userFilter(), shopRouter);
-router.use('/trips', userFilter(), tripRouter);
+router.use('/requests', addUserFilter(), requestRouter);
+router.use('/shops', addUserFilter(), shopRouter);
+router.use('/trips', addUserFilter(), tripRouter);
 
 // router.put('/unlink/:provider', controller.unlink.bind(controller));
 
