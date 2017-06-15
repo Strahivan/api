@@ -4,29 +4,48 @@ const searchFilter = require('../../components/filters/text-search');
 
 function rejectExtras(properties, params, idKey) {
   let data = Object.assign({}, params);
+  // if paramaters has the id key(usually the last param)
+  // then replace it's name with id
   if (data[idKey]) {
     const temp = data[idKey];
     delete data[idKey];
     data.id = temp;
   }
+
+  // reject the properties in url params that don't belong to the model
   data = _.pick(data, properties);
+  // convert everything to number
   return _.mapValues(data, Number);
 }
 
-function getFilter(req, idKey, properties, userKey) {
-  let filter;
-  if (userKey && req.userSpecific) {
-    filter = { [userKey]: req.user.id };
+function mapQueryParams(req, map) {
+  if (map) {
+    // for each value in map, if the value exists in params
+    // create a where query (join op) for that to fetch the data from
+    // related table
+    Object.entries(map).map(entry => {
+      if (req.params[entry[0]]) {
+        req.query = req.query ? req.query : {};
+        req.query.where = req.query.where ? req.query.where : {};
+        req.query.where[entry[1]] = req.params[entry[0]];
+      }
+    });
   }
-  return Object.assign({}, filter, rejectExtras(properties, req.params, idKey));
 }
 
+function getUserFilter(req, userKey) {
+  if (userKey && req.userSpecific) {
+    return { [userKey]: req.user.id };
+  }
+  return {};
+}
 
 class BaseController {
-  constructor(model, idKey, userKey) {
+  constructor(model, idKey, userKey, map) {
     this.model = model;
     this.id = idKey;
     this.userKey = userKey;
+    this.map = map;
     this.properties = Object.keys(this.model.jsonSchema.properties);
     this.properties.push('id');
   }
@@ -48,13 +67,8 @@ class BaseController {
   }
 
   index(req, res, next) {
-    const filter = getFilter(req, this.id, this.properties, this.userKey);
-    console.log('#######################');
-    console.log(req.query.where);
-    console.log('#######################');
-    console.log(filter);
-    console.log('#######################');
-    console.log(searchFilter);
+    const filter = Object.assign({}, getUserFilter(req, this.userKey), rejectExtras(this.properties, req.params, this.id));
+    mapQueryParams(req, this.map);
     return findQuery(this.model)
       .registerFilter('search', searchFilter)
       .build(req.query.where)
@@ -71,7 +85,7 @@ class BaseController {
   }
 
   show(req, res, next) {
-    const filter = getFilter(req, this.id, this.properties, this.userKey);
+    const filter = Object.assign({}, getUserFilter(req, this.userKey), rejectExtras(this.properties, req.params, this.id));
     return this.model.query()
       .skipUndefined()
       .where(filter)
@@ -89,7 +103,7 @@ class BaseController {
   }
 
   update(req, res, next) {
-    const filter = getFilter(req, this.id, this.properties, this.userKey);
+    const filter = Object.assign({}, getUserFilter(req, this.userKey), rejectExtras(this.properties, req.params, this.id));
     return this.model.query()
       .skipUndefined()
       .patch(req.body)
@@ -99,7 +113,7 @@ class BaseController {
   }
 
   destroy(req, res, next) {
-    const filter = getFilter(req, this.id, this.properties, this.userKey);
+    const filter = Object.assign({}, getUserFilter(req, this.userKey), rejectExtras(this.properties, req.params, this.id));
     return this.model.query()
       .skipUndefined()
       .patch({ active: false })
