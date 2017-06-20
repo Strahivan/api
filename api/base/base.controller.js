@@ -18,6 +18,14 @@ function rejectExtras(properties, params, idKey) {
   return _.mapValues(data, Number);
 }
 
+function filterActive(req, properties) {
+  if (!properties.includes('active')) {
+    if (req.query && req.query.where && (req.query.where['active:eq'] === true || req.query.where['active:eq'] === false )) {
+      delete req.query.where['active:eq'];
+    }
+  }
+}
+
 function mapQueryParams(req, map) {
   if (map) {
     // for each value in map, if the value exists in params
@@ -69,6 +77,7 @@ class BaseController {
   index(req, res, next) {
     const filter = Object.assign({}, getUserFilter(req, this.userKey), rejectExtras(this.properties, req.params, this.id));
     mapQueryParams(req, this.map);
+    filterActive(req, this.properties);
     return findQuery(this.model)
       .registerFilter('search', searchFilter)
       .build(req.query.where)
@@ -86,6 +95,7 @@ class BaseController {
 
   show(req, res, next) {
     const filter = Object.assign({}, getUserFilter(req, this.userKey), rejectExtras(this.properties, req.params, this.id));
+    filterActive(req, this.properties);
     return this.model.query()
       .skipUndefined()
       .where(filter)
