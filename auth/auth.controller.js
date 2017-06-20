@@ -20,7 +20,7 @@ async function signup(req, res, next) {
     const registrationId = uuid.v4();
     const user = await User
       .query()
-      .where('email', req.body.email);
+      .where('email', req.body.email.toLowerCase());
     if (user.length) {
       res.locals.status = 409;
       return next(new Error('a user with that email already exists'));
@@ -29,7 +29,7 @@ async function signup(req, res, next) {
     const hash = await User.encryptPassword(req.body.password);
     const userInfo = {
       hash,
-      email: req.body.email
+      email: req.body.email.toLowerCase()
     };
 
     await redis.hmsetAsync(registrationId, userInfo);
@@ -38,7 +38,7 @@ async function signup(req, res, next) {
     // create a mail sending task
     await mailQueue.add({
       from: `Novelship <${config.mail.registration}>`,
-      to: req.body.email,
+      to: req.body.email.toLowerCase(),
       template: 'signup',
       context: {
         verification_url: getVerificationUrl(registrationId)
@@ -54,7 +54,7 @@ async function signup(req, res, next) {
 async function login(req, res, next) {
   try {
     const user = await User.query()
-      .where({ email: req.body.email })
+      .where({ email: req.body.email.toLowerCase() })
       .first();
 
     if (user) {
@@ -98,7 +98,7 @@ function getResetContent(resetId) {
 async function requestReset(req, res, next) {
   try {
     const user = await User.query()
-      .where({ email: req.body.email })
+      .where({ email: req.body.email.toLowerCase() })
       .first();
     if (!user) {
       res.locals.status = 404;
@@ -109,7 +109,7 @@ async function requestReset(req, res, next) {
     redis.expire(resetId, 2 * 24 * 60 * 60);
     await mailQueue.add({
       from: `Novelship <${config.mail.support}>`,
-      to: req.body.email,
+      to: req.body.email.toLowerCase(),
       template: 'reset',
       context: {
         reset_url: getResetContent(resetId)
