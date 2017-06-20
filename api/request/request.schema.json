@@ -70,7 +70,7 @@
       "enum": ["pending", "confirmed", "processing", "ready", "delivering", "completed", "failed", "canceled"]
     },
     "collection_method": {
-      "enum": ["pickup", "post"]
+      "enum": ["pickup", "post", "courier"]
     },
     "total_price": {
       "anyOf": [
