@@ -28,6 +28,22 @@
       "maxLength": 255,
       "faker": "random.word"
     },
+    "tiers": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "min": { "type": "number" },
+              "max": { "type": "number" },
+              "rate": { "type": "number" }
+            }
+          }
+        },
+        { "type": "null" }
+      ]
+    },
     "ems_fee": {
       "type": "number",
       "minLength": 1,
