@@ -4,7 +4,7 @@
   "description": "cross country ship",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon --harmony-async-await app.js",
+    "dev": "nodemon --harmony-async-await --inspect app.js",
     "test": "abao docs/api.raml --hookfiles=**/*/*.e2e.js --hooks-only",
     "start": "node --harmony-async-await app.js",
     "mail": "node --harmony-async-await workers/mail.worker.js",
