@@ -28,6 +28,12 @@
       "maxLength": 255,
       "faker": "random.word"
     },
+    "ems_fee": {
+      "type": "number",
+      "minLength": 1,
+      "maxLength": 255,
+      "faker": "random.word"
+    },
     "active": {
       "type": "boolean"
     }

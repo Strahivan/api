@@ -76,7 +76,28 @@
       "faker": { "random.number": [{"max": 100, "min": 10}]
       }
     },
+    "cost": {
+      "anyOf": [
+        { "type": "number" }
+      ],
+      "faker": { "random.number": [{"max": 100, "min": 10}]
+      }
+    },
     "weight": {
+      "anyOf": [
+        { "type": "number" }
+      ],
+      "faker": { "random.number": [{"max": 100, "min": 10}]
+      }
+    },
+    "local_delivery_fee": {
+      "anyOf": [
+        { "type": "number" }
+      ],
+      "faker": { "random.number": [{"max": 100, "min": 10}]
+      }
+    },
+    "price_override": {
       "anyOf": [
         { "type": "number" }
       ],
