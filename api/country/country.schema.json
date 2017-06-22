@@ -1,57 +1,54 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "required": ["name"],
-
   "properties": {
-    "name": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 255,
-      "faker": "random.word"
-    },
+    "active": {"type": "boolean"},
     "currency": {
-      "type": "string",
-      "minLength": 1,
+      "faker": "random.word",
       "maxLength": 255,
-      "faker": "random.word"
+      "minLength": 1,
+      "type": "string"
+    },
+    "ems_fee": {
+      "faker": "random.word",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "number"
     },
     "lang": {
-      "type": "string",
-      "minLength": 1,
+      "faker": "random.word",
       "maxLength": 255,
-      "faker": "random.word"
+      "minLength": 1,
+      "type": "string"
+    },
+    "name": {
+      "faker": "random.word",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
     },
     "shortcode": {
-      "type": "string",
-      "minLength": 1,
+      "faker": "random.word",
       "maxLength": 255,
-      "faker": "random.word"
+      "minLength": 1,
+      "type": "string"
     },
     "tiers": {
       "anyOf": [
         {
-          "type": "array",
           "items": {
-            "type": "object",
             "properties": {
-              "min": { "type": "number" },
-              "max": { "type": "number" },
-              "rate": { "type": "number" }
-            }
-          }
+              "max": {"type": "number"},
+              "min": {"type": "number"},
+              "rate": {"type": "number"}
+            },
+            "type": "object"
+          },
+          "type": "array"
         },
-        { "type": "null" }
+        {"type": "null"}
       ]
-    },
-    "ems_fee": {
-      "type": "number",
-      "minLength": 1,
-      "maxLength": 255,
-      "faker": "random.word"
-    },
-    "active": {
-      "type": "boolean"
     }
-  }
+  },
+  "required": ["name"],
+  "type": "object"
 }

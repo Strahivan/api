@@ -1,31 +1,25 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "required": ["name"],
-
   "properties": {
-    "name": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "string" }
-      ],
-      "faker": "company.name"
+    "active": {"type": "boolean"},
+    "description": {
+      "faker": "random.word",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
     },
     "logo": {
-      "type": "string",
-      "minLength": 1,
+      "faker": "random.word",
       "maxLength": 255,
-      "faker": "random.word"
-    },
-    "description": {
-      "type": "string",
       "minLength": 1,
-      "maxLength": 255,
-      "faker": "random.word"
+      "type": "string"
     },
-    "active": {
-      "type": "boolean"
+    "name": {
+      "anyOf": [{"type": "string"}, {"type": "string"}],
+      "faker": "company.name"
     }
-  }
+  },
+  "required": ["name"],
+  "type": "object"
 }
 

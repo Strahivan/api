@@ -1,49 +1,34 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "required": ["name", "owner_id"],
-
   "properties": {
-    "name": {
-      "type": "string",
-      "faker": "company.name"
+    "active": {"type": "boolean"},
+    "created_at": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time"
     },
     "description": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
+      "anyOf": [{"type": "string"}, {"type": "null"}],
       "faker": "company.name"
     },
     "image": {
-      "type": "string",
-      "minLength": 1,
+      "faker": "random.word",
       "maxLength": 255,
-      "faker": "random.word"
+      "minLength": 1,
+      "type": "string"
     },
+    "name": {"faker": "company.name", "type": "string"},
     "owner_id": {
-      "type": "integer",
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
-    "active": {
-      "type": "boolean"
-    },
-    "created_at": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "format": "date-time",
-      "chance": { "date": [{"string": true}]}
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "type": "integer"
     },
     "updated_at": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "format": "date-time",
-      "chance": { "date": [{"string": true}]}
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time"
     }
-  }
+  },
+  "required": ["name", "owner_id"],
+  "type": "object"
 }
 

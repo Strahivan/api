@@ -1,21 +1,18 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "required": ["country_id", "name"],
-
   "properties": {
-    "name": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 255,
-      "faker": "random.word"
-    },
+    "active": {"type": "boolean"},
     "country_id": {
-      "type": "integer",
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "type": "integer"
     },
-    "active": {
-      "type": "boolean"
+    "name": {
+      "faker": "random.word",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
     }
-  }
+  },
+  "required": ["country_id", "name"],
+  "type": "object"
 }

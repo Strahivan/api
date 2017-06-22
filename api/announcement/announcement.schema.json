@@ -1,83 +1,51 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "required": ["image"],
-
   "properties": {
-    "title": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "maxLength": 255,
-      "faker": "random.word"
-    },
-    "sequence": {
-      "anyOf": [
-        { "type": "integer" },
-        { "type": "null" }
-      ],
-      "minimum": 1,
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
-    "description": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "maxLength": 255,
-      "faker": "random.word"
-    },
-    "url": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "maxLength": 512,
-      "faker": "internet.url"
-    },
+    "active": {"type": "boolean"},
     "c2a": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "maxLength": 255,
-      "faker": "random.word"
-    },
-    "image": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "maxLength": 255,
-      "faker": "random.word"
-    },
-    "active": {
-      "type": "boolean"
-    },
-    "description_style": {
-      "anyOf": [
-        { "type": "object" },
-        { "type": "null" }
-      ]
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "faker": "random.word",
+      "maxLength": 255
     },
     "created_at": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "format": "date-time",
-      "chance": { "date": [{"string": true}]}
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time"
+    },
+    "description": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "faker": "random.word",
+      "maxLength": 255
+    },
+    "description_style": {"anyOf": [{"type": "object"}, {"type": "null"}]},
+    "image": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "faker": "random.word",
+      "maxLength": 255
+    },
+    "sequence": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
+    },
+    "title": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "faker": "random.word",
+      "maxLength": 255
     },
     "updated_at": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "format": "date-time",
-      "chance": { "date": [{"string": true}]}
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time"
+    },
+    "url": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "faker": "internet.url",
+      "maxLength": 512
     }
-  }
+  },
+  "required": ["image"],
+  "type": "object"
 }
 
 

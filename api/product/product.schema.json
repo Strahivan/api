@@ -1,255 +1,178 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "required": ["name"],
-
   "properties": {
-    "category_id": {
-      "anyOf": [
-        { "type": "integer" },
-        { "type": "null" }
-      ],
-      "minimum": 1,
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
-    "shop_id": {
-      "anyOf": [
-        { "type": "integer" },
-        { "type": "null" }
-      ],
-      "minimum": 1,
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
+    "active": {"type": "boolean"},
     "brand_id": {
-      "anyOf": [
-        { "type": "integer" },
-        { "type": "null" }
-      ],
-      "minimum": 1,
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
     },
-    "source_id": {
-      "anyOf": [
-        { "type": "integer" },
-        { "type": "null" }
-      ],
-      "minimum": 1,
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
-    "order_count": {
-      "anyOf": [
-        { "type": "integer" },
-        { "type": "null" }
-      ],
-      "minimum": 1,
-      "faker": { "random.number": [{"max": 200, "min": 1}]}
-    },
-    "postage": {
-      "anyOf": [
-        { "type": "number" },
-        { "type": "null" }
-      ],
-      "faker": { "random.number": [{"max": 100, "min": 10}]
-      }
-    },
-    "courier": {
-      "anyOf": [
-        { "type": "number" },
-        { "type": "null" }
-      ],
-      "faker": { "random.number": [{"max": 100, "min": 10}]
-      }
-    },
-    "active": {
-      "type": "boolean"
-    },
-    "featured": {
-      "type": "boolean"
-    },
-    "preorder": {
-      "type": "boolean"
-    },
-    "price": {
-      "anyOf": [
-        { "type": "number" }
-      ],
-      "faker": { "random.number": [{"max": 100, "min": 10}]
-      }
-    },
-    "cost": {
-      "anyOf": [
-        { "type": "number" }
-      ],
-      "faker": { "random.number": [{"max": 100, "min": 10}]
-      }
-    },
-    "weight": {
-      "anyOf": [
-        { "type": "number" }
-      ],
-      "faker": { "random.number": [{"max": 100, "min": 10}]
-      }
-    },
-    "local_delivery_fee": {
-      "anyOf": [
-        { "type": "number" }
-      ],
-      "faker": { "random.number": [{"max": 100, "min": 10}]
-      }
-    },
-    "price_override": {
-      "anyOf": [
-        { "type": "number" }
-      ],
-      "faker": { "random.number": [{"max": 100, "min": 10}]
-      }
-    },
-    "dimensions": {
-      "type": "array",
-      "items": {
-        "type": "number"
-      },
-      "maxItems": 3,
-      "minItems": 2
-    },
-    "platform_charge": {
-      "anyOf": [
-        { "type": "number" }
-      ],
-      "faker": { "random.number": [{"max": 100, "min": 10}]
-      }
+    "category_id": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
     },
     "colors": {
       "anyOf": [
         {
-          "type": "array",
           "items": {
-            "type": "object",
             "properties": {
-              "name": { "type": "string" },
-              "gallery": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "color": { "type": "string" },
-              "delta": { "type": "number" }
-            }
-          }
+              "color": {"type": "string"},
+              "delta": {"type": "number"},
+              "gallery": {"items": {"type": "string"}, "type": "array"},
+              "name": {"type": "string"}
+            },
+            "type": "object"
+          },
+          "type": "array"
         },
-        { "type": "null" }
+        {"type": "null"}
       ]
     },
-    "variations": {
-      "anyOf": [
-        {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": { "type": "string" },
-              "gallery": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "description": { "type": "string" },
-              "delta": { "type": "number" }
-            }
-          }
-        },
-        { "type": "null" }
-      ]
+    "cost": {
+      "anyOf": [{"type": "number"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
     },
+    "courier": {
+      "anyOf": [{"type": "number"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
+    },
+    "created_at": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time"
+    },
+    "currency": {
+      "faker": "lorem.word",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+    },
+    "delivery_time": {
+      "faker": {"random.number": [{"max": 100, "min": 10}]},
+      "maxLength": 12,
+      "minLength": 1,
+      "type": "integer"
+    },
+    "description": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "faker": "lorem.paragraph",
+      "maxLength": 3000
+    },
+    "dimensions": {
+      "items": {"type": "number"},
+      "maxItems": 3,
+      "minItems": 2,
+      "type": "array"
+    },
+    "featured": {"type": "boolean"},
     "gallery": {
       "anyOf": [
         {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "faker": "image.imageUrl"
-          }
+          "items": {"faker": "image.imageUrl", "type": "string"},
+          "type": "array"
         },
-        { "type": "null" }
+        {"type": "null"}
       ]
+    },
+    "local_delivery_fee": {
+      "anyOf": [{"type": "number"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
+    },
+    "name": {
+      "faker": "lorem.sentence",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+    },
+    "order_count": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 200, "min": 1}]},
+      "minimum": 1
+    },
+    "platform_charge": {
+      "anyOf": [{"type": "number"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
+    },
+    "postage": {
+      "anyOf": [{"type": "number"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
+    },
+    "preorder": {"type": "boolean"},
+    "price": {
+      "anyOf": [{"type": "number"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
+    },
+    "price_override": {
+      "anyOf": [{"type": "number"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
+    },
+    "shop_id": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
     },
     "sizes": {
       "anyOf": [
         {
-          "type": "array",
           "items": {
-            "type": "object",
             "properties": {
-              "name": { "type": "string" },
-              "size": { "type": "string" },
-              "weight": { "type": "number" },
+              "delta": {"type": "number"},
               "dimensions": {
-                "type": "array",
-                "items": {
-                  "type": "number"
-                },
+                "items": {"type": "number"},
                 "maxItems": 3,
-                "minItems": 2
+                "minItems": 2,
+                "type": "array"
               },
-              "delta": { "type": "number" }
-            }
-          }
+              "name": {"type": "string"},
+              "size": {"type": "string"},
+              "weight": {"type": "number"}
+            },
+            "type": "object"
+          },
+          "type": "array"
         },
-        { "type": "null" }
+        {"type": "null"}
       ]
     },
-    "delivery_time": {
-      "type": "integer",
-      "minLength": 1,
-      "maxLength": 12,
-      "faker": { "random.number": [{"max": 100, "min": 10}] }
-    },
-    "name": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 255,
-      "faker": "lorem.sentence"
-    },
-    "currency": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 255,
-      "faker": "lorem.word"
-    },
-    "url": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "maxLength": 512,
-      "faker": "internet.url"
-    },
-    "description": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "maxLength": 3000,
-      "faker": "lorem.paragraph"
-    },
-    "created_at": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "format": "date-time",
-      "chance": { "date": [{"string": true}]}
+    "source_id": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
     },
     "updated_at": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time"
+    },
+    "url": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "faker": "internet.url",
+      "maxLength": 512
+    },
+    "variations": {
       "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "format": "date-time",
-      "chance": { "date": [{"string": true}]}
+        {
+          "items": {
+            "properties": {
+              "delta": {"type": "number"},
+              "description": {"type": "string"},
+              "gallery": {"items": {"type": "string"}, "type": "array"},
+              "name": {"type": "string"}
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        {"type": "null"}
+      ]
+    },
+    "weight": {
+      "anyOf": [{"type": "number"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
     }
-  }
+  },
+  "required": ["name"],
+  "type": "object"
 }
 

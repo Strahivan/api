@@ -1,70 +1,58 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "required": [],
-
   "properties": {
-    "name": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 255,
-      "faker": "name.findName"
-    },
-    "country_id": {
-      "type": "integer",
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
-    "role": {
-      "enum": ["admin"]
-    },
-    "email": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 255,
-      "format": "email",
-      "faker": "internet.email"
-    },
-    "hash": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 255,
-      "chance": "hash"
-    },
-    "avatar": {
-      "type": "string",
-      "faker": "image.imageUrl"
-    },
-    "stripe_token": {
-      "type": "string"
-    },
-    "phone": {
-      "type": "string"
-    },
+    "active": {"type": "boolean"},
     "address": {
-      "type": "object",
       "properties": {
+        "city": {"type": "string"},
         "line_1": {"type": "string"},
         "line_2": {"type": "string"},
-        "city": {"type": "string"},
         "zip": {"type": "string"}
-      }
+      },
+      "type": "object"
     },
-    "active": {
-      "type": "boolean"
+    "avatar": {"faker": "image.imageUrl", "type": "string"},
+    "country_id": {
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "type": "integer"
     },
     "created_at": {
-      "type": "string",
+      "chance": {"date": [{"string": true}]},
       "format": "date-time",
-      "minLength": 1,
       "maxLength": 255,
-      "chance": { "date": [{"string": true}]}
+      "minLength": 1,
+      "type": "string"
     },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time",
-      "minLength": 1,
+    "email": {
+      "faker": "internet.email",
+      "format": "email",
       "maxLength": 255,
-      "chance": { "date": [{"string": true}]}
+      "minLength": 1,
+      "type": "string"
+    },
+    "hash": {
+      "chance": "hash",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+    },
+    "name": {
+      "faker": "name.findName",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+    },
+    "phone": {"type": "string"},
+    "role": {"enum": ["admin"]},
+    "stripe_token": {"type": "string"},
+    "updated_at": {
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
     }
-  }
+  },
+  "required": [],
+  "type": "object"
 }

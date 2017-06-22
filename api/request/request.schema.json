@@ -1,232 +1,166 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "required": ["customer_id", "source_id", "destination_id", "product_id"],
-
   "properties": {
-    "customer_id": {
-      "anyOf": [
-        { "type": "integer" },
-        { "type": "null" }
-      ],
-      "minimum": 1,
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
-    "source_id": {
-      "anyOf": [
-        { "type": "integer" },
-        { "type": "null" }
-      ],
-      "minimum": 1,
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
+    "active": {"type": "boolean"},
+    "bank_reference": {"type": "string"},
+    "base_price": {
+      "anyOf": [{"type": "number"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
     },
     "batch_id": {
-      "anyOf": [
-        { "type": "integer" },
-        { "type": "null" }
-      ],
-      "minimum": 1,
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
     },
-    "destination_id": {
-      "anyOf": [
-        { "type": "integer" },
-        { "type": "null" }
-      ],
-      "minimum": 1,
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
-    "product_id": {
-      "anyOf": [
-        { "type": "integer" },
-        { "type": "null" }
-      ],
-      "minimum": 1,
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
-    "trip_id": {
-      "anyOf": [
-        { "type": "integer" },
-        { "type": "null" }
-      ],
-      "minimum": 1,
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
-    "preorder": {
-      "type": "boolean"
-    },
-    "urgent": {
-      "type": "boolean"
-    },
-    "delivery_date": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "format": "date-time",
-      "chance": { "date": [{"string": true}]}
-    },
-    "status": {
-      "enum": ["pending", "confirmed", "processing", "ready", "delivering", "completed", "failed", "canceled"]
-    },
-    "collection_method": {
-      "enum": ["pickup", "post", "courier"]
-    },
-    "total_price": {
-      "anyOf": [
-        { "type": "number" },
-        { "type": "null" }
-      ],
-      "faker": { "random.number": [{"max": 100, "min": 10}]
-      }
-    },
-    "base_price": {
-      "anyOf": [
-        { "type": "number" },
-        { "type": "null" }
-      ],
-      "faker": { "random.number": [{"max": 100, "min": 10}]
-      }
-    },
-    "platform_charge": {
-      "anyOf": [
-        { "type": "number" },
-        { "type": "null" }
-      ],
-      "faker": { "random.number": [{"max": 100, "min": 10}]
-      }
-    },
-    "postage": {
-      "anyOf": [
-        { "type": "number" },
-        { "type": "null" }
-      ],
-      "faker": { "random.number": [{"max": 100, "min": 10}]
-      }
-    },
-    "count": {
-      "type": "number",
-      "faker": { "random.number": [{"max": 10, "min": 1}]
-      }
-    },
-    "currency": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 255,
-      "faker": "lorem.word"
-    },
+    "collection_method": {"enum": ["pickup", "post", "courier"]},
     "color": {
       "anyOf": [
         {
-          "type": "object",
           "properties": {
-            "name": { "type": "string" },
-            "gallery": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "color": { "type": "string" },
-            "delta": { "type": "number" }
-          }
+            "color": {"type": "string"},
+            "delta": {"type": "number"},
+            "gallery": {"items": {"type": "string"}, "type": "array"},
+            "name": {"type": "string"}
+          },
+          "type": "object"
         },
-        { "type": "null" }
+        {"type": "null"}
       ]
     },
-    "variation": {
-      "anyOf": [
-        {
-          "type": "object",
-          "properties": {
-            "name": { "type": "string" },
-            "gallery": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "description": { "type": "string" },
-            "delta": { "type": "number" }
-          }
-        },
-        { "type": "null" }
-      ]
+    "count": {
+      "faker": {"random.number": [{"max": 10, "min": 1}]},
+      "type": "number"
     },
-    "size": {
-      "anyOf": [
-        {
-          "type": "object",
-          "properties": {
-            "size": { "type": "string" },
-            "weight": { "type": "number" },
-            "dimensions": {
-              "type": "array",
-              "items": {
-                "type": "number"
-              },
-              "maxItems": 3,
-              "minItems": 2
-            },
-            "delta": { "type": "number" }
-          }
-        },
-        { "type": "null" }
-      ]
+    "created_at": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time"
+    },
+    "currency": {
+      "faker": "lorem.word",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+    },
+    "customer_id": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
+    },
+    "delivery_date": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time"
+    },
+    "destination_id": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
     },
     "instructions": {
-      "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "maxLength": 1000,
-      "faker": "lorem.paragraph"
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "faker": "lorem.paragraph",
+      "maxLength": 1000
     },
-    "stripe_charge_id": {
-      "type": "string"
+    "platform_charge": {
+      "anyOf": [{"type": "number"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
+    },
+    "postage": {
+      "anyOf": [{"type": "number"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
+    },
+    "preorder": {"type": "boolean"},
+    "product_id": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
     },
     "proof": {
       "anyOf": [
         {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "faker": "image.imageUrl"
-          }
+          "items": {"faker": "image.imageUrl", "type": "string"},
+          "type": "array"
         },
-        { "type": "null" }
+        {"type": "null"}
       ]
     },
-    "bank_reference": {
-      "type": "string"
-    },
     "shipping_address": {
-      "type": "object",
       "properties": {
+        "city": {"type": "string"},
         "line_1": {"type": "string"},
         "line_2": {"type": "string"},
-        "city": {"type": "string"},
         "zip": {"type": "string"}
-      }
+      },
+      "type": "object"
     },
-    "active": {
-      "type": "boolean"
-    },
-    "created_at": {
+    "size": {
       "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "format": "date-time",
-      "chance": { "date": [{"string": true}]}
+        {
+          "properties": {
+            "delta": {"type": "number"},
+            "dimensions": {
+              "items": {"type": "number"},
+              "maxItems": 3,
+              "minItems": 2,
+              "type": "array"
+            },
+            "size": {"type": "string"},
+            "weight": {"type": "number"}
+          },
+          "type": "object"
+        },
+        {"type": "null"}
+      ]
+    },
+    "source_id": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
+    },
+    "status": {
+      "enum": [
+        "canceled",
+        "completed",
+        "confirmed",
+        "delivering",
+        "failed",
+        "pending",
+        "processing",
+        "ready"
+      ]
+    },
+    "stripe_charge_id": {"type": "string"},
+    "total_price": {
+      "anyOf": [{"type": "number"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
+    },
+    "trip_id": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
     },
     "updated_at": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time"
+    },
+    "urgent": {"type": "boolean"},
+    "variation": {
       "anyOf": [
-        { "type": "string" },
-        { "type": "null" }
-      ],
-      "format": "date-time",
-      "chance": { "date": [{"string": true}]}
+        {
+          "properties": {
+            "delta": {"type": "number"},
+            "description": {"type": "string"},
+            "gallery": {"items": {"type": "string"}, "type": "array"},
+            "name": {"type": "string"}
+          },
+          "type": "object"
+        },
+        {"type": "null"}
+      ]
     }
-  }
+  },
+  "required": ["customer_id", "source_id", "destination_id", "product_id"],
+  "type": "object"
 }

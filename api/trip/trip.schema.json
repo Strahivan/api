@@ -1,67 +1,58 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "required": ["traveler_id", "origin_id", "destination_id"],
-
   "properties": {
-    "traveler_id": {
-      "type": "integer",
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
-    "origin_id": {
-      "type": "integer",
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
-    "destination_id": {
-      "type": "integer",
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
-    "zone_id": {
-      "type": "integer",
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
-    },
-    "note": {
-      "type": "string",
-      "faker": "lorem.paragraph"
-    },
-    "chat_id": {
-      "type": "string",
-      "chance": "hash"
+    "active": {"type": "boolean"},
+    "arrival": {
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
     },
     "available_weight": {
-      "type": "number",
-      "faker": { "random.number": [{"max": 5, "min": 1}]}
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "type": "number"
+    },
+    "chat_id": {"chance": "hash", "type": "string"},
+    "created_at": {
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
     },
     "departure": {
-      "type": "string",
+      "chance": {"date": [{"string": true}]},
       "format": "date-time",
-      "minLength": 1,
       "maxLength": 255,
-      "chance": { "date": [{"string": true}]}
-    },
-    "arrival": {
-      "type": "string",
-      "format": "date-time",
       "minLength": 1,
-      "maxLength": 255,
-      "chance": { "date": [{"string": true}]}
+      "type": "string"
     },
-    "active": {
-      "type": "boolean"
+    "destination_id": {
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "type": "integer"
     },
-    "created_at": {
-      "type": "string",
-      "format": "date-time",
-      "minLength": 1,
-      "maxLength": 255,
-      "chance": { "date": [{"string": true}]}
+    "note": {"faker": "lorem.paragraph", "type": "string"},
+    "origin_id": {
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "type": "integer"
+    },
+    "traveler_id": {
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "type": "integer"
     },
     "updated_at": {
-      "type": "string",
+      "chance": {"date": [{"string": true}]},
       "format": "date-time",
-      "minLength": 1,
       "maxLength": 255,
-      "chance": { "date": [{"string": true}]}
+      "minLength": 1,
+      "type": "string"
+    },
+    "zone_id": {
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "type": "integer"
     }
-  }
+  },
+  "required": ["traveler_id", "origin_id", "destination_id"],
+  "type": "object"
 }
