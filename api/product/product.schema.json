@@ -57,7 +57,7 @@
     "description": {
       "anyOf": [{"type": "string"}, {"type": "null"}],
       "faker": "lorem.paragraph",
-      "maxLength": 3000
+      "maxLength": 10000
     },
     "dimensions": {
       "items": {"type": "number"},
