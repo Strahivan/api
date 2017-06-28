@@ -8,6 +8,7 @@ const brand = require('./api/brand');
 const batch = require('./api/batch');
 const product = require('./api/product');
 const category = require('./api/category');
+const collection = require('./api/collection');
 const announcement = require('./api/announcement');
 const me = require('./api/me');
 const auth = require('./auth');
@@ -18,6 +19,7 @@ module.exports = (app) => {
   app.use('/announcements', announcement);
   app.use('/countries', country);
   app.use('/categories', category);
+  app.use('/collections', collection);
   app.use('/requests', request);
   app.use('/trips', trip);
   app.use('/products', product);
