@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "active": {"type": "boolean"},
+    "banner": {
+      "faker": "image.imageUrl",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+    },
+    "creator_id": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
+    },
+    "created_at": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time"
+    },
+    "description": {
+      "faker": "lorem.paragraph",
+      "maxLength": 5000,
+      "minLength": 100,
+      "type": "string"
+    },
+    "name": {
+      "faker": "lorem.sentence",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+    },
+    "picture": {
+      "faker": "image.imageUrl",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+    },
+    "updated_at": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": {"date": [{"string": true}]},
+      "format": "date-time"
+    }
+  },
+  "required": ["name"],
+  "type": "object"
+}
