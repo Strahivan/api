@@ -20,7 +20,7 @@ function rejectExtras(properties, params, idKey) {
 
 function filterActive(req, properties) {
   if (!properties.includes('active')) {
-    if (req.query && req.query.where && (req.query.where['active:eq'] === true || req.query.where['active:eq'] === false )) {
+    if (req.query && req.query.where && (req.query.where['active:eq'] === 'true' || req.query.where['active:eq'] === 'false')) {
       delete req.query.where['active:eq'];
     }
   }
@@ -119,6 +119,20 @@ class BaseController {
       .patch(req.body)
       .where(filter)
       .then(affected => next())
+      .catch(err => next(err));
+  }
+
+  delete(req, res, next) {
+    const filter = Object.assign({}, getUserFilter(req, this.userKey), rejectExtras(this.properties, req.params, this.id));
+    console.log(filter);
+    return this.model.query()
+      .skipUndefined()
+      .where(filter)
+      .delete()
+      .then(() => {
+        res.locals.status = 204;
+        return next();
+      })
       .catch(err => next(err));
   }
 
