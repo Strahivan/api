@@ -87,6 +87,15 @@
       "faker": {"random.number": [{"max": 100, "min": 10}]}
     },
     "preorder": {"type": "boolean"},
+    "product_details": {
+      "anyOf": [
+        {
+          "properties": {"name": {"type": "string"}, "url": {"type": "string"}},
+          "type": "object"
+        },
+        {"type": "null"}
+      ]
+    },
     "product_id": {
       "anyOf": [{"type": "integer"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 5, "min": 1}]},
@@ -109,6 +118,11 @@
         "zip": {"type": "string"}
       },
       "type": "object"
+    },
+    "shop_id": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
     },
     "size": {
       "anyOf": [
@@ -147,6 +161,7 @@
       ]
     },
     "stripe_charge_id": {"type": "string"},
+    "merchant_message": {"type": "string"},
     "tiers": {
       "anyOf": [
         {
@@ -197,6 +212,6 @@
       "faker": {"random.number": [{"max": 100, "min": 10}]}
     }
   },
-  "required": ["customer_id", "source_id", "destination_id", "product_id"],
+  "required": ["customer_id", "source_id", "destination_id"],
   "type": "object"
 }
