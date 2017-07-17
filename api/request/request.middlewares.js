@@ -6,30 +6,42 @@ const Request = require('./request.model');
 
 async function notifyOrderCreated(req, res, next) {
   try {
-    const recipients = [];
-    const product = await Product.query()
-      .findById(res.locals.data.product_id);
-
     const shop = await Shop.query()
-      .findById(product.shop_id)
+      .findById(res.locals.data.shop_id)
       .eager('[owner]');
 
+    const recipients = [];
+    const context = {
+      store_url: `${config.webappUrl}/user/shops/${res.locals.data.shop_id}`,
+      order_url: `${config.webappUrl}/user/shops/${res.locals.data.shop_id}/requests/${res.locals.data.id}`,
+      store_name: shop.name
+    };
     recipients.push(shop.owner.email);
     recipients.push(config.mail.sales);
+
+    if (req.body.product_details) {
+      Object.assign(context, {
+        product_url: res.locals.data.product_details.url,
+        product_name: res.locals.data.product_details.name
+      });
+    } else {
+      const product = await Product.query()
+        .findById(res.locals.data.product_id);
+
+      Object.assign(context, {
+        product_url: `${config.webappUrl}/products/${res.locals.data.product_id}`,
+        product_name: product.name
+      });
+    }
 
     await mailQueue.add({
       from: `Novelship <${config.mail.notify}>`,
       to: recipients,
       template: 'new-order',
-      context: {
-        store_url: `${config.webappUrl}/user/shops/${shop.id}`,
-        order_url: `${config.webappUrl}/user/shops/${shop.id}/requests/${res.locals.data.id}`,
-        product_url: `${config.webappUrl}/products/${res.locals.data.product_id}`,
-        product_name: product.name,
-        store_name: shop.name
-      }
+      context: context
     });
-    next();
+
+    return next();
   } catch (e) {
     /* handle error */
     return next(e);
@@ -48,7 +60,7 @@ async function notifyOrderChanged(req, res, next) {
 
       if (req.body.status === 'completed') {
         const shop = await Shop.query()
-          .findById(order.product.shop_id)
+          .findById(order.shop_id)
           .eager('[owner]');
 
         email = shop.owner.email;
@@ -62,11 +74,11 @@ async function notifyOrderChanged(req, res, next) {
           order_url: `${config.webappUrl}/user/requests/${req.params.request_id}`,
           order_number: order.id,
           status: order.status,
-          product_name: order.product.name
+          product_name: (order.product && order.product.name) || (order.product_details && order.product_details.name)
         }
       });
 
-      next();
+      return next();
     } catch (e) {
       return next(e);
     }
