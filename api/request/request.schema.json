@@ -78,6 +78,7 @@
       "anyOf": [{"type": "number"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 100, "min": 10}]}
     },
+    "merchant_message": {"type": "string"},
     "platform_charge": {
       "anyOf": [{"type": "number"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 100, "min": 10}]}
@@ -90,7 +91,7 @@
     "product_details": {
       "anyOf": [
         {
-          "properties": {"name": {"type": "string"}, "url": {"type": "string"}},
+          "properties": {"name": {"type": "string"}, "url": {"type": "string"}, "picture": {"type": "string"}},
           "type": "object"
         },
         {"type": "null"}
@@ -157,11 +158,12 @@
         "failed",
         "pending",
         "processing",
-        "ready"
+        "ready",
+        "verify",
+        "approval"
       ]
     },
     "stripe_charge_id": {"type": "string"},
-    "merchant_message": {"type": "string"},
     "tiers": {
       "anyOf": [
         {
