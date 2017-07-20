@@ -6,7 +6,8 @@ const Request = require('./request.model');
 const BaseController = require('../base/base.controller');
 const middlewares = require('./request.middlewares');
 
-const controller = new BaseController(Request, 'request_id', 'customer_id', {shop_id: 'product.shop_id:eq'});
+// const controller = new BaseController(Request, 'request_id', 'customer_id', {shop_id: 'product.shop_id:eq'});
+const controller = new BaseController(Request, 'request_id', 'customer_id');
 
 const router = new express.Router({ mergeParams: true });
 
