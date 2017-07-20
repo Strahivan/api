@@ -20,7 +20,8 @@
               "color": {"type": "string"},
               "delta": {"type": "number"},
               "gallery": {"items": {"type": "string"}, "type": "array"},
-              "name": {"type": "string"}
+              "name": {"type": "string"},
+              "out_of_stock": {"type": "boolean"}
             },
             "type": "object"
           },
@@ -126,7 +127,8 @@
               },
               "name": {"type": "string"},
               "size": {"type": "string"},
-              "weight": {"type": "number"}
+              "weight": {"type": "number"},
+              "out_of_stock": {"type": "boolean"}
             },
             "type": "object"
           },
@@ -158,7 +160,8 @@
               "delta": {"type": "number"},
               "description": {"type": "string"},
               "gallery": {"items": {"type": "string"}, "type": "array"},
-              "name": {"type": "string"}
+              "name": {"type": "string"},
+              "out_of_stock": {"type": "boolean"}
             },
             "type": "object"
           },
