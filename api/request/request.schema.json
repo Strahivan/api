@@ -160,7 +160,8 @@
         "processing",
         "ready",
         "verify",
-        "approval"
+        "approval",
+        "rejected"
       ]
     },
     "stripe_charge_id": {"type": "string"},
