@@ -1,6 +1,6 @@
 const Base = require('../base/base.model');
+const path = require('path');
 const schema = require('./collection_product.schema.json');
-const Collection = require('../collection/collection.model');
 const Product = require('../product/product.model');
 
 class CollectionProduct extends Base {
@@ -16,7 +16,7 @@ class CollectionProduct extends Base {
     return {
       collection: {
         relation: Base.BelongsToOneRelation,
-        modelClass: Collection,
+        modelClass: path.normalize(`${__dirname}/../collection/collection.model`),
         join: {
           from: 'collection_product.collection_id',
           to: 'collection.id'
