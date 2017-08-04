@@ -31,6 +31,10 @@
       "anyOf": [{"type": "number"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 100, "min": 10}]}
     },
+    "discount": {
+      "anyOf": [{"type": "number"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
+    },
     "count": {
       "faker": {"random.number": [{"max": 10, "min": 1}]},
       "type": "number"

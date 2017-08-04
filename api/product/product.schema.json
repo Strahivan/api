@@ -34,6 +34,10 @@
       "anyOf": [{"type": "number"}],
       "faker": {"random.number": [{"max": 100, "min": 10}]}
     },
+    "discount": {
+      "anyOf": [{"type": "number"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
+    },
     "courier": {
       "anyOf": [{"type": "number"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 100, "min": 10}]}
@@ -147,6 +151,7 @@
       "chance": {"date": [{"string": true}]},
       "format": "date-time"
     },
+    "sold_out": {"type": "boolean"},
     "url": {
       "anyOf": [{"type": "string"}, {"type": "null"}],
       "faker": "internet.url",
