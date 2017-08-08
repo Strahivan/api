@@ -124,7 +124,6 @@ class BaseController {
 
   delete(req, res, next) {
     const filter = Object.assign({}, getUserFilter(req, this.userKey), rejectExtras(this.properties, req.params, this.id));
-    console.log(filter);
     return this.model.query()
       .skipUndefined()
       .where(filter)

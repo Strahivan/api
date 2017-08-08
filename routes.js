@@ -34,6 +34,7 @@ module.exports = (app) => {
   app.use('/auth', auth);
 
   app.use((err, req, res, next) => {
+    console.log(req.user && req.user.email);
     console.log(err);
     if (err) {
       const status = res.locals.status || err.statusCode || err.status || 400;
