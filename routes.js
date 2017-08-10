@@ -38,7 +38,7 @@ module.exports = (app) => {
     console.log(err);
     if (err) {
       const status = res.locals.status || err.statusCode || err.status || 400;
-      return res.status(status).send({err: err.message});
+      return res.status(status).send({message: err.message});
     }
     return next();
   });
