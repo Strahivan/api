@@ -1,0 +1,84 @@
+{% include "components/email-templates/layout.nunjucks" %}
+
+{% block content %}
+  <body>
+    <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="center">
+          <table class="email-content" width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td class="email-masthead">
+                <a href="https://novelship.com" class="email-masthead_name">
+                  Novelship
+                </a>
+              </td>
+            </tr>
+            <!-- Email Body -->
+            <tr>
+              <td class="email-body" width="100%" cellpadding="0" cellspacing="0">
+                <table class="email-body_inner" align="center" width="570" cellpadding="0" cellspacing="0">
+                  <!-- Body content -->
+                  <tr>
+                    <td class="content-cell">
+                      <p class="message">{{status.message}}</p>
+                      <!-- Action -->
+                      <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td align="center">
+                            <!-- Border based button
+                       https://litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design -->
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                              <tr>
+                                <td align="center">
+                                  <table border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                      <td>
+                                        <a href="{{webappUrl + '/user/shops/' + shop.id + '/requests/' + order.id}}" class="button button--" target="_blank">{{ "Check Availability and Quote Price" if order.status == "pending" else "Verify Bank Transfer" }}</a>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                      <p>Have any question or feedback? <a href="mailto:support@novelship.com">Let us know</a>.
+                      </p>
+                      <!-- Sub copy -->
+                      <table class="body-sub">
+                        <tr>
+                          <td>
+                            <p class="sub">If you’re having trouble with the button above, copy and paste the URL below into your web browser.</p>
+                            <p class="sub">{{webappUrl + '/user/shops/' + shop.id + '/requests/' + order.id}}</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td class="content-cell" align="center">
+                      <p class="sub align-center">&copy; 2017 Novelship. All rights reserved.</p>
+                      <p class="sub align-center">
+                        Athenadesk PTE Ltd
+                        <br>195 Pearl’s Hill Terrace
+                        <br>S168976
+                        <br>Singapore
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+{% endblock %}
