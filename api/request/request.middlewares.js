@@ -3,6 +3,8 @@ const Product = require('../product/product.model');
 const mailQueue = require('../../config/queue').mailQueue;
 const config = require('../../config/environment');
 const Request = require('./request.model');
+const statusMap = require('../../components/status-map');
+const shopStatusMap = require('../../components/shop-status-map');
 
 async function notifyOrderCreated(req, res, next) {
   try {
@@ -48,6 +50,30 @@ async function notifyOrderCreated(req, res, next) {
   }
 }
 
+async function sendUpdateToShopOwner(req, order) {
+  console.log('hello');
+  const shop = await Shop.query()
+    .findById(order.shop_id)
+    .eager('[owner]');
+
+  const email = shop.owner.email;
+  const template = 'shop-order-status';
+  const status = shopStatusMap[req.body.status];
+
+  return mailQueue.add({
+    from: `Novelship <${config.mail.notify}>`,
+    to: email,
+    template: template,
+    context: {
+      webappUrl: config.webappUrl,
+      order: order,
+      shop: shop,
+      product: order.product || order.product_details,
+      status: status
+    }
+  });
+}
+
 async function notifyOrderChanged(req, res, next) {
   if (req.body.status) {
     try {
@@ -55,26 +81,23 @@ async function notifyOrderChanged(req, res, next) {
         .findById(req.params.request_id)
         .eager('[customer, product]');
 
-      let email = order.customer.email;
-      let template = 'order-status';
+      const email = order.customer.email;
+      const template = 'order-status';
+      status = statusMap[req.body.status];
 
-      if (req.body.status === 'completed') {
-        const shop = await Shop.query()
-          .findById(order.shop_id)
-          .eager('[owner]');
-
-        email = shop.owner.email;
-        template = 'order-status';
+      if (req.body.status === 'verify' || req.body.status === 'pending') {
+        await sendUpdateToShopOwner(req, order);
       }
+
       await mailQueue.add({
         from: `Novelship <${config.mail.notify}>`,
         to: email,
         template: template,
         context: {
-          order_url: `${config.webappUrl}/user/requests/${req.params.request_id}`,
-          order_number: order.id,
-          status: order.status,
-          product_name: (order.product && order.product.name) || (order.product_details && order.product_details.name)
+          webappUrl: config.webappUrl,
+          order: order,
+          product: order.product || order.product_details,
+          status: status
         }
       });
 
