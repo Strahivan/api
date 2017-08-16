@@ -8,7 +8,9 @@ const all = {
     region: process.env.AWS_REGION
   },
   facebook: {
-    profile: 'https://graph.facebook.com/v2.8/me'
+    profile: 'https://graph.facebook.com/v2.8/me',
+    app_id: process.env.FACEBOOK_APPID,
+    app_secret: process.env.FACEBOOK_APPSECRET
   },
   token: process.env.TOKEN_SECRET,
   redis: process.env.REDIS_URL,
