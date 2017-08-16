@@ -16,7 +16,7 @@ const app = express()
   .use(bodyParser.json())
   .use(morgan('dev'))
   .use(compress())
-  .use(cors())
+  .use(cors({origin: process.env.WEBAPP_URL, credentials: true}))
   .set('json spaces', 2);
 
 registerApi(app);
