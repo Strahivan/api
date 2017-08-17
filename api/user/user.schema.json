@@ -49,6 +49,7 @@
       "type": "string"
     },
     "phone": {"type": "string"},
+    "meta": {"type": "object"},
     "role": {"enum": ["admin"]},
     "stripe_token": {"type": "string"},
     "updated_at": {
