@@ -30,6 +30,11 @@
       "minLength": 1,
       "type": "string"
     },
+    "sequence": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
+    },
     "picture": {
       "faker": "image.imageUrl",
       "maxLength": 255,
