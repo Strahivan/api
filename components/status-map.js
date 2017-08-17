@@ -23,6 +23,9 @@ module.exports = {
   ready: {
     message: 'Ahoy! Your item is now ready for pickup!'
   },
+  shipping: {
+    message: 'We have began shipping your item from our foreign warehouse!'
+  },
   verify: {
     message: 'Our in house goblins are verifying the amount transferred. We\'ll confirm the order soon. Hold tight!'
   },
