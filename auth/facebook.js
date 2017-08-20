@@ -16,6 +16,7 @@ exports.authenticate = function(req, res, next) {
   // Step 1. Exchange authorization code for access token.
   request.get({ url: accessTokenUrl, qs: params, json: true }, (err, response, accessToken) => {
     if (response.statusCode !== 200) {
+      console.log(response);
       return next(new Error(accessToken.error.message));
     }
 
