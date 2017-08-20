@@ -10,7 +10,7 @@ exports.authenticate = function(req, res, next) {
     code: req.body.code,
     client_id: req.body.clientId,
     client_secret: config.facebook.app_secret,
-    redirect_uri: req.body.redirectUri
+    redirect_uri: req.body.redirectUri || config.webappUrl
   };
 
   // Step 1. Exchange authorization code for access token.
