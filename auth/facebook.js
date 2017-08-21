@@ -21,6 +21,12 @@ exports.authenticate = function(req, res, next) {
 
     // Step 2. Retrieve profile information about the current user.
     request.get({ url: graphApiUrl, qs: accessToken, json: true }, (fberr, fbresponse, profile) => {
+      console.log('*******************************************');
+      console.log(fberr);
+      console.log('*******************************************');
+      console.log(fbresponse);
+      console.log('*******************************************');
+      console.log(profile);
       if (response.statusCode !== 200) {
         return next(new Error(profile.error.message));
       }
