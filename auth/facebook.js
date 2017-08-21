@@ -16,15 +16,11 @@ exports.authenticate = function(req, res, next) {
   // Step 1. Exchange authorization code for access token.
   request.get({ url: accessTokenUrl, qs: params, json: true }, (err, response, accessToken) => {
     if (response.statusCode !== 200) {
-      console.log(response);
       return next(new Error(accessToken.error.message));
     }
 
-    console.log(accessToken);
-
     // Step 2. Retrieve profile information about the current user.
     request.get({ url: graphApiUrl, qs: accessToken, json: true }, (fberr, fbresponse, profile) => {
-      console.log(profile);
       if (response.statusCode !== 200) {
         return next(new Error(profile.error.message));
       }
@@ -54,7 +50,7 @@ exports.authenticate = function(req, res, next) {
                   .$query()
                   .patchAndFetch({
                     facebook: profile.id,
-                    picture: user.picture || 'https://graph.facebook.com/v2.10/' + profile.id + '/picture?type=large',
+                    avatar: user.avatar || 'https://graph.facebook.com/v2.10/' + profile.id + '/picture?type=large',
                     name: user.name || profile.name
                   })
                   .then(userdata => {
@@ -88,7 +84,29 @@ exports.authenticate = function(req, res, next) {
                 res.locals.data = { token: authUtils.createJWT(userdata) };
                 return next();
               })
-              .catch(error => next(error));
+              .catch(error => {
+                if (error.constraint === 'user_email_unique') {
+                  return User
+                    .query()
+                    .where({email: profile.email})
+                    .first()
+                    .then(user => {
+                      return user
+                        .$query()
+                        .patchAndFetch({
+                          facebook: profile.id,
+                          avatar: user.avatar || 'https://graph.facebook.com/v2.10/' + profile.id + '/picture?type=large',
+                          name: user.name || profile.name
+                        });
+                    })
+                    .then(userdata => {
+                      res.locals.data = { token: authUtils.createJWT(userdata) };
+                      return next();
+                    })
+                    .catch(patchErr => next(patchErr));
+                }
+                return next(error);
+              });
           });
       }
     });
