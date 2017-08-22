@@ -4,6 +4,6 @@ module.exports = function(propertyRef, value, modelClass) {
 
   return {
     method: 'whereRaw',
-    args: [`similarity(${columnName}, ?) > 0.2`, value.toLowerCase()]
+    args: [`${columnName} @@ to_tsquery(?)`, value.toLowerCase()]
   };
 };
