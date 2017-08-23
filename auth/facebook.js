@@ -4,20 +4,13 @@ const config = require('../config/environment');
 const authUtils = require('./authutils');
 
 exports.authenticate = function(req, res, next) {
-  if (req.params.iosfb) {
-    console.log('Logging from IOS in facebook');
-    console.log(req.params);
-  }
-
-  console.log('logging in');
-
   const accessTokenUrl = 'https://graph.facebook.com/v2.10/oauth/access_token';
   const graphApiUrl = 'https://graph.facebook.com/v2.10/me?fields=id,name,email';
   const params = {
-    code: req.body.code,
+    code: (req.body && req.body.code) || req.params.code,
     client_id: config.facebook.app_secret,
     client_secret: config.facebook.app_secret,
-    redirect_uri: req.body.redirectUri || config.webappUrl
+    redirect_uri: (req.body && req.body.redirectUri) || req.params.post_redir || config.webappUrl
   };
 
   // Step 1. Exchange authorization code for access token.

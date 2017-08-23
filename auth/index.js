@@ -6,6 +6,7 @@ const responseHandler = require('../components/middlewares/respond');
 const router = new express.Router();
 
 router.post('/facebook', facebook.authenticate, responseHandler);
+router.get('/facebook', facebook.authenticate, responseHandler);
 
 router.post('/signup', local.signup, responseHandler);
 router.get('/verify', local.verify, responseHandler);
