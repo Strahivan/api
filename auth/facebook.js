@@ -4,11 +4,18 @@ const config = require('../config/environment');
 const authUtils = require('./authutils');
 
 exports.authenticate = function(req, res, next) {
+  if (req.params.iosfb) {
+    console.log('Logging from IOS in facebook');
+    console.log(req.params);
+  }
+
+  console.log('logging in');
+
   const accessTokenUrl = 'https://graph.facebook.com/v2.10/oauth/access_token';
   const graphApiUrl = 'https://graph.facebook.com/v2.10/me?fields=id,name,email';
   const params = {
     code: req.body.code,
-    client_id: req.body.clientId,
+    client_id: config.facebook.app_secret,
     client_secret: config.facebook.app_secret,
     redirect_uri: req.body.redirectUri || config.webappUrl
   };
@@ -21,13 +28,7 @@ exports.authenticate = function(req, res, next) {
 
     // Step 2. Retrieve profile information about the current user.
     request.get({ url: graphApiUrl, qs: accessToken, json: true }, (fberr, fbresponse, profile) => {
-      console.log('*******************************************');
-      console.log(fberr);
-      console.log('*******************************************');
-      console.log(fbresponse);
-      console.log('*******************************************');
-      console.log(profile);
-      if (response.statusCode !== 200) {
+      if (fbresponse.statusCode !== 200) {
         return next(new Error(profile.error.message));
       }
 
