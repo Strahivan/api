@@ -1,4 +1,5 @@
 const request = require('request');
+const querystring = require('querystring');
 const User = require('../api/user/user.model');
 const config = require('../config/environment');
 const authUtils = require('./authutils');
@@ -6,11 +7,13 @@ const authUtils = require('./authutils');
 exports.authenticate = function(req, res, next) {
   const accessTokenUrl = 'https://graph.facebook.com/v2.10/oauth/access_token';
   const graphApiUrl = 'https://graph.facebook.com/v2.10/me?fields=id,name,email';
+  const postRedirect = `${config.webappUrl}/auth/signup?`;
+
   const params = {
-    code: (req.body && req.body.code) || req.params.code,
-    client_id: config.facebook.app_secret,
+    code: req.query.code,
+    client_id: config.facebook.app_id,
     client_secret: config.facebook.app_secret,
-    redirect_uri: (req.body && req.body.redirectUri) || req.params.post_redir || config.webappUrl
+    redirect_uri: process.env.HOST + `/auth/facebook?${querystring.encode({state: req.query.state})}`
   };
 
   // Step 1. Exchange authorization code for access token.
@@ -54,8 +57,7 @@ exports.authenticate = function(req, res, next) {
                     name: user.name || profile.name
                   })
                   .then(userdata => {
-                    res.locals.data = { token: authUtils.createJWT(userdata) };
-                    return next();
+                    return res.redirect(301, `${postRedirect}${querystring.encode({ token: authUtils.createJWT(userdata), redirect: req.query.state })}`);
                   })
                   .catch(patchErr => next(patchErr));
               });
@@ -68,8 +70,7 @@ exports.authenticate = function(req, res, next) {
           .first()
           .then(existingUser => {
             if (existingUser) {
-              res.locals.data = { token: authUtils.createJWT(existingUser) };
-              return next();
+              return res.redirect(301, `${postRedirect}${querystring.encode({ token: authUtils.createJWT(existingUser), redirect: req.query.state })}`);
             }
 
             return User
@@ -81,8 +82,7 @@ exports.authenticate = function(req, res, next) {
                 avatar: 'https://graph.facebook.com/v2.10/' + profile.id + '/picture?type=large'
               })
               .then(userdata => {
-                res.locals.data = { token: authUtils.createJWT(userdata) };
-                return next();
+                return res.redirect(301, `${postRedirect}${querystring.encode({ token: authUtils.createJWT(userdata), redirect: req.query.state })}`);
               })
               .catch(error => {
                 if (error.constraint === 'user_email_unique') {
@@ -100,8 +100,7 @@ exports.authenticate = function(req, res, next) {
                         });
                     })
                     .then(userdata => {
-                      res.locals.data = { token: authUtils.createJWT(userdata) };
-                      return next();
+                      return res.redirect(301, `${postRedirect}${querystring.encode({ token: authUtils.createJWT(userdata), redirect: req.query.state })}`);
                     })
                     .catch(patchErr => next(patchErr));
                 }
