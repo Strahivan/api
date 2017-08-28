@@ -12,11 +12,13 @@ const knex = require('knex')(knexConfig[process.env.NODE_ENV]);
 
 Model.knex(knex);
 
+const allowedOrigins = ['https://novelship.com', 'http://localhost:9000', 'http://novelship.com.s3-website-ap-southeast-1.amazonaws.com'];
+
 const app = express()
   .use(bodyParser.json())
   .use(morgan('dev'))
   .use(compress())
-  .use(cors({origin: process.env.WEBAPP_URL, credentials: true}))
+  .use(cors({origin: allowedOrigins, credentials: true}))
   .set('json spaces', 2);
 
 registerApi(app);
