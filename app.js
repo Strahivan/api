@@ -21,6 +21,10 @@ const app = express()
   .use(cors({origin: allowedOrigins, credentials: true}))
   .set('json spaces', 2);
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(require('prerender-node').set('prerenderToken', '9hxefTQr2ybM1HLbwKgx'));
+}
+
 registerApi(app);
 
 const server = app.listen(process.env.PORT || 3000, () => {

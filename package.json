@@ -39,6 +39,7 @@
     "objection": "^0.7.12",
     "objection-find": "^0.4.0",
     "pg": "^6.1.5",
+    "prerender-node": "^2.7.2",
     "raml2html": "^2.0.3",
     "redis": "^2.7.1",
     "request": "^2.81.0",
