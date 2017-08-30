@@ -17,6 +17,11 @@
     "name": {
       "anyOf": [{"type": "string"}, {"type": "string"}],
       "faker": "company.name"
+    },
+    "sequence": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
     }
   },
   "required": ["name"],
