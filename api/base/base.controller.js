@@ -83,6 +83,7 @@ class BaseController {
       .build(req.query.where)
       .skipUndefined()
       .where(filter)
+      .column(req.query.fields)
       .eager(req.query.include)
       .orderBy(req.query.sort.by, req.query.sort.order)
       .page(req.query.page.number, req.query.page.size)
