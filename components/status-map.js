@@ -18,13 +18,13 @@ module.exports = {
     message: 'We got your request. Hang in there while we verify the availability of the item. You\'ll get a confirmation in half an hour.'
   },
   processing: {
-    message: 'We have began processing your order.'
+    message: 'We have begun processing your order.'
   },
   ready: {
     message: 'Ahoy! Your item is now ready for pickup!'
   },
   shipping: {
-    message: 'We have began shipping your item from our foreign warehouse!'
+    message: 'We have begun shipping your item from our foreign warehouse!'
   },
   verify: {
     message: 'Our in house goblins are verifying the amount transferred. We\'ll confirm the order soon. Hold tight!'
