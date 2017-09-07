@@ -44,6 +44,19 @@ class Product extends Base {
           from: 'product.source_id',
           to: 'country.id'
         }
+      },
+      collections: {
+        relation: Base.ManyToManyRelation,
+        modelClass: path.normalize(`${__dirname}/../collection/collection.model`),
+        join: {
+          from: 'product.id',
+          through: {
+            modelClass: path.normalize(`${__dirname}/../collection_product/collection_product.model`),
+            from: 'collection_product.product_id',
+            to: 'collection_product.collection_id'
+          },
+          to: 'collection.id'
+        }
       }
     };
   }
