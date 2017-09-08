@@ -1,5 +1,4 @@
 const express = require('express');
-const apicache = require('apicache');
 const Category = require('./category.model');
 const BaseController = require('../base/base.controller');
 const processQuery = require('../../components/middlewares/process-query');
@@ -10,12 +9,11 @@ const productRouter = require('../product');
 const controller = new BaseController(Category, 'category_id');
 
 const router = new express.Router({ mergeParams: true });
-const cache = apicache.middleware;
 
 router.use('/:category_id/products', productRouter);
 
-router.get('/', cache('10 minutes'), processQuery, controller.index.bind(controller), responseHandler);
-router.get('/:category_id', cache('10 minutes'), controller.show.bind(controller), responseHandler);
+router.get('/', processQuery, controller.index.bind(controller), responseHandler);
+router.get('/:category_id', controller.show.bind(controller), responseHandler);
 
 router.use(authenticate);
 router.post('/', controller.create.bind(controller), responseHandler);
