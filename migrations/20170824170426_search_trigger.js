@@ -5,16 +5,15 @@ function up(knex, Promise) {
           AS
           $BODY$
           BEGIN
-            UPDATE product SET tsv = p_search.document FROM (SELECT product.id as pid, setweight(to_tsvector(brand.name), \'A\') || \' \' || setweight(to_tsvector(product.name), \'B\') as document FROM product JOIN brand ON product.brand_id = brand.id) p_search WHERE product.id = NEW.id;
+            UPDATE product SET tsv = p_search.document
+            FROM (SELECT p.id as pid, setweight(to_tsvector(b.name), 'A') || ' ' || setweight(to_tsvector(p.name), 'B') as document
+              FROM product p JOIN brand b ON (p.brand_id = b.id)) p_search
+            WHERE product.id = p_search.pid AND p_search.pid = NEW.id;
             RETURN NEW;
           END;
           $BODY$
           LANGUAGE plpgsql;`)
-    .raw(`CREATE TRIGGER generate_search
-          AFTER INSERT OR UPDATE OF name
-            ON product
-          FOR EACH ROW
-            EXECUTE PROCEDURE generate_search_column();`);
+    .raw('CREATE TRIGGER generate_search AFTER INSERT OR UPDATE OF name ON product FOR EACH ROW EXECUTE PROCEDURE generate_search_column();');
 }
 
 function down(knex, Promise) {
