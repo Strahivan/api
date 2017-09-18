@@ -19,6 +19,14 @@ class Category extends Base {
           from: 'category.parent_id',
           to: 'category.id'
         }
+      },
+      subcategories: {
+        relation: Base.HasManyRelation,
+        modelClass: Category,
+        join: {
+          from: 'category.id',
+          to: 'category.parent_id'
+        }
       }
     };
   }
