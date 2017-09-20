@@ -42,6 +42,11 @@
       "anyOf": [{"type": "string"}, {"type": "null"}],
       "faker": "internet.url",
       "maxLength": 512
+    },
+    "mobile_image_url": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "faker": "internet.url",
+      "maxLength": 512
     }
   },
   "required": ["image"],
