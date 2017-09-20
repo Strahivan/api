@@ -12,7 +12,7 @@ const knex = require('knex')(knexConfig[process.env.NODE_ENV]);
 
 Model.knex(knex);
 
-const allowedOrigins = ['https://www.novelship.com', 'https://novelship.com', 'http://localhost:9000', 'http://novelship.com.s3-website-ap-southeast-1.amazonaws.com'];
+const allowedOrigins = ['https://www.novelship.com', 'https://novelship.com', 'http://localhost:9000', 'http://192.168.1.156'];
 
 const app = express()
   .use(bodyParser.json())
