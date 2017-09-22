@@ -116,7 +116,7 @@ async function requestReset(req, res, next) {
       }
     });
     return next();
-  } catch (e) {
+  } catch (err) {
     return next(err);
   }
 }
@@ -131,7 +131,7 @@ async function reset(req, res, next) {
       .patchAndFetchById(Number(userId), { hash });
 
     return next();
-  } catch (e) {
+  } catch (err) {
     return next(err);
   }
 }
