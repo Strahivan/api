@@ -3,7 +3,6 @@ const processQuery = require('../../components/middlewares/process-query');
 const authenticate = require('../../components/middlewares/authenticate');
 const responseHandler = require('../../components/middlewares/respond');
 const Product = require('./product.model');
-const middlewares = require('./product.middlewares');
 const requestRoutes = require('../request');
 const BaseController = require('../base/base.controller');
 
@@ -17,7 +16,7 @@ router.get('/', processQuery, controller.index.bind(controller), responseHandler
 router.get('/:product_id', controller.show.bind(controller), responseHandler);
 
 router.use(authenticate);
-router.post('/', middlewares.calculatePrice, controller.create.bind(controller), responseHandler);
+router.post('/', controller.create.bind(controller), responseHandler);
 router.put('/:product_id', controller.update.bind(controller), responseHandler);
 router.patch('/:product_id', controller.update.bind(controller), responseHandler);
 router.delete('/:product_id', controller.destroy.bind(controller), responseHandler);
