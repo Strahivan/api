@@ -90,10 +90,9 @@
       "minLength": 1,
       "type": "string"
     },
-    "order_count": {
+    "sequence": {
       "anyOf": [{"type": "integer"}, {"type": "null"}],
-      "faker": {"random.number": [{"max": 200, "min": 1}]},
-      "minimum": 1
+      "faker": {"random.number": [{"max": 200, "min": 1}]}
     },
     "platform_charge": {
       "anyOf": [{"type": "number"}],
@@ -151,7 +150,7 @@
       "chance": {"date": [{"string": true}]},
       "format": "date-time"
     },
-    "sold_out": {"type": "boolean"},
+    "out_of_stock": {"type": "boolean"},
     "url": {
       "anyOf": [{"type": "string"}, {"type": "null"}],
       "faker": "internet.url",
