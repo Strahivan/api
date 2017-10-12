@@ -1,4 +1,5 @@
 const User = require('../user/user.model');
+const Shop = require('../shop/shop.model');
 const config = require('../../config/environment');
 const stripe = require('stripe')(config.stripeKey);
 
@@ -96,14 +97,24 @@ class MeController {
       .catch(err => next(err));
   }
 
-  charge(req, res, next) {
+  async charge(req, res, next) {
+    // TODO: this should be part of a transaction
+
     const amount = Math.trunc(Number(req.body.amount) * this.currencyMultiplierMap[req.body.currency.toLowerCase()]);
+    if (!req.body.shop_stripe_id) {
+      try {
+        const NOVELSHIP_OFFICIAL_SHOP_ID = 1;
+        req.body.shop_stripe_id = await Shop.query().findById(NOVELSHIP_OFFICIAL_SHOP_ID);
+      } catch (e) {
+        /* handle error */
+      }
+    }
     stripe.charges.create({
       amount: amount,
       source: req.body.source,
       currency: req.body.currency,
       customer: req.user.stripe_token
-    })
+    }, {stripe_account: req.body.shop_stripe_id})
     .then(charge => {
       res.locals.data = charge;
       return next();

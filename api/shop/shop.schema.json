@@ -22,6 +22,10 @@
       "faker": {"random.number": [{"max": 5, "min": 1}]},
       "type": "integer"
     },
+    "shop_stripe_id": {
+      "chance": "hash",
+      "type": "string"
+    },
     "updated_at": {
       "anyOf": [{"type": "string"}, {"type": "null"}],
       "chance": {"date": [{"string": true}]},

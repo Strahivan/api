@@ -14,7 +14,8 @@ const all = {
   },
   token: process.env.TOKEN_SECRET,
   redis: process.env.REDIS_URL,
-  stripeKey: process.env.STRIPE_KEY,
+  stripeKey: process.env.STRIPE_OAUTH_CLIENT_ID,
+  stripeClientId: process.env.STRIPE_KEY,
   mail: {
     smtp: process.env.SMTP_CONNECTION,
     registration: 'verify@novelship.com',

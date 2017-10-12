@@ -1,11 +1,13 @@
 const express = require('express');
 const facebook = require('./facebook');
+const stripe = require('./stripe');
 const local = require('./auth.controller');
 const responseHandler = require('../components/middlewares/respond');
 
 const router = new express.Router();
 
 router.get('/facebook', facebook.authenticate, responseHandler);
+router.get('/stripe', stripe.authenticate, responseHandler);
 
 router.post('/signup', local.signup, responseHandler);
 router.get('/verify', local.verify, responseHandler);
