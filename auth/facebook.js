@@ -70,6 +70,32 @@ exports.authenticate = function(req, res, next) {
           .first()
           .then(existingUser => {
             if (existingUser) {
+              if (!existingUser.email && profile.email) {
+                try {
+                  existingUser.$query.patch({email: profile.email});
+                } catch (e) {
+                  // TODO: use abstraction
+                  if (error.constraint === 'user_email_unique') {
+                    return User
+                      .query()
+                      .where({email: profile.email})
+                      .first()
+                      .then(user => {
+                        return user
+                          .$query()
+                          .patchAndFetch({
+                            facebook: profile.id,
+                            avatar: user.avatar || 'https://graph.facebook.com/v2.10/' + profile.id + '/picture?type=large',
+                            name: user.name || profile.name
+                          });
+                      })
+                      .then(userdata => {
+                        return res.redirect(301, `${postRedirect}${querystring.encode({ token: authUtils.createJWT(userdata), redirect: req.query.state })}`);
+                      })
+                      .catch(patchErr => next(patchErr));
+                  }
+                }
+              }
               return res.redirect(301, `${postRedirect}${querystring.encode({ token: authUtils.createJWT(existingUser), redirect: req.query.state })}`);
             }
 
