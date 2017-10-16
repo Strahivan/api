@@ -75,7 +75,7 @@ exports.authenticate = function(req, res, next) {
                   existingUser.$query.patch({email: profile.email});
                 } catch (e) {
                   // TODO: use abstraction
-                  if (error.constraint === 'user_email_unique') {
+                  if (e.constraint === 'user_email_unique') {
                     return User
                       .query()
                       .where({email: profile.email})
