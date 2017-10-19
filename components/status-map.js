@@ -23,6 +23,15 @@ module.exports = {
   ready: {
     message: 'Ahoy! Your item is now ready for pickup!'
   },
+  pending_payment: {
+    message: 'Your item has arrived in our warehouse. Please proceed to pay the due amount so that we can ship your items immediately.'
+  },
+  verify_pending_payment: {
+    message: 'We are now verifying your receipt, we will ship your item as soon as we confirm receipt.'
+  },
+  ready_for_delivery: {
+    message: 'Your item is ready for delivery.'
+  },
   shipping: {
     message: 'We have begun shipping your item from our foreign warehouse!'
   },
