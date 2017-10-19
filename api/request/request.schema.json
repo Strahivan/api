@@ -115,6 +115,23 @@
         {"type": "null"}
       ]
     },
+    "remaining_amount": {
+      "anyOf": [{"type": "number"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 100, "min": 10}]}
+    },
+    "second_installment": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": "hash"
+    },
+    "second_installment_proof": {
+      "anyOf": [
+        {
+          "items": {"faker": "image.imageUrl", "type": "string"},
+          "type": "array"
+        },
+        {"type": "null"}
+      ]
+    },
     "shipping_address": {
       "properties": {
         "city": {"type": "string"},
@@ -166,7 +183,10 @@
         "verify",
         "approval",
         "rejected",
-        "shipping"
+        "shipping",
+        "pending_payment",
+        "verify_pending_payment",
+        "ready_for_delivery"
       ]
     },
     "stripe_charge_id": {"type": "string"},
