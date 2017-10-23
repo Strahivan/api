@@ -51,7 +51,6 @@ async function notifyOrderCreated(req, res, next) {
 }
 
 async function sendUpdateToShopOwner(req, order) {
-  console.log('hello');
   const shop = await Shop.query()
     .findById(order.shop_id)
     .eager('[owner]');
@@ -85,7 +84,7 @@ async function notifyOrderChanged(req, res, next) {
       const template = 'order-status';
       status = statusMap[req.body.status];
 
-      if (req.body.status === 'verify' || req.body.status === 'pending') {
+      if (req.body.status === 'verify' || req.body.status === 'pending' || req.body.status === 'verify_pending_payment' || req.body.status === 'ready_for_delivery') {
         await sendUpdateToShopOwner(req, order);
       }
 
