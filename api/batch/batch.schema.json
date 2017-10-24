@@ -17,7 +17,15 @@
       "faker": {"random.number": [{"max": 5, "min": 1}]},
       "minimum": 1
     },
-    "number": {
+    "tracking_code": {
+      "anyOf": [{"type": "string"}, {"type": "string"}],
+      "faker": "company.name"
+    },
+    "shipping_provider": {
+      "anyOf": [{"type": "string"}, {"type": "string"}],
+      "faker": "company.name"
+    },
+    "name": {
       "anyOf": [{"type": "string"}, {"type": "string"}],
       "faker": "company.name"
     },
@@ -37,13 +45,14 @@
       "faker": {"random.number": [{"max": 5, "min": 1}]},
       "minimum": 1
     },
+    "closed": {"type": "boolean"},
     "updated_at": {
       "anyOf": [{"type": "string"}, {"type": "null"}],
       "chance": {"date": [{"string": true}]},
       "format": "date-time"
     }
   },
-  "required": ["source_id", "destination_id", "number", "shipping_date"],
+  "required": ["source_id", "destination_id"],
   "type": "object"
 }
 
