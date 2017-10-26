@@ -4,7 +4,6 @@ const responseHandler = require('../../components/middlewares/respond');
 const User = require('../user/user.model');
 const MeController = require('./me.controller');
 const requestRouter = require('../request');
-const tripRouter = require('../trip');
 const shopRouter = require('../shop');
 const addUserFilter = require('../../components/middlewares/user-filter');
 
@@ -23,8 +22,5 @@ router.post('/charge', controller.charge.bind(controller), responseHandler);
 
 router.use('/requests', addUserFilter(), requestRouter);
 router.use('/shops', addUserFilter(), shopRouter);
-router.use('/trips', addUserFilter(), tripRouter);
-
-// router.put('/unlink/:provider', controller.unlink.bind(controller));
 
 module.exports = router;

@@ -24,14 +24,6 @@ class User extends Base {
 
   static get relationMappings() {
     return {
-      trips: {
-        relation: Base.HasManyRelation,
-        modelClass: path.normalize(`${__dirname}/../trip/trip.model`),
-        join: {
-          from: 'user.id',
-          to: 'trip.traveler_id'
-        }
-      },
       requests: {
         relation: Base.HasManyRelation,
         modelClass: path.normalize(`${__dirname}/../request/request.model`),

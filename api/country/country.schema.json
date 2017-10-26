@@ -37,22 +37,6 @@
       "maxLength": 255,
       "minLength": 1,
       "type": "string"
-    },
-    "tiers": {
-      "anyOf": [
-        {
-          "items": {
-            "properties": {
-              "max": {"type": "number"},
-              "min": {"type": "number"},
-              "rate": {"type": "number"}
-            },
-            "type": "object"
-          },
-          "type": "array"
-        },
-        {"type": "null"}
-      ]
     }
   },
   "required": ["name"],

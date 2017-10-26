@@ -94,20 +94,8 @@
       "anyOf": [{"type": "integer"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 200, "min": 1}]}
     },
-    "platform_charge": {
-      "anyOf": [{"type": "number"}],
-      "faker": {"random.number": [{"max": 100, "min": 10}]}
-    },
-    "postage": {
-      "anyOf": [{"type": "number"}, {"type": "null"}],
-      "faker": {"random.number": [{"max": 100, "min": 10}]}
-    },
     "preorder": {"type": "boolean"},
     "price": {
-      "anyOf": [{"type": "number"}],
-      "faker": {"random.number": [{"max": 100, "min": 10}]}
-    },
-    "price_override": {
       "anyOf": [{"type": "number"}],
       "faker": {"random.number": [{"max": 100, "min": 10}]}
     },

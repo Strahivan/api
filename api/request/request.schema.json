@@ -2,11 +2,6 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "properties": {
     "active": {"type": "boolean"},
-    "bank_reference": {"type": "string"},
-    "base_price": {
-      "anyOf": [{"type": "number"}, {"type": "null"}],
-      "faker": {"random.number": [{"max": 100, "min": 10}]}
-    },
     "batch_id": {
       "anyOf": [{"type": "integer"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 5, "min": 1}]},
@@ -26,10 +21,6 @@
         },
         {"type": "null"}
       ]
-    },
-    "cost": {
-      "anyOf": [{"type": "number"}, {"type": "null"}],
-      "faker": {"random.number": [{"max": 100, "min": 10}]}
     },
     "discount": {
       "anyOf": [{"type": "number"}, {"type": "null"}],
@@ -60,18 +51,10 @@
       "chance": {"date": [{"string": true}]},
       "format": "date-time"
     },
-    "delta": {
-      "anyOf": [{"type": "number"}, {"type": "null"}],
-      "faker": {"random.number": [{"max": 100, "min": 10}]}
-    },
     "destination_id": {
       "anyOf": [{"type": "integer"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 5, "min": 1}]},
       "minimum": 1
-    },
-    "ems_fee": {
-      "anyOf": [{"type": "number"}, {"type": "null"}],
-      "faker": {"random.number": [{"max": 100, "min": 10}]}
     },
     "instructions": {
       "anyOf": [{"type": "string"}, {"type": "null"}],
@@ -83,10 +66,6 @@
       "faker": {"random.number": [{"max": 100, "min": 10}]}
     },
     "merchant_message": {"type": "string"},
-    "platform_charge": {
-      "anyOf": [{"type": "number"}, {"type": "null"}],
-      "faker": {"random.number": [{"max": 100, "min": 10}]}
-    },
     "postage": {
       "anyOf": [{"type": "number"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 100, "min": 10}]}
@@ -190,30 +169,9 @@
       ]
     },
     "stripe_charge_id": {"type": "string"},
-    "tiers": {
-      "anyOf": [
-        {
-          "items": {
-            "properties": {
-              "max": {"type": "number"},
-              "min": {"type": "number"},
-              "rate": {"type": "number"}
-            },
-            "type": "object"
-          },
-          "type": "array"
-        },
-        {"type": "null"}
-      ]
-    },
     "total_price": {
       "anyOf": [{"type": "number"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 100, "min": 10}]}
-    },
-    "trip_id": {
-      "anyOf": [{"type": "integer"}, {"type": "null"}],
-      "faker": {"random.number": [{"max": 5, "min": 1}]},
-      "minimum": 1
     },
     "updated_at": {
       "anyOf": [{"type": "string"}, {"type": "null"}],

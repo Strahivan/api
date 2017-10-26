@@ -1,6 +1,5 @@
 const country = require('./api/country');
 const request = require('./api/request');
-const trip = require('./api/trip');
 const user = require('./api/user');
 const zone = require('./api/zone');
 const shop = require('./api/shop');
@@ -21,7 +20,6 @@ module.exports = (app) => {
   app.use('/categories', category);
   app.use('/collections', collection);
   app.use('/requests', request);
-  app.use('/trips', trip);
   app.use('/products', product);
   app.use('/shops', shop);
   app.use('/brands', brand);

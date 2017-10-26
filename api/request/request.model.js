@@ -52,14 +52,6 @@ class Request extends Base {
           from: 'request.customer_id',
           to: 'user.id'
         }
-      },
-      trip: {
-        relation: Base.BelongsToOneRelation,
-        modelClass: path.normalize(`${__dirname}/../trip/trip.model`),
-        join: {
-          from: 'request.trip_id',
-          to: 'trip.id'
-        }
       }
     };
   }
