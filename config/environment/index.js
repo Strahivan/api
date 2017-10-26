@@ -15,6 +15,7 @@ const all = {
   token: process.env.TOKEN_SECRET,
   redis: process.env.REDIS_URL,
   stripeKey: process.env.STRIPE_KEY,
+  aftershipKey: process.env.AFTERSHIP_API_KEY,
   mail: {
     smtp: process.env.SMTP_CONNECTION,
     registration: 'verify@novelship.com',

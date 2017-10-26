@@ -11,6 +11,7 @@ const collection = require('./api/collection');
 const announcement = require('./api/announcement');
 const me = require('./api/me');
 const auth = require('./auth');
+const integrations = require('./api/integrations');
 const signedUrl = require('./components/signing');
 const responseHandler = require('./components/middlewares/respond');
 
@@ -27,6 +28,7 @@ module.exports = (app) => {
   app.use('/zones', zone);
   app.use('/users', user);
   app.use('/me', me);
+  app.use('/integrations', integrations);
 
   app.get('/upload', signedUrl, responseHandler);
   app.use('/auth', auth);
