@@ -10,6 +10,10 @@
       "anyOf": [{"type": "integer"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 5, "min": 1}]},
       "minimum": 1
+    },
+    "sequence": {
+      "anyOf": [{"type": "number"}],
+      "faker": {"random.number": [{"max": 100, "min": 1}]}
     }
   },
   "type": "object"
