@@ -2,11 +2,16 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "properties": {
     "active": {"type": "boolean"},
+    "authorization_id": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": "hash"
+    },
     "batch_id": {
       "anyOf": [{"type": "integer"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 5, "min": 1}]},
       "minimum": 1
     },
+    "captured": {"type": "boolean"},
     "collection_method": {"enum": ["pickup", "post", "courier"]},
     "color": {
       "anyOf": [
@@ -66,6 +71,14 @@
       "faker": {"random.number": [{"max": 100, "min": 10}]}
     },
     "merchant_message": {"type": "string"},
+    "payment_id": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": "hash"
+    },
+    "payment_method": {
+      "anyOf": [{"type": "string"}, {"type": "null"}],
+      "chance": "company.name"
+    },
     "postage": {
       "anyOf": [{"type": "number"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 100, "min": 10}]}

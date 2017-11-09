@@ -108,4 +108,4 @@ async function notifyOrderChanged(req, res, next) {
   return next();
 }
 
-module.exports = { notifyOrderChanged, notifyOrderCreated};
+module.exports = { notifyOrderChanged, notifyOrderCreated };
