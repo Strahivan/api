@@ -94,16 +94,15 @@ async function payment(req, res, next) {
 
 async function execute(req, res, next) {
   try {
-    console.log(req.body);
     const options = {
       method: 'POST',
-      uri: `${config.paypal.base}/payments/payment/${req.body.payment_id}/execute`,
+      uri: `${config.paypal.base}/payments/payment/${req.query.payment_id}/execute`,
       headers: {
         Authorization: `Bearer ${config.paypal.accessToken}`,
         'content-type': 'application/json',
         'Accept': 'application/json'
       },
-      body: {payer_id: req.body.payer_id},
+      body: {payer_id: req.query.payer_id},
       json: true
     };
 

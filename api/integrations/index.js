@@ -11,7 +11,7 @@ router.use(authenticate);
 router.post('/aftership', aftership.create.bind(AftershipController), responseHandler);
 
 router.post('/paypal/payment', paypal.payment, responseHandler);
-router.post('/paypal/execute', paypal.execute, responseHandler);
+router.get('/paypal/execute', paypal.execute, responseHandler);
 router.post('/paypal/auth', paypal.getAuthorization, responseHandler);
 
 module.exports = router;
