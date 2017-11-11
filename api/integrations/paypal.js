@@ -94,7 +94,7 @@ async function payment(req, res, next) {
 
 async function execute(req, res, next) {
   try {
-    console.log(config.paypal.accessToken);
+    console.log(req.body);
     const options = {
       method: 'POST',
       uri: `${config.paypal.base}/payments/payment/${req.body.payment_id}/execute`,
