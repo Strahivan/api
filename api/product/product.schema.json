@@ -167,7 +167,7 @@
       "faker": {"random.number": [{"max": 100, "min": 10}]}
     }
   },
-  "required": ["name"],
+  "required": ["name", "brand_id", "category_id", "price", "shop_id", "source_id"],
   "type": "object"
 }
 
