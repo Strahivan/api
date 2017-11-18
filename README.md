@@ -7,13 +7,18 @@ All query parameters are grouped in five classes: filters, projections, paginati
 
 ### Getting started:
 
- - Install [nvm](https://github.com/creationix/nvm) and then `nvm install node` (*minimum version: 8.x*).
+ - Install [nvm](https://github.com/creationix/nvm) and then install node.js via running `nvm install node` in the terminal (*minimum version: 8.x*).
  - Add `node_modules` to your path variable. For example, for `zsh`, add this to your `.zshrc`: `export PATH="$PATH:./node_modules/.bin"`
- - Install project dependencies: `npm install`
- - Install [PostgreSQL](https://www.postgresql.org/download/) and create a database.
+ - Clone the project `git clone https://github.com/athenadesk/api.git`
+ - Jump into the (local) project repository and run `npm install` to install the project dependencies
+ - Install [PostgreSQL](https://www.postgresql.org/download/) and create a database. For MacOS you might install the [PostgreSQLApp](https://postgresapp.com/)
  - Install [redis](http://redis.io)
+ - Install [knex](http://knexjs.org)
+ - After you've installed knex.js you should see a knex executable file within the following folder `<your-project-folder>/node_modules/.bin/knex`
  - Create an environment variable configuration file named `.env` in the project root and define the environment variables. Here's a [sample](https://gist.github.com/afm-sayem/b000849ffa2f38169c73d2c9bb165bc0).
- - Create tables: `knex migrate:latest`
+ - After you've done that, change the following two variables to the appropriate local path of yours: `DATABASE_URL` and `REDIS_URL`
+ - Optional: You might modify the <timestamp> triplocation.js 
+ - Run the following bash command within the local project directory to clone the actual database-structure: `knex migrate:latest`
  - Run the server: `npm run dev`
  - Test the API: http://localhost:3000/products
-
+ - You may also install [Postgis](http://postgis.net/install/) - But note: You don't have to run the script for enabling Postgis because it's already part of the migration script of knex.js
