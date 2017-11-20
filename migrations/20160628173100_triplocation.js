@@ -1,5 +1,5 @@
 function up(knex, Promise) {
-  return knex
+/*  return knex
     .raw('CREATE EXTENSION postgis')
     .then(() => {
       return Promise.all([
@@ -9,10 +9,13 @@ function up(knex, Promise) {
         })
       ]);
     });
+*/
+
+return Promise.resolve()
 }
 
 function down(knex, Promise) {
-  return Promise.all([
+/*  return Promise.all([
     knex.raw('DROP EXTENSION postgis'),
     knex.schema
       .table('trip', (table) => {
@@ -20,6 +23,8 @@ function down(knex, Promise) {
         table.dropColumn('coordinates');
       })
   ]);
+*/
+return Promise.resolve()
 }
 
 module.exports = { up, down };
