@@ -7,6 +7,7 @@ const statusMap = require('../../components/status-map');
 const shopStatusMap = require('../../components/shop-status-map');
 
 async function notifyOrderCreated(req, res, next) {
+  // skip if the status is paypal
   try {
     const shop = await Shop.query()
       .findById(res.locals.data.shop_id)
@@ -36,7 +37,7 @@ async function notifyOrderCreated(req, res, next) {
       });
     }
 
-    await mailQueue.add({
+    mailQueue.add({
       from: `Novelship <${config.mail.notify}>`,
       to: recipients,
       template: 'new-order',
@@ -84,11 +85,15 @@ async function notifyOrderChanged(req, res, next) {
       const template = 'order-status';
       status = statusMap[req.body.status];
 
-      if (req.body.status === 'verify' || req.body.status === 'pending' || req.body.status === 'verify_pending_payment' || req.body.status === 'ready_for_delivery') {
-        await sendUpdateToShopOwner(req, order);
+      if (req.body.status && ['verify', 'confirmed', 'pending', 'verify_pending_payment', 'ready_for_delivery'].includes(req.body.status)) {
+        sendUpdateToShopOwner(req, order);
       }
 
-      await mailQueue.add({
+      if (req.body.status && ['paypal_pending', 'paypal_canceled'].includes(req.body.status)) {
+        return next();
+      }
+
+      mailQueue.add({
         from: `Novelship <${config.mail.notify}>`,
         to: email,
         template: template,
