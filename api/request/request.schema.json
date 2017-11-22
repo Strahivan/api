@@ -178,7 +178,9 @@
         "shipping",
         "pending_payment",
         "verify_pending_payment",
-        "ready_for_delivery"
+        "ready_for_delivery",
+        "paypal_pending",
+        "paypal_canceled"
       ]
     },
     "stripe_charge_id": {"type": "string"},
