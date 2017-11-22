@@ -54,7 +54,7 @@ async function signup(req, res, next) {
 async function login(req, res, next) {
   try {
     const user = await User.query()
-      .where({ email: req.body.email.toLowerCase() })
+      .where({ email: req.body.email && req.body.email.toLowerCase()})
       .first();
 
     if (user) {
