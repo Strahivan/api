@@ -63,8 +63,6 @@ async function login(req, res, next) {
         res.locals.data = {token: authUtils.createJWT(user)};
         return next();
       }
-      res.locals.status = 422;
-      return next(new Error('wrong username or password'));
     }
     res.locals.status = 422;
     return next(new Error('wrong username or password'));
