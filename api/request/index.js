@@ -15,6 +15,7 @@ router.use(authenticate);
 router.get('/', processQuery, controller.index.bind(controller), responseHandler);
 router.get('/:request_id', controller.show.bind(controller), responseHandler);
 router.get('/:request_id/capture', payment.capture.bind(controller), responseHandler);
+router.get('/:request_id/void', payment.voidAuth.bind(controller), responseHandler);
 
 router.post('/', controller.create.bind(controller), middlewares.notifyOrderCreated, responseHandler);
 router.put('/:request_id', controller.update.bind(controller), middlewares.notifyOrderChanged, responseHandler);

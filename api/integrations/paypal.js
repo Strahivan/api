@@ -165,4 +165,31 @@ async function capture(req, res, next) {
   }
 }
 
-module.exports = {capture, execute, payment, getAuthorization};
+async function voidAuth(req, res, next) {
+  try {
+    const order = await Request.query().findById(req.params.request_id);
+    const options = {
+      method: 'POST',
+      uri: `${config.paypal.base}/payments/authorization/${order.authorization_id}/void`,
+      headers: {
+        Authorization: `Bearer ${config.paypal.accessToken}`,
+        'content-type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: {},
+      json: true
+    };
+
+    const data = await request(options);
+    await order.$query().patch({refunded: true, captured: false});
+    res.locals.data = data;
+    return next();
+  } catch (e) {
+    if (e.statusCode === 401) {
+      return await errorHandler(e, req, voidAuth.bind(this, req, res, next), next);
+    }
+    return next(e);
+  }
+}
+
+module.exports = {capture, execute, payment, getAuthorization, voidAuth};

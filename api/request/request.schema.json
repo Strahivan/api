@@ -107,6 +107,7 @@
         {"type": "null"}
       ]
     },
+    "refunded": {"type": "boolean"},
     "remaining_amount": {
       "anyOf": [{"type": "number"}, {"type": "null"}],
       "faker": {"random.number": [{"max": 100, "min": 10}]}
