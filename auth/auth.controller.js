@@ -69,7 +69,7 @@ async function login(req, res, next) {
     res.locals.status = 422;
     return next(new Error('wrong username or password'));
   } catch (e) {
-    return next(err);
+    return next(e);
   }
 }
 
