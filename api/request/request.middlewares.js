@@ -85,7 +85,7 @@ async function notifyOrderChanged(req, res, next) {
       const template = 'order-status';
       status = statusMap[req.body.status];
 
-      if (req.body.status && ['verify', 'confirmed', 'pending', 'verify_pending_payment', 'ready_for_delivery'].includes(req.body.status)) {
+      if (req.body.status && ['verify', 'pending', 'verify_pending_payment', 'ready_for_delivery'].includes(req.body.status)) {
         sendUpdateToShopOwner(req, order);
       }
 
