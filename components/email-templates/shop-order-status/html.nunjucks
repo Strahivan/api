@@ -33,7 +33,7 @@
                                   <table border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                       <td>
-                                        <a href="{{webappUrl + '/user/shops/' + shop.id + '/requests/' + order.id}}" class="button button--" target="_blank">{{ "Check Availability and Quote Price" if order.status == "pending" else "Verify Bank Transfer" }}</a>
+                                        <a href="{{webappUrl + '/user/shops/' + shop.id + '/requests/' + order.id}}" class="button button--" target="_blank">{{ "Check Availability and Quote Price" if order.status == "pending" else "Go to Order" }}</a>
                                       </td>
                                     </tr>
                                   </table>
