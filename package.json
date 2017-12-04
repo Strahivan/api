@@ -41,6 +41,7 @@
     "pg": "^6.1.5",
     "prerender-node": "^2.7.2",
     "raml2html": "^2.0.3",
+    "randomstring": "^1.1.5",
     "redis": "^2.7.1",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
