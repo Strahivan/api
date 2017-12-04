@@ -107,6 +107,16 @@
         {"type": "null"}
       ]
     },
+    "applied_credit": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "maximum": 25
+    },
+    "referred_by": {
+      "anyOf": [{"type": "integer"}, {"type": "null"}],
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "minimum": 1
+    },
     "refunded": {"type": "boolean"},
     "remaining_amount": {
       "anyOf": [{"type": "number"}, {"type": "null"}],
