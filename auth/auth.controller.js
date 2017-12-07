@@ -10,8 +10,6 @@ function getVerificationUrl(registrationId) {
 }
 
 async function signup(req, res, next) {
-  // TODO: validate username, password and email
-  // decorator for validation
   if (!(req.body.email || req.body.password)) {
     return next(new Error('must provide email and password'));
   }
@@ -27,15 +25,16 @@ async function signup(req, res, next) {
     }
 
     const hash = await User.encryptPassword(req.body.password);
+    const referralCode = await authUtils.getReferralCode();
     const userInfo = {
       hash,
+      referral_code: referralCode,
       email: req.body.email.toLowerCase()
     };
 
     await redis.hmsetAsync(registrationId, userInfo);
     redis.expire(registrationId, 2 * 24 * 60 * 60);
 
-    // create a mail sending task
     await mailQueue.add({
       from: `Novelship <${config.mail.registration}>`,
       to: req.body.email.toLowerCase(),

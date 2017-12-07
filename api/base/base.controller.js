@@ -130,7 +130,7 @@ class BaseController {
       .where(filter)
       .delete()
       .then(() => {
-        res.locals.status = 204;
+        res.locals.status = 200;
         return next();
       })
       .catch(err => next(err));
@@ -143,7 +143,7 @@ class BaseController {
       .patch({ active: false })
       .where(filter)
       .then(() => {
-        res.locals.status = 204;
+        res.locals.status = 200;
         return next();
       })
       .catch(err => next(err));

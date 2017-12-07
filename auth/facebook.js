@@ -68,7 +68,7 @@ exports.authenticate = function(req, res, next) {
           .query()
           .where({ facebook: profile.id })
           .first()
-          .then(existingUser => {
+          .then(async (existingUser) => {
             if (existingUser) {
               if (!existingUser.email && profile.email) {
                 try {
@@ -99,11 +99,14 @@ exports.authenticate = function(req, res, next) {
               return res.redirect(301, `${postRedirect}${querystring.encode({ token: authUtils.createJWT(existingUser), redirect: req.query.state })}`);
             }
 
+            const referralCode = await authUtils.getReferralCode();
+
             return User
               .query()
               .insert({
                 name: profile.name,
                 facebook: profile.id,
+                referral_code: referralCode,
                 email: profile.email,
                 avatar: 'https://graph.facebook.com/v2.10/' + profile.id + '/picture?type=large'
               })

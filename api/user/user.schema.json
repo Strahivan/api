@@ -50,6 +50,21 @@
     },
     "phone": {"type": "string"},
     "meta": {"type": "object"},
+    "referral_code": {
+      "chance": "hash",
+      "maxLength": 255,
+      "minLength": 5,
+      "type": "string"
+    },
+    "referred_by": {
+      "faker": {"random.number": [{"max": 5, "min": 1}]},
+      "type": "integer"
+    },
+    "referral_credit": {
+      "faker": {"random.number": [{"max": 25, "min": 5}]},
+      "maximum": 25,
+      "type": "integer"
+    },
     "role": {"enum": ["admin"]},
     "stripe_token": {"type": "string"},
     "updated_at": {
